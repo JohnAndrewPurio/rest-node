@@ -1,0 +1,7 @@
+{
+  "name": "rest-node",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
