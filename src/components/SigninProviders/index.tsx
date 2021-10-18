@@ -1,11 +1,12 @@
 import { IonFab, IonGrid, IonIcon, IonRow, IonCol, IonFabButton } from '@ionic/react'
-import { logoGoogle } from 'ionicons/icons';
+import { logoGoogle, logoFacebook, logoTwitter, logoApple } from 'ionicons/icons';
+import './styles.css'
 
 const SigninProviders: React.FC = () => {
     return (
-        <IonGrid>
+        <IonGrid id="sign-in-provider-grid">
             <IonRow>
-                <IonCol>
+                <IonCol id="centered-col">
                     <IonFab>
                         <IonFabButton>
                             <IonIcon icon={logoGoogle} />
@@ -13,26 +14,26 @@ const SigninProviders: React.FC = () => {
                     </IonFab>
                 </IonCol>
 
-                <IonCol>
+                <IonCol id="centered-col">
                     <IonFab>
                         <IonFabButton>
-                            <IonIcon icon={logoGoogle} />
+                            <IonIcon icon={logoTwitter} />
                         </IonFabButton>
                     </IonFab>
                 </IonCol>
 
-                <IonCol>
+                <IonCol id="centered-col">
                     <IonFab>
                         <IonFabButton>
-                            <IonIcon icon={logoGoogle} />
+                            <IonIcon icon={logoFacebook} />
                         </IonFabButton>
                     </IonFab>
                 </IonCol>
 
-                <IonCol>
+                <IonCol id="centered-col">
                     <IonFab>
                         <IonFabButton>
-                            <IonIcon icon={logoGoogle} />
+                            <IonIcon icon={logoApple} />
                         </IonFabButton>
                     </IonFab>
                 </IonCol>
