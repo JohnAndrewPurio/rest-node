@@ -9,16 +9,10 @@ import { googleSignIn } from '../../api/firebaseAuth';
 const SigninProviders: React.FC = () => {
     const userData = useContext(UserContext)
 
-    console.log('SignIn Provider:', userData)
+    console.log(userData)
 
     return (
         <IonGrid id="sign-in-provider-grid">
-            {
-                userData && userData.displayName && 
-                <IonButton>
-                    {userData.displayName}
-                </IonButton>
-            }
             <IonRow>
                 <IonCol id="centered-col">
                     <IonFab>
