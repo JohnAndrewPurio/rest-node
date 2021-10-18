@@ -16,7 +16,7 @@ const AppRouter: React.FC = () => {
                     <Home />
                 </Route>
                 <Route exact path="/">
-                    <Redirect to="/home" />
+                    <Redirect to="/login" />
                 </Route>
             </IonRouterOutlet>
         </IonReactRouter>

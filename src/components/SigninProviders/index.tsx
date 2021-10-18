@@ -1,14 +1,28 @@
-import { IonFab, IonGrid, IonIcon, IonRow, IonCol, IonFabButton } from '@ionic/react'
+import { useContext } from 'react';
+import { IonFab, IonGrid, IonIcon, IonRow, IonCol, IonFabButton, IonButton } from '@ionic/react'
 import { logoGoogle, logoFacebook, logoTwitter, logoApple } from 'ionicons/icons';
 import './styles.css'
 
+import { UserContext } from '../../App';
+import { googleSignIn } from '../../api/firebaseAuth';
+
 const SigninProviders: React.FC = () => {
+    const userData = useContext(UserContext)
+
+    console.log('SignIn Provider:', userData)
+
     return (
         <IonGrid id="sign-in-provider-grid">
+            {
+                userData && userData.displayName && 
+                <IonButton>
+                    {userData.displayName}
+                </IonButton>
+            }
             <IonRow>
                 <IonCol id="centered-col">
                     <IonFab>
-                        <IonFabButton>
+                        <IonFabButton onClick={googleSignIn} >
                             <IonIcon icon={logoGoogle} />
                         </IonFabButton>
                     </IonFab>
