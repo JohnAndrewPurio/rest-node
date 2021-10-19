@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { IonApp } from '@ionic/react';
-import AppRouter from './components/Router';
+import AppRouter from './components/AppRouter';
 import './api/firebaseConfig'
 
 import { auth } from './api/firebaseAuth';
