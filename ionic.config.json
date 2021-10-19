@@ -1,5 +1,5 @@
 {
-  "name": "REST Node",
+  "name": "rest-node",
   "integrations": {
     "capacitor": {}
   },
