@@ -11,8 +11,6 @@ import UserContext from './contextStore/userContext'
 
 import './styles'
 
-
-
 const App: React.FC = () => {
   const [present, dismiss] = useIonToast()
   const [userData, setUserData] = useState<User | null>(null)
