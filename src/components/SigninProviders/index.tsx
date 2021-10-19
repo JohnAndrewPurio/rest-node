@@ -3,8 +3,8 @@ import { IonFab, IonGrid, IonIcon, IonRow, IonCol, IonFabButton, IonButton } fro
 import { logoGoogle, logoFacebook, logoTwitter, logoApple } from 'ionicons/icons';
 import './styles.css'
 
-import { UserContext } from '../../App';
 import { googleSignIn } from '../../api/firebaseAuth';
+import UserContext from '../../contextStore/userContext';
 
 const SigninProviders: React.FC = () => {
     const userData = useContext(UserContext)

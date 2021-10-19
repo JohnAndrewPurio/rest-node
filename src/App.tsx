@@ -1,39 +1,41 @@
-import { createContext, useState, useEffect } from 'react';
-import { IonApp } from '@ionic/react';
-import AppRouter from './components/AppRouter';
-import './api/firebaseConfig'
+import { useState, useEffect } from 'react';
+import { IonApp, useIonToast } from '@ionic/react';
 
+import AppRouter from './components/AppRouter';
+
+import './api/firebaseConfig'
 import { auth } from './api/firebaseAuth';
 import { User } from 'firebase/auth'
 
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
+import UserContext from './contextStore/userContext'
 
-/* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
+import './styles'
 
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
 
-/* Theme variables */
-import './theme/variables.css';
-
-export const UserContext = createContext<User | null>(null)
 
 const App: React.FC = () => {
-  const [ userData, setUserData ] = useState<User | null>(null)
+  const [present, dismiss] = useIonToast()
+  const [userData, setUserData] = useState<User | null>(null)
+
+  const showToast = (message: string) => {
+    const toastData = {
+      buttons: [{ text: 'hide', handler: dismiss }],
+      message,
+      onDidDismiss: () => console.log('dismissed'),
+      onWillDismiss: () => console.log('will dismiss'),
+    }
+
+    present(toastData)
+  }
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUserData(user)
+
+      showToast( userData?.displayName || '' )
     })
+
+    // eslint-disable-next-line
   }, [])
 
   return (

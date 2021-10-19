@@ -1,0 +1,7 @@
+{
+    "LOGIN": "/login",
+    "HOME": "/home",
+    "REST_NODE": "/restnode",
+    
+    "DEFAULT": "/login"
+}

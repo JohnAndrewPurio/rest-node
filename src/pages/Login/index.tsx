@@ -1,4 +1,4 @@
-import { IonContent, IonGrid, IonRow, IonPage } from "@ionic/react"
+import { IonContent, IonGrid, IonRow, IonPage, IonCol } from "@ionic/react"
 import CompanyLogo from "../../components/CompanyLogo"
 import EmailAccountSignup from "../../components/EmailAccountSignup"
 import SigninProviders from "../../components/SigninProviders"
@@ -8,15 +8,17 @@ const Login: React.FC = () => {
     return (
         <IonPage>
             <IonContent fullscreen>
-                <IonGrid>
+                <IonGrid id="page-grid">
                     <IonRow class="ion-justify-content-center">
                         <CompanyLogo />
                     </IonRow>
-                    <IonRow>
+                    <IonRow class="ion-justify-content-center">
                         <EmailAccountSignup />
                     </IonRow>
-                    <IonRow>
-                        <SigninProviders />
+                    <IonRow class="ion-justify-content-center">
+                        <IonCol size="12">
+                            <SigninProviders />
+                        </IonCol>
                     </IonRow>
                 </IonGrid>
             </IonContent>

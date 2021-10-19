@@ -1,4 +1,4 @@
-import { IonInput, IonLabel, IonList, IonItem, IonItemDivider, IonButton, IonRow, IonGrid } from "@ionic/react"
+import { IonInput, IonLabel, IonList, IonItem, IonButton, IonRow, IonGrid } from "@ionic/react"
 import { FormEvent } from "react"
 import './styles.css'
 
@@ -14,18 +14,16 @@ const EmailAccountSignup = () => {
 
     return (
         <form onSubmit={submitHandler} id="email-account-signup">
-            <IonList id="email-forms-list">
+            <IonList id="email-forms-list" inset>
                 <IonItem>
                     <IonLabel color="primary">Name</IonLabel>
                     <IonInput type="text" placeholder="Enter Name" name="name" required />
                 </IonItem>
-                <IonItemDivider />
 
                 <IonItem>
                     <IonLabel color="primary">Email</IonLabel>
                     <IonInput type="email" placeholder="Enter Email" name="email" required />
                 </IonItem>
-                <IonItemDivider />
 
                 <IonItem>
                     <IonLabel color="primary">Password</IonLabel>
@@ -34,7 +32,7 @@ const EmailAccountSignup = () => {
             </IonList>
             <IonGrid>
                 <IonRow class="ion-justify-content-center">
-                    <IonButton type="submit" color="primary">Submit</IonButton>
+                    <IonButton type="submit" color="primary">Sign Up</IonButton>
                 </IonRow>
             </IonGrid>
         </form>

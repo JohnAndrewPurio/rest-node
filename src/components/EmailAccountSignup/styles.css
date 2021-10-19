@@ -1,3 +1,7 @@
 #email-account-signup {
     padding: 2em;
 }
+
+ion-item {
+    --padding-top: 2em;
+}
