@@ -1,57 +1,50 @@
 
+import { useEffect, useState } from "react"
 import "./styles.css"
+import moment from "moment"
 
-const Clock: React.FC = () => {
+interface Props {
+    size: number,
+    circle: number
+}
 
-    const positions = [
-        {
-            top: 0,
-            margin: "0 auto"
+const Clock: React.FC<Props> = ({ size, circle }) => {
+
+    const [time, setTime] = useState(moment().format("HH:mm"))
+    const [tilt, setTilt] = useState(0)
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setTime(moment().format("HH:mm"))
+        }, 1000)
+        return () => clearInterval(interval)
+    }, [])
+
+    useEffect(() => {
+        const minute = Number(moment().minute()) / 60
+        const hour = (Number(moment().hour()) + minute) / 24
+        setTilt(360*hour)
+    }, [time])
+
+
+    const _style = {
+        container: {
+            height: size,
+            width: size,
+            fontSize: `${size/4}px`
         },
-        {
-            right: "14%",
-            top: "14%",
-            margin: "auto"
-        },
-        {
-            right: 0,
-            margin: "auto 0"
-        },
-        {
-            right: "14%",
-            bottom: "14%",
-            margin: "auto"
-        },
-        {
-            bottom: 0,
-            margin: "0 auto"
-        },
-        {
-            left: "14%",
-            bottom: "14%",
-            margin: "auto"
-        },
-        {
-            left: 0,
-            margin: "auto 0"
-        },
-        {
-            left: "14%",
-            top: "14%",
-            margin: "auto"
+        hand: {
+            height: circle,
+            transform: `rotate(${tilt}deg)`
         }
-    ]
-
-    type rotationType = {
-        transform: string
     }
-    const rotation: rotationType[] = []
-
-    positions.forEach((el, i) => rotation.push({ transform: `rotate(${i * 45}deg)` }))
 
     return (
-        <div className="grid">
-            {positions.map((triangle, i) => <div key={`triangle${i}`} style={{ ...triangle, ...rotation[i] }} className="triangle"></div>)}
+        <div className="clock-container" style={_style.container}>
+            <div className="clock-time">
+                {time}
+            </div>
+            <div className="clock-hand" style={_style.hand}></div>
         </div>
     )
 }

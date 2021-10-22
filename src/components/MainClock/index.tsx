@@ -2,6 +2,7 @@
 import { IonGrid } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import Circle from "./Circle"
+import Clock from "./Clock";
 import Numbers from "./Numbers"
 import "./styles.css"
 
@@ -9,7 +10,7 @@ const MainClock: React.FC = () => {
 
     const space = 30;
     const ref = useRef<HTMLDivElement>(null)
-    const [biggest, setBiggest] = useState(200)
+    const [biggest, setBiggest] = useState(0)
 
     useEffect(() => {
         setTimeout(() => {
@@ -62,6 +63,7 @@ const MainClock: React.FC = () => {
             {circles.map((circle, i) => 
                 <Circle key={`circle${i}`} size={circle.size} color={circle.color} percentage={circle.percentage} placement={circle.placement}/>
             )}
+            <Clock size={circles[circles.length - 1].size - space} circle={biggest/2}/>
         </div>
     )
 }

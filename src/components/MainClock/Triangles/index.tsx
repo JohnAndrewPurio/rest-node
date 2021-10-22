@@ -1,8 +1,7 @@
 
-import Triangles from "../Triangles"
 import "./styles.css"
 
-const Numbers: React.FC = () => {
+const Triangles: React.FC = () => {
 
     const positions = [
         {
@@ -10,17 +9,17 @@ const Numbers: React.FC = () => {
             margin: "0 auto"
         },
         {
-            right: "15%",
-            top: "15%",
+            right: "14%",
+            top: "14%",
             margin: "auto"
         },
         {
-            right: "1ch",
+            right: 0,
             margin: "auto 0"
         },
         {
-            right: "15%",
-            bottom: "15%",
+            right: "14%",
+            bottom: "14%",
             margin: "auto"
         },
         {
@@ -43,14 +42,18 @@ const Numbers: React.FC = () => {
         }
     ]
 
-    const time = [24, 3, 6, 9, 12, 15, 18, 21]
+    type rotationType = {
+        transform: string
+    }
+    const rotation: rotationType[] = []
+
+    positions.forEach((el, i) => rotation.push({ transform: `rotate(${i * 45}deg)` }))
 
     return (
-        <div className="number-container">
-            {time.map((number, i) => <div key={`number${number}`} className="number" style={positions[i]}>{number}</div>)}
-            <Triangles />
+        <div className="grid">
+            {positions.map((triangle, i) => <div key={`triangle${i}`} style={{ ...triangle, ...rotation[i] }} className="triangle"></div>)}
         </div>
     )
 }
 
-export default Numbers
+export default Triangles

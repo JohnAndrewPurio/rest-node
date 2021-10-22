@@ -8,7 +8,7 @@ const RestNode: React.FC<RouteComponentProps> = (props) => {
     return (
         <IonPage>
             {/* <Header title="REST Node" /> */}
-            
+
             <IonContent>
                 <BottomNavigationTabs {...props} />
             </IonContent>
