@@ -1,5 +1,3 @@
-import { IonGrid } from "@ionic/react"
-import { useRef } from "react"
 import Progress from "../Progress"
 import "./styles.css"
 
@@ -11,7 +9,6 @@ interface Props {
 }
 
 const Circle: React.FC<Props> = ({ size, color, percentage, placement }) => {
-
     const sqSize = size;
     const strokeWidth = 10;
     const radius = (sqSize - strokeWidth) / 2;
@@ -27,7 +24,8 @@ const Circle: React.FC<Props> = ({ size, color, percentage, placement }) => {
                 cx={sqSize / 2}
                 cy={sqSize / 2}
                 r={radius}
-                strokeWidth={`${strokeWidth}px`} />
+                strokeWidth={`${strokeWidth}px`}
+            />
             <Progress size={size} color={color} percentage={percentage} placement={placement} strokeWidth={strokeWidth} />
         </svg>
     )
