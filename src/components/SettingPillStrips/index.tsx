@@ -4,7 +4,7 @@ import { moon } from "ionicons/icons"
 const SettingPillStrips = () => {
     return (
         <IonItem style={{
-            margin: '1em'
+            margin: 0
         }}>
             <IonIcon icon={moon} slot="start" />
             <IonLabel>Bedtime History</IonLabel>

@@ -3,9 +3,7 @@ import SettingPillStrips from "../SettingPillStrips"
 
 const SettingsList = () => {
     return (
-        <IonList style={{
-            margin: '1em'
-        }}>
+        <IonList>
             <SettingPillStrips />
             <SettingPillStrips />
             <SettingPillStrips />

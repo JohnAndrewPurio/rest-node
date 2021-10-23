@@ -20,10 +20,7 @@ const DateAndLocation: React.FC = () => {
                     {date.toDateString()}
                 </IonCol>
             </IonRow>
-            <IonRow style={{
-                display: "flex",
-                justifyContent: "center"
-            }}>
+            <IonRow class="ion-justify-content-center">
                 <MainClock />
             </IonRow>
         </IonGrid>
