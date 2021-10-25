@@ -1,23 +1,22 @@
 
-import { IonGrid } from "@ionic/react";
 import { useEffect, useRef, useState } from "react";
 import Circle from "./Circle"
 import Clock from "./Clock";
 import Numbers from "./Numbers"
 import "./styles.css"
+import { circleSpacing } from './constants.json'
 
 const MainClock: React.FC = () => {
 
-    const space = 30;
     const ref = useRef<HTMLDivElement>(null)
     const [biggest, setBiggest] = useState(0)
 
     useEffect(() => {
         setTimeout(() => {
             if (ref.current?.offsetWidth) {
-                setBiggest(ref.current.offsetWidth*.75)
+                setBiggest(ref.current.offsetWidth * .75)
             }
-        }, 1000)
+        }, 500)
     }, [])
 
     const circles = [
@@ -54,16 +53,20 @@ const MainClock: React.FC = () => {
     ]
 
     circles.forEach((circle, index) => {
-        circle.size = biggest - (space * index)
+        circle.size = biggest - (circleSpacing * index)
     })
 
     return (
         <div ref={ref} className="container">
-            <Numbers />
-            {circles.map((circle, i) => 
-                <Circle key={`circle${i}`} size={circle.size} color={circle.color} percentage={circle.percentage} placement={circle.placement}/>
-            )}
-            <Clock size={circles[circles.length - 1].size - space} circle={biggest/2}/>
+            {biggest !== 0 &&
+                <>
+                    <Numbers />
+                    {circles.map((circle, i) =>
+                        <Circle key={`circle${i}`} size={circle.size} color={circle.color} percentage={circle.percentage} placement={circle.placement} />
+                    )}
+                    <Clock size={circles[circles.length - 1].size - circleSpacing} circle={biggest / 2} />
+                </>
+            }
         </div>
     )
 }

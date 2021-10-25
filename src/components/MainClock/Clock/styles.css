@@ -35,3 +35,16 @@
     z-index: 2;
     transform-origin: bottom;
 }
+
+body.dark .clock-container {
+    border: 2px solid white;   
+}
+
+body.dark .clock-time {
+    background-color: black;;
+    color: white
+}
+
+body.dark .clock-hand {
+    background-color: white;
+}

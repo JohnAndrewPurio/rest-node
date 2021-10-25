@@ -33,6 +33,8 @@ const App: React.FC = () => {
       showToast( userData?.displayName || '' )
     })
 
+    // document.body.classList.add('dark');
+
     // eslint-disable-next-line
   }, [])
 

@@ -26,12 +26,11 @@ const Clock: React.FC<Props> = ({ size, circle }) => {
         setTilt(360*hour)
     }, [time])
 
-
     const _style = {
         container: {
             height: size,
             width: size,
-            fontSize: `${size/4}px`
+            fontSize: `${size/4.5}px`
         },
         hand: {
             height: circle,
