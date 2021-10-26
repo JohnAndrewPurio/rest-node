@@ -10,7 +10,7 @@ const SettingsList: React.FC = () => {
         }
     }
 
-    const list = ["Bedtime", "Lights", "Sounds", "Relaxation"]
+    const list = ["bedtime", "lights", "sounds", "relaxation"]
 
     return (
         <IonList style={_styles.list}>

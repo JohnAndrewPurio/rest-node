@@ -1,0 +1,80 @@
+
+
+.acc-close {
+    border: 3px solid var(--ion-color-tertiary);
+    height: 10%;
+    margin: 1em;
+    border-radius: 10px;
+    transition: height 200ms linear;
+}
+
+.acc-open {
+    border: 3px solid var(--ion-color-tertiary);
+    height: 80%;
+    margin: 1em;
+    border-radius: 10px;
+    transition: height 200ms linear;
+    background-color: var(--ion-color-tertiary);
+    color: var(--ion-color-tertiary-contrast);
+}
+
+.acc-close .title-head {
+    height: 100%;
+}
+
+.acc-open .title-head {
+    height: 12.5%;
+}
+
+.time-bar {
+    height: 12px;
+    width: 100%;
+    margin: 1em 1em 0em 1em;
+    background-color: var(--ion-color-secondary);
+    border-radius: 10px;
+    position: relative;
+}
+
+.times {
+    width: 100%;
+    margin: 0em 1em 1em 1em;
+    display: flex;
+    position: relative;
+}
+
+.time {
+    font-size: .8rem;
+    font-weight: 700;
+    position: absolute;
+}
+
+.time2 {
+    left: 20%;
+}
+
+.time3 {
+    left: 70%;
+}
+
+.time4 {
+    right: 0;
+}
+
+.wake-time, .night-time {
+    position: absolute;
+}
+
+.wake-time {
+    width: 100%;
+    height: 100%;
+    background-color: var(--ion-color-tertiary);
+    border-radius: 10px;
+}
+
+.night-time {
+    width: 60%;
+    height: 100%;
+    background-color: var(--ion-color-tertiary-tint);
+    border-radius: 10px;
+    left: 20%;
+}

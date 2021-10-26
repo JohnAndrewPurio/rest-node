@@ -1,6 +1,5 @@
 import { IonTabBar, IonTabs, IonTabButton, IonLabel, IonRouterOutlet, IonIcon } from "@ionic/react"
 import { Redirect, Route, RouteComponentProps } from "react-router"
-import { IonReactRouter } from "@ionic/react-router"
 
 import Dashboard from "./Dashboard"
 import History from "./History"
@@ -11,26 +10,24 @@ const BottomNavigationTabs: React.FC<RouteComponentProps> = ({ match }) => {
     return (
         <IonTabs>
             <IonRouterOutlet>
-                <IonReactRouter>
-                    <Route path={`${match.url}/history`} render={() => <History />} />
-                    <Route path={`${match.url}/help`} render={() => <Help />} />
-                    <Route path={`${match.url}/dashboard`} render={() => <Dashboard />} />
-                    <Route render={() => <Redirect to={`${match.url}/dashboard`} />} />
-                </IonReactRouter>
+                <Route path={`/restnode/:tab(history)`} component={History} />
+                <Route path={`/restnode/:tab(help)`} component={Help} />
+                <Route path={`/restnode/:tab(dashboard)`} component={Dashboard} />
+                <Route render={() => <Redirect to={`/restnode/dashboard`} />} />
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
-                <IonTabButton tab="history" href="/restnode/history">
+                <IonTabButton tab="history" href={`/restnode/history`}>
                     <IonIcon icon={time} />
                     <IonLabel>History</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab="dashboard" href="/restnode/dashboard">
-                    <IonIcon icon={home}/>
+                <IonTabButton tab="dashboard" href={`/restnode/dashboard`}>
+                    <IonIcon icon={home} />
                     <IonLabel>Dashboard</IonLabel>
                 </IonTabButton>
 
-                <IonTabButton tab="help" href="/restnode/help">
+                <IonTabButton tab="help" href={`/restnode/help`}>
                     <IonIcon icon={informationCircle} />
                     <IonLabel>Help</IonLabel>
                 </IonTabButton>

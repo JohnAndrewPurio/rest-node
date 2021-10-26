@@ -34,7 +34,7 @@ const DateAndLocation: React.FC = () => {
         }
     }
 
-    const [location, setLocation] = useState<any>()
+    const [location, setLocation] = useState<any>("Castillejos")
 
     let options: NativeGeocoderOptions = {
         useLocale: true,
