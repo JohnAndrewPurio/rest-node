@@ -15,6 +15,9 @@ fill: none;
 }
 
 .circle-background {
-stroke: #ddd;
+    stroke: #ddd;
 }
 
+body.dark .circle-background {
+ stroke: rgb(46, 46, 46);
+}
