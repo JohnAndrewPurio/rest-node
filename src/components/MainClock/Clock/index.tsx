@@ -15,9 +15,8 @@ const Clock: React.FC<Props> = ({ size, circle }) => {
         container: {
             height: size,
             width: size,
-            fontSize: `${size / 4}px`
+            fontSize: `${size/4.5}px`
         },
-
         hand: {
             height: circle,
             transform: `rotate(${tilt}deg)`

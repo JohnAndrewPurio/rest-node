@@ -1,6 +1,6 @@
 import DateAndLocation from "../../DateAndLocation"
 
-const Bedtime: React.FC = () => {
+const History: React.FC = () => {
     return (
         <>
             <DateAndLocation />
@@ -8,4 +8,4 @@ const Bedtime: React.FC = () => {
     )
 }
 
-export default Bedtime
+export default History

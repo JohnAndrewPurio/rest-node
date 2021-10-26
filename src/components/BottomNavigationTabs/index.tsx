@@ -3,16 +3,16 @@ import { Redirect, Route, RouteComponentProps } from "react-router"
 import { IonReactRouter } from "@ionic/react-router"
 
 import Dashboard from "./Dashboard"
-import Bedtime from "./Bedtime"
+import History from "./History"
 import Learn from "./Learn"
-import { bed, bookmark, home } from "ionicons/icons"
+import { bookmark, home, time } from "ionicons/icons"
 
 const BottomNavigationTabs: React.FC<RouteComponentProps> = ({ match }) => {
     return (
         <IonTabs>
             <IonRouterOutlet>
                 <IonReactRouter>
-                    <Route path={`${match.url}/bedtime`} render={() => <Bedtime />} />
+                    <Route path={`${match.url}/history`} render={() => <History />} />
                     <Route path={`${match.url}/learn`} render={() => <Learn />} />
                     <Route path={`${match.url}/dashboard`} render={() => <Dashboard />} />
                     <Route render={() => <Redirect to={`${match.url}/dashboard`} />} />
@@ -20,14 +20,15 @@ const BottomNavigationTabs: React.FC<RouteComponentProps> = ({ match }) => {
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
+
+                <IonTabButton tab="history" href="/restnode/history">
+                    <IonIcon icon={time} />
+                    <IonLabel>History</IonLabel>
+                </IonTabButton>
+
                 <IonTabButton tab="dashboard" href="/restnode/dashboard">
                     <IonIcon icon={home} />
                     <IonLabel>Dashboard</IonLabel>
-                </IonTabButton>
-
-                <IonTabButton tab="bedtime" href="/restnode/bedtime">
-                    <IonIcon icon={bed} />
-                    <IonLabel>Bedtime</IonLabel>
                 </IonTabButton>
 
                 <IonTabButton tab="learn" href="/restnode/learn">

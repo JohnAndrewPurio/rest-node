@@ -1,5 +1,6 @@
 import Progress from "../Progress"
 import "./styles.css"
+import { strokeWidth } from "./constants.json"
 
 interface Props {
     size: number,
@@ -10,7 +11,6 @@ interface Props {
 
 const Circle: React.FC<Props> = ({ size, color, percentage, placement }) => {
     const sqSize = size;
-    const strokeWidth = 10;
     const radius = (sqSize - strokeWidth) / 2;
     const viewBox = `0 0 ${sqSize} ${sqSize}`;
 
