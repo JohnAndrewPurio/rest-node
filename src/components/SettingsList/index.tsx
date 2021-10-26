@@ -16,7 +16,7 @@ const SettingsList: React.FC = () => {
         <IonList style={_styles.list}>
             {
                 list.map((page, index) =>
-                    <SettingPillStrips title={page} icon={index} />
+                    <SettingPillStrips key={page} title={page} icon={index} />
                 )
             }
         </IonList>
