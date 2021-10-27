@@ -1,4 +1,4 @@
-import { IonGrid, IonRow, IonCol } from "@ionic/react"
+import { IonGrid, IonRow, IonCol, IonHeader, IonContent, IonPage, IonToolbar } from "@ionic/react"
 import MainClock from "../MainClock"
 import moment from "moment"
 import { useEffect, useState } from "react"
@@ -19,18 +19,14 @@ import { NativeGeocoder, NativeGeocoderOptions } from '@ionic-native/native-geoc
 //     }
 // }
 
-const DateAndLocation: React.FC = () => {
+const DateAndLocation: React.FC = ({ children }) => {
     const _styles = {
-        grid: {
-            margin: '2em .5em 2sem .5em'
-        },
         place: {
             height: 'fit-content',
             fontWeight: 700
         },
-        clock: {
-            display: "flex",
-            justifyContent: "center"
+        header: {
+            padding: ".5em 0em"
         }
     }
 
@@ -44,11 +40,8 @@ const DateAndLocation: React.FC = () => {
     const printCurrentPosition = async () => {
         const coordinates = await Geolocation.getCurrentPosition();
         const { latitude, longitude } = coordinates.coords
-        NativeGeocoder.reverseGeocode(latitude, longitude, options)
-            .then(res => {
-                console.log('Current position:', res);
-                setLocation(res[0].administrativeArea)
-            })
+        const res = await NativeGeocoder.reverseGeocode(latitude, longitude, options)
+        setLocation(res[0].locality)
     };
 
     useEffect(() => {
@@ -56,21 +49,25 @@ const DateAndLocation: React.FC = () => {
     }, [])
 
     return (
-        <IonGrid style={_styles.grid}>
-            <IonRow>
-                <IonCol class="ion-text-center" style={_styles.place}>
-                    {location}
-                </IonCol>
-            </IonRow>
-            <IonRow>
-                <IonCol class="ion-text-center">
-                    {moment().format("DD MMMM YYYY")}
-                </IonCol>
-            </IonRow>
-            <IonRow style={_styles.clock}>
-                <MainClock />
-            </IonRow>
-        </IonGrid>
+        <IonContent>
+            <IonHeader>
+                <IonToolbar>
+                    <IonRow>
+                        <IonCol class="ion-text-center" style={_styles.place}>
+                            {location}
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol class="ion-text-center">
+                            {moment().format("DD MMMM YYYY")}
+                        </IonCol>
+                    </IonRow>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent>
+                {children}
+            </IonContent>
+        </IonContent>
     )
 }
 
