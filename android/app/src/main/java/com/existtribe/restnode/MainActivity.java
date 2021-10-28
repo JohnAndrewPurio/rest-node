@@ -1,4 +1,4 @@
-package io.ionic.restnode;
+package com.existtribe.restnode;
 
 import com.getcapacitor.BridgeActivity;
 

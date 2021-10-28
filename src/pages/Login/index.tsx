@@ -1,12 +1,9 @@
-import { IonContent, IonGrid, IonRow, IonPage, IonButton } from "@ionic/react"
+import { IonContent, IonGrid, IonRow, IonPage } from "@ionic/react"
 import CompanyLogo from "../../components/CompanyLogo"
+import LoginButton from "../../components/LoginButton"
 import './styles.css'
 
 const Login: React.FC = () => {
-    const signInHandler = () => {
-        console.log('Sign in')
-    }
-
     return (
         <IonPage>
             <IonContent fullscreen>
@@ -15,9 +12,7 @@ const Login: React.FC = () => {
                         <CompanyLogo />
                     </IonRow>
                     <IonRow class="ion=justify-content-center">
-                        <IonButton onClick={signInHandler}>
-                            Sign In
-                        </IonButton>
+                        <LoginButton />
                     </IonRow>
                 </IonGrid>
             </IonContent>
