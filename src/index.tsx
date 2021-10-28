@@ -9,13 +9,13 @@ import { domain, redirectUri, clientId } from './auth0.config'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth0Provider
+    {/* <Auth0Provider
       domain={domain}
       clientId={clientId}
       redirectUri={redirectUri}
-    >
+    > */}
       <App />
-    </Auth0Provider>
+    {/* </Auth0Provider> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

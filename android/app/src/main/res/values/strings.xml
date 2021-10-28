@@ -4,4 +4,6 @@
     <string name="title_activity_main">REST Node</string>
     <string name="package_name">com.existtribe.restnode</string>
     <string name="custom_url_scheme">com.existtribe.restnode</string>
+    <!-- <string name="com_auth0_client_id">YOUR_CLIENT_ID</string> -->
+    <string name="com_auth0_domain">192.168.100.32:8100</string>
 </resources>
