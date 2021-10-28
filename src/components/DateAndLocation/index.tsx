@@ -6,19 +6,6 @@ import { useEffect, useState } from "react"
 import { Geolocation } from '@capacitor/geolocation';
 import { NativeGeocoder, NativeGeocoderOptions } from '@ionic-native/native-geocoder'
 
-// interface Position {
-//     timestamp: number,
-//     coords: { 
-//         latitude: number,
-//         longitude: number,
-//         accuracy: number,
-//         altitudeAccuracy: number | null,
-//         altitude: number | null,
-//         speed: number | null,
-//         heading: number | null
-//     }
-// }
-
 const DateAndLocation: React.FC = ({ children }) => {
     const _styles = {
         place: {
@@ -30,22 +17,27 @@ const DateAndLocation: React.FC = ({ children }) => {
         }
     }
 
-    const [location, setLocation] = useState<any>("Keme")
+    const [location, setLocation] = useState<any>("")
 
     let options: NativeGeocoderOptions = {
         useLocale: true,
         maxResults: 5
     };
 
-    const printCurrentPosition = async () => {
-        const coordinates = await Geolocation.getCurrentPosition();
-        const { latitude, longitude } = coordinates.coords
-        const res = await NativeGeocoder.reverseGeocode(latitude, longitude, options)
-        setLocation(res[0].locality)
+    const getCurrentPosition = async () => {
+        try {
+            const coordinates = await Geolocation.getCurrentPosition();
+            const { latitude, longitude } = coordinates.coords
+            const res = await NativeGeocoder.reverseGeocode(latitude, longitude, options)
+            setLocation(res[0].locality)
+        }
+        catch(e) {
+            alert(e)
+        }
     };
 
     useEffect(() => {
-        printCurrentPosition()
+        getCurrentPosition()
     }, [])
 
     return (

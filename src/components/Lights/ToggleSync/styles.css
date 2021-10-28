@@ -1,0 +1,16 @@
+
+
+ion-item {
+    --background: transparent;
+    width: 100%;
+}
+
+/* 
+.md ion-toggle {
+    width: 40px;
+    height: 20px;
+}
+
+.ios ion-toggle {
+    width: 60px;
+} */
