@@ -2,5 +2,5 @@
 	"appId": "com.existtribe.restnode",
 	"appName": "REST Node",
 	"webDir": "build",
-	"bundledWebRuntime": false
+	"plugins": {}
 }

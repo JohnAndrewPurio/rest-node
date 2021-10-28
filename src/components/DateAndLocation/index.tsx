@@ -46,6 +46,8 @@ const DateAndLocation: React.FC = ({ children }) => {
 
     useEffect(() => {
         printCurrentPosition()
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
