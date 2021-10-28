@@ -1,8 +1,6 @@
 {
-	"appId": "io.ionic.restnode",
-	"appName": "restnode",
+	"appId": "com.existtribe.restnode",
+	"appName": "REST Node",
 	"webDir": "build",
-	"bundledWebRuntime": false,
-	"npmClient": "npm",
-	"cordova": {}
+	"bundledWebRuntime": false
 }
