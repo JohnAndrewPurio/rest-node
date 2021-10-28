@@ -55,7 +55,8 @@
     "eject": "react-scripts eject",
     "ios": "ionic capacitor open ios",
     "android": "ionic capacitor open android",
-    "dev-android": "ionic cap run android -l --external"
+    "dev-android": "ionic cap run android -l --external",
+    "dev-ios": "ionic cap run ios -l --external"
   },
   "eslintConfig": {
     "extends": [

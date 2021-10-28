@@ -10,13 +10,13 @@ const SettingsList: React.FC = () => {
         }
     }
 
-    const list = ["Bedtime", "Lights", "Sounds", "Relaxation"]
+    const list = ["bedtime", "lights", "sounds", "relaxation"]
 
     return (
         <IonList style={_styles.list}>
             {
                 list.map((page, index) =>
-                    <SettingPillStrips title={page} icon={index} />
+                    <SettingPillStrips key={page} title={page} icon={index} />
                 )
             }
         </IonList>

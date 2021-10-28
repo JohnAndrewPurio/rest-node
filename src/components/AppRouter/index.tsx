@@ -5,8 +5,9 @@ import { Redirect, Route } from 'react-router-dom';
 import Home from '../../pages/Home'
 import Login from '../../pages/Login'
 import RestNode from '../../pages/RestNode';
+import SettingsRouter from '../../pages/Settings';
 
-import { DEFAULT, LOGIN, HOME, REST_NODE } from './paths.json'
+import { DEFAULT, LOGIN, HOME, REST_NODE, SETTINGS } from "./paths.json"
 
 const AppRouter: React.FC = () => {
     return (
@@ -19,10 +20,12 @@ const AppRouter: React.FC = () => {
                     <Home />
                 </Route>
                 <Route path={REST_NODE} render={(props) => <RestNode {...props} />} />
+                <Route path={SETTINGS} render={(props) => <SettingsRouter {...props} />} />
                 <Route render={() => <Redirect to={DEFAULT} />} />
             </IonRouterOutlet>
         </IonReactRouter >
     )
 }
+
 
 export default AppRouter
