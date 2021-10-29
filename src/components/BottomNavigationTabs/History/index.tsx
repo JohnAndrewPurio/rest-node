@@ -1,12 +1,8 @@
-import { IonContent } from "@ionic/react"
-import DateAndLocation from "../../DateAndLocation"
+import { IonContent } from '@ionic/react';
+import DateAndLocation from '../../DateAndLocation';
 
 const History: React.FC = () => {
-    return (
-        <IonContent>
-            History
-        </IonContent>
-    )
-}
+  return <IonContent>History</IonContent>;
+};
 
-export default History
+export default History;

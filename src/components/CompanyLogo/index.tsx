@@ -1,12 +1,10 @@
-import { IonImg } from '@ionic/react'
-import { logo } from './resources.json'
+import { IonImg } from '@ionic/react';
+import { logo } from './resources.json';
 
-import './styles.css'
+import './styles.css';
 
 const CompanyLogo = () => {
-    return (
-        <IonImg src={logo.src} alt={logo.alt} id={logo.id} />
-    )
-}
+  return <IonImg src={logo.src} alt={logo.alt} id={logo.id} />;
+};
 
-export default CompanyLogo
+export default CompanyLogo;
