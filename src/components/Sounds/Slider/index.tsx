@@ -19,11 +19,11 @@ const Slider: React.FC<Props> = ({ index, open, onclick }) => {
     return (
         <IonCol className={open ? "open-slider slider-container" : "slider-container"} onClick={() => onclick(index)}>
             {open ?
-                <IonRange color="tertiary" className="range-slider">
-                    <IonIcon color="tertiary" slot="start" icon={volumeLow} />
-                    <IonIcon color="tertiary" slot="end" icon={volumeHigh} />
+                <IonRange color="primary" className="range-slider">
+                    <IonIcon color="primary" slot="start" icon={volumeLow} />
+                    <IonIcon color="primary" slot="end" icon={volumeHigh} />
                 </IonRange>
-                : <IonIcon style={_styles.icon} color="tertiary" icon={volumeHigh} />
+                : <IonIcon style={_styles.icon} color="primary" icon={volumeHigh} />
             }
         </IonCol>
     )

@@ -1,7 +1,7 @@
 
 
 .acc-close {
-    border: 3px solid var(--ion-color-tertiary);
+    border: 3px solid var(--ion-color-primary);
     height: 10%;
     margin: 1em;
     border-radius: 10px;
@@ -11,7 +11,7 @@
 }
 
 .acc-open {
-    border: 3px solid var(--ion-color-tertiary);
+    border: 3px solid var(--ion-color-primary);
     height: 80%;
     margin: 1em;
     border-radius: 10px;
@@ -19,8 +19,8 @@
     display: flex;
     flex-direction: column;
 
-    background-color: var(--ion-color-tertiary);
-    color: var(--ion-color-tertiary-contrast);
+    background-color: var(--ion-color-primary);
+    color: var(--ion-color-primary-contrast);
 }
 
 .acc-close .title-head {
@@ -51,7 +51,7 @@
 }
 
 .playing {
-    background-color: var(--ion-color-tertiary-tint);
+    background-color: var(--ion-color-primary-tint);
 }
 
 .slider-close-btn {
@@ -69,7 +69,7 @@
     margin: 1em .5em;
     border-radius: 10px;
     flex: 1;
-    background-color: var(--ion-color-tertiary-contrast);
+    background-color: var(--ion-color-light);
     height: 70%;
     flex-direction: column;
     padding: 0px 0px 10px 0px;

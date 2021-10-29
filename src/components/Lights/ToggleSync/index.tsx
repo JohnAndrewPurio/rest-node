@@ -13,7 +13,7 @@ const ToggleSync: React.FC = () => {
     return (
         <IonRow>
             <IonItem style={_styles.item}>
-                <IonLabel>Enable Sun Sync</IonLabel>
+                <IonLabel>Sync Sunset and Sunrise</IonLabel>
                 <IonToggle slot="end" />
             </IonItem>
         </IonRow>

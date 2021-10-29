@@ -131,7 +131,7 @@ const Sounds: React.FC = () => {
                                         <Slider index={0} onclick={sliderOpenSlider} open={sliderOpen[0]} />
                                         {sliderOpen[0] ?
                                             <IonCol size="auto" className="slider-close-btn" onClick={() => closeSlider(0)}>
-                                                <IonIcon style={_styles.closeIcon} icon={close} />
+                                                <IonIcon color="light" style={_styles.closeIcon} icon={close} />
                                             </IonCol>
                                             : <PlayBtn index={0} onclick={playBtnClicked} playing={playing[0]} />
                                         }
@@ -164,7 +164,7 @@ const Sounds: React.FC = () => {
                                         <Slider index={1} onclick={sliderOpenSlider} open={sliderOpen[1]} />
                                         {sliderOpen[1] ?
                                             <IonCol size="auto" className="slider-close-btn" onClick={() => closeSlider(1)}>
-                                                <IonIcon style={_styles.closeIcon} icon={close} />
+                                                <IonIcon color="light" style={_styles.closeIcon} icon={close} />
                                             </IonCol>
                                             : <PlayBtn index={1} onclick={playBtnClicked} playing={playing[1]} />
                                         }
@@ -231,9 +231,9 @@ const PlayBtn: React.FC<PlayBtnProps> = ({ index, onclick, playing }) => {
     return (
         <IonCol className={playing ? "playing play-btn" : "play-btn"} onClick={() => onclick(index)}>
             {playing ?
-                <IonIcon style={_styles.icon} color="tertiary" icon={pause} />
+                <IonIcon style={_styles.icon} color="primary" icon={pause} />
                 :
-                <IonIcon style={_styles.icon} color="tertiary" icon={play} />
+                <IonIcon style={_styles.icon} color="primary" icon={play} />
             }
         </IonCol>
     )

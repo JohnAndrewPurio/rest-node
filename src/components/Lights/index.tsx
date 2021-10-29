@@ -19,7 +19,7 @@ const Lights: React.FC = () => {
         setLightsOpen(newArr)
 
         const newRangeArr = new Array(rangeValue.length).fill(0)
-        newRangeArr[index] = newArr[index] ? 100 : 0
+        newRangeArr[index] = newArr[index] ? 50 : 0
         setRangeValue(newRangeArr)
     }
 
@@ -97,7 +97,7 @@ const LightControl: React.FC<controlProps> = ({ title, index, onclick, open, ran
             <IonItem lines="none" style={_styles.header}>
                 <IonIcon slot="start" color={open ? "tertiary" : undefined } style={_styles.icon} icon={icons[index]} />
                 <IonLabel style={_styles.headerTxt}>{title}</IonLabel>
-                <IonToggle checked={open} onClick={() => onclick(index)} slot="end" className="light-switch-toggle" />
+                <IonToggle color="tertiary" checked={open} onClick={() => onclick(index)} slot="end" className="light-switch-toggle" />
             </IonItem>
             <IonRow style={_styles.rangeContainer}>
                 <IonGrid>

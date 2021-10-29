@@ -12,7 +12,7 @@ const App: React.FC = () => {
   // const { handleRedirectCallback } = useAuth0()
 
   useEffect(() => {
-    // document.body.classList.add('dark');
+    document.body.classList.add('dark');
     // eslint-disable-next-line
   }, [])
 

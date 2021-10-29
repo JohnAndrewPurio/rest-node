@@ -15,10 +15,10 @@ interface Props {
 
 const Audio: React.FC<Props> = ({ index, song, active, onclick }) => {
     return (
-        <IonItem onClick={() => onclick(index)} color={active ? "tertiary" : undefined} button detail={false} lines="full" className="audio-container">
+        <IonItem onClick={() => onclick(index)} color={active ? "primary" : undefined} button detail={false} lines="full" className="audio-container">
             <IonLabel>{song.title}</IonLabel>
             <IonButton fill="clear" slot="end">
-                <IonIcon color={active ? "light" : "tertiary"} slot="icon-only" icon={play} />
+                <IonIcon color={active ? "light" : "primary"} slot="icon-only" icon={play} />
             </IonButton>
         </IonItem>
     )
