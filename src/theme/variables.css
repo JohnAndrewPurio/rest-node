@@ -241,7 +241,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 body.dark {
-  --ion-color-primary: #8fa877;
+  --ion-color-primary: #6b9243;
     --ion-color-primary-rgb: 128, 170, 185;
     --ion-color-primary-contrast: #cddcbc;
     --ion-color-primary-contrast-rgb: 205, 220, 188;
