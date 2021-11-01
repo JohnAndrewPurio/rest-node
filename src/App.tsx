@@ -24,7 +24,7 @@ const App: React.FC = () => {
   //       await handleRedirectCallback(url);
   //     }
   //     // No-op on Android
-  //     await Browser.close();
+  //     await Browser.close()
   //   });
 
   // }, [handleRedirectCallback]);
