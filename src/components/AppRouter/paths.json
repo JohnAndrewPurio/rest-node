@@ -3,5 +3,5 @@
     "HOME": "/home",
     "REST_NODE": "/restnode",
     "SETTINGS": "/settings",
-    "DEFAULT": "/login"
+    "DEFAULT": "/restnode"
 }

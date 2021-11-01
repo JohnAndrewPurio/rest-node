@@ -9,19 +9,25 @@ import AppRouter from './components/AppRouter';
 import './styles'
 
 const App: React.FC = () => {
-  const { handleRedirectCallback } = useAuth0()
+  // const { handleRedirectCallback } = useAuth0()
 
   useEffect(() => {
-    // Handle the 'appUrlOpen' event and call `handleRedirectCallback`
-    CapApp.addListener('appUrlOpen', async ({ url }) => {
-      if (url.includes('state') && (url.includes('code') || url.includes('error'))) {
-        await handleRedirectCallback(url);
-      }
-      // No-op on Android
-      await Browser.close();
-    });
-    
-  }, [handleRedirectCallback])
+    // document.body.classList.add('dark');
+    // eslint-disable-next-line
+  }, [])
+
+
+  // useEffect(() => {
+  //   // Handle the 'appUrlOpen' event and call `handleRedirectCallback`
+  //   CapApp.addListener('appUrlOpen', async ({ url }) => {
+  //     if (url.includes('state') && (url.includes('code') || url.includes('error'))) {
+  //       await handleRedirectCallback(url);
+  //     }
+  //     // No-op on Android
+  //     await Browser.close();
+  //   });
+
+  // }, [handleRedirectCallback]);
 
   return (
     <IonApp>

@@ -14,7 +14,7 @@ const MainClock: React.FC = () => {
             if (ref.current?.offsetWidth) {
                 setBiggest(ref.current.offsetWidth * .75)
             }
-        }, 500)
+        }, 1000)
     }, [])
 
     const circles = [
