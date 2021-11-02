@@ -1,168 +1,26 @@
 import {
-  IonContent,
-  IonGrid,
-  IonPage,
-  IonRow,
   IonButton,
-  IonListHeader,
+  IonCol,
+  IonDatetime,
+  IonGrid,
+  IonIcon,
+  IonItem,
   IonLabel,
   IonList,
-  IonItem,
-  IonCol,
-  IonIcon,
-  IonDatetime,
+  IonListHeader,
+  IonRow,
 } from '@ionic/react';
 import { add, alarm, remove } from 'ionicons/icons';
-import { useEffect, useState } from 'react';
-import SettingsHeader from '../SettingsHeader';
-import TimeBar from '../TimeBar';
-import './styles.css';
 import moment from 'moment';
-import momentTz from 'moment-timezone';
 
-const Bedtime: React.FC = () => {
-  const _styles = {
-    page: {
-      marginBottom: '5vh',
-    },
-  };
-
-  const [sleepHours, setSleepHours] = useState(8);
-  const [bedtimeStarted, setBedtimeStarted] = useState(false);
-  const [bedtime, setBedTime] = useState(moment().add(30, 'm'));
-  const [wakeUpTime, setWakeUpTime] = useState(
-    moment(bedtime).add(sleepHours, 'h')
-  );
-
-  const handleChangeHours = (add: boolean) => {
-    if (add && sleepHours < 24) {
-      setSleepHours((p) => p + 1);
-    } else if (!add && sleepHours > 1) {
-      setSleepHours((p) => p - 1);
-    }
-  };
-
-  const handleChangeWakeTime = (val: string) => {
-    console.log(wakeUpTime);
-    setWakeUpTime(moment(val));
-    console.log(wakeUpTime);
-  };
-
-  useEffect(() => {
-    setBedTime(moment(wakeUpTime).subtract(sleepHours, 'h'));
-  }, [sleepHours, wakeUpTime]);
-
-  return (
-    <IonPage style={_styles.page}>
-      <SettingsHeader title="Bedtime Settings" />
-      <IonContent>
-        <IonGrid>
-          <TimeBar />
-          <StartBtn />
-          <BedTimeStart bedtime={bedtime} />
-          <TimeControl
-            sleepHours={sleepHours}
-            handleChangeHours={handleChangeHours}
-            wakeUpTime={wakeUpTime}
-            handleChangeWakeTime={handleChangeWakeTime}
-          />
-        </IonGrid>
-      </IonContent>
-    </IonPage>
-  );
-};
-
-const StartBtn: React.FC = () => {
-  const _styles = {
-    container: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-  };
-
-  return (
-    <IonRow style={_styles.container}>
-      <div className="outer-circle">
-        <IonButton
-          fill="clear"
-          shape="round"
-          className="inner-circle"
-          color="light"
-        >
-          <p className="circle-text">
-            <p>Start</p>
-            <p>Now</p>
-          </p>
-        </IonButton>
-      </div>
-    </IonRow>
-  );
-};
-
-interface BedTimeStartProps {
-  bedtime: moment.Moment;
-}
-
-const BedTimeStart: React.FC<BedTimeStartProps> = ({ bedtime }) => {
-  const _styles = {
-    headerText: {
-      fontSize: '1.1rem',
-      fontWeight: 700,
-    },
-    time: {
-      fontSize: '12vw',
-      fontWeight: 900,
-      color: 'var(--ion-color-primary-shade)',
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-    date: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      fontWeight: 900,
-      color: 'var(--ion-color-primary-shade)',
-    },
-    grid: {
-      marginTop: '5vw',
-    },
-  };
-
-  return (
-    <IonRow className="time-control-container">
-      <IonList className="song-list">
-        <IonListHeader lines="full">
-          <IonLabel style={_styles.headerText}>
-            Scheduled bed time start
-          </IonLabel>
-        </IonListHeader>
-        <IonItem lines="none" className="transparent-bg-ion-item">
-          <IonGrid style={_styles.grid}>
-            <IonRow style={_styles.time}>
-              {moment(bedtime).format('HH:mm')}
-            </IonRow>
-            <IonRow style={_styles.date}>
-              {`${moment(bedtime).format('MMMM DD, YYYY z')} ${momentTz
-                .tz(momentTz.tz.guess())
-                .zoneAbbr()}`}
-            </IonRow>
-          </IonGrid>
-        </IonItem>
-      </IonList>
-    </IonRow>
-  );
-};
-
-interface TimeControlProps {
+interface BedTimeControlProps {
   sleepHours: number;
   handleChangeHours: (add: boolean) => void;
   wakeUpTime: moment.Moment;
   handleChangeWakeTime: (val: string) => void;
 }
 
-const TimeControl: React.FC<TimeControlProps> = ({
+const BedTimeControl: React.FC<BedTimeControlProps> = ({
   sleepHours,
   handleChangeHours,
   wakeUpTime,
@@ -345,23 +203,6 @@ const TimePicker: React.FC<TimePickerProps> = ({
       <IonDatetime
         slot="start"
         style={_styles.picker}
-        pickerOptions={{
-          buttons: [
-            {
-              text: 'Confirm',
-              handler: (e) => {
-                console.log(e);
-                return true;
-              },
-            },
-            {
-              text: 'Cancel',
-              handler: () => {
-                return false;
-              },
-            },
-          ],
-        }}
         displayFormat="HH:mm"
         value={wakeUpTime.format()}
         onIonChange={(e) => handleChangeWakeTime(e.detail.value!)}
@@ -373,4 +214,4 @@ const TimePicker: React.FC<TimePickerProps> = ({
   );
 };
 
-export default Bedtime;
+export default BedTimeControl;

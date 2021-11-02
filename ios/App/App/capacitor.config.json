@@ -2,8 +2,5 @@
 	"appId": "com.existtribe.restnode",
 	"appName": "REST Node",
 	"webDir": "build",
-	"plugins": {},
-	"server": {
-		"url": "http://192.168.100.32:8100"
-	}
+	"plugins": {}
 }

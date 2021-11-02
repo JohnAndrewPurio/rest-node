@@ -1,10 +1,8 @@
 import {
-  IonGrid,
   IonRow,
   IonCol,
   IonHeader,
   IonContent,
-  IonPage,
   IonToolbar,
 } from '@ionic/react';
 import moment from 'moment';
@@ -15,7 +13,6 @@ import {
   NativeGeocoder,
   NativeGeocoderOptions,
 } from '@ionic-native/native-geocoder';
-import MainClock from '../MainClock';
 
 const DateAndLocation: React.FC = ({ children }) => {
   const _styles = {
@@ -52,6 +49,7 @@ const DateAndLocation: React.FC = ({ children }) => {
 
   useEffect(() => {
     getCurrentPosition();
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -1,8 +1,8 @@
 import './styles.css';
 
-interface ContainerProps {}
+// interface ContainerProps {}
 
-const ExploreContainer: React.FC<ContainerProps> = () => {
+const ExploreContainer: React.FC = () => {
   return (
     <div className="container">
       <strong>Ready to create an app?</strong>

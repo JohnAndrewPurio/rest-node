@@ -3,7 +3,7 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "airbnb",
+    // "airbnb",
     "plugin:prettier/recommended",
     "prettier"
   ],
@@ -17,4 +17,8 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "error",
   },
   ignorePatterns: ["__tests__"],
+  env: {
+    "node": true,
+    "browser": true
+  }
 };

@@ -1,7 +1,7 @@
 import { IonContent, IonRow } from '@ionic/react';
-import DateAndLocation from '../../DateAndLocation';
-import MainClock from '../../MainClock';
-import SettingsList from '../../SettingsList';
+import DateAndLocation from '../../../components/DateAndLocation';
+import MainClock from '../../../components/MainClock';
+import SettingsList from '../../../components/SettingsList';
 import './styles.css';
 
 const Dashboard: React.FC = () => {
