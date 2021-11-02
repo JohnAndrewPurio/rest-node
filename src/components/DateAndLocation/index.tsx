@@ -17,15 +17,14 @@ const DateAndLocation: React.FC = ({ children }) => {
         }
     }
 
-    const [location, setLocation] = useState<any>("")
-
-    let options: NativeGeocoderOptions = {
-        useLocale: true,
-        maxResults: 5
-    };
+    const [location, setLocation] = useState<string>("")
 
     const getCurrentPosition = async () => {
         try {
+            const options: NativeGeocoderOptions = {
+                useLocale: true,
+                maxResults: 5
+            };
             const coordinates = await Geolocation.getCurrentPosition();
             const { latitude, longitude } = coordinates.coords
             const res = await NativeGeocoder.reverseGeocode(latitude, longitude, options)
