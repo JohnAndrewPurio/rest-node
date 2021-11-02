@@ -1,21 +1,32 @@
-import { IonGrid, IonRow, IonCol, IonHeader, IonContent, IonPage, IonToolbar } from "@ionic/react"
-import MainClock from "../MainClock"
-import moment from "moment"
-import { useEffect, useState } from "react"
+import {
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonHeader,
+  IonContent,
+  IonPage,
+  IonToolbar,
+} from '@ionic/react';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
 
 import { Geolocation } from '@capacitor/geolocation';
-import { NativeGeocoder, NativeGeocoderOptions } from '@ionic-native/native-geocoder'
+import {
+  NativeGeocoder,
+  NativeGeocoderOptions,
+} from '@ionic-native/native-geocoder';
+import MainClock from '../MainClock';
 
 const DateAndLocation: React.FC = ({ children }) => {
-    const _styles = {
-        place: {
-            height: 'fit-content',
-            fontWeight: 700
-        },
-        header: {
-            padding: ".5em 0em"
-        }
-    }
+  const _styles = {
+    place: {
+      height: 'fit-content',
+      fontWeight: 700,
+    },
+    header: {
+      padding: '.5em 0em',
+    },
+  };
 
     const [location, setLocation] = useState<string>("")
 
@@ -35,31 +46,29 @@ const DateAndLocation: React.FC = ({ children }) => {
         }
     };
 
-    useEffect(() => {
-        getCurrentPosition()
-    }, [])
+  useEffect(() => {
+    getCurrentPosition();
+  }, []);
 
-    return (
-        <IonContent>
-            <IonHeader>
-                <IonToolbar>
-                    <IonRow>
-                        <IonCol class="ion-text-center" style={_styles.place}>
-                            {location}
-                        </IonCol>
-                    </IonRow>
-                    <IonRow>
-                        <IonCol class="ion-text-center">
-                            {moment().format("DD MMMM YYYY")}
-                        </IonCol>
-                    </IonRow>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent>
-                {children}
-            </IonContent>
-        </IonContent>
-    )
-}
+  return (
+    <IonContent>
+      <IonHeader>
+        <IonToolbar>
+          <IonRow>
+            <IonCol class="ion-text-center" style={_styles.place}>
+              {location}
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol class="ion-text-center">
+              {moment().format('DD MMMM YYYY')}
+            </IonCol>
+          </IonRow>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent>{children}</IonContent>
+    </IonContent>
+  );
+};
 
-export default DateAndLocation
+export default DateAndLocation;

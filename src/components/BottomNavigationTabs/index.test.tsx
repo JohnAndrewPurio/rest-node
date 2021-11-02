@@ -1,5 +1,5 @@
 import { IonReactRouter } from '@ionic/react-router';
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import BottomNavigationTabs from './index';
 

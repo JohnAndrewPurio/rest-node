@@ -1,51 +1,49 @@
-import { useEffect, useState } from "react"
-import moment from "moment"
-import "./styles.css"
+import { useEffect, useState } from 'react';
+import moment from 'moment';
+import './styles.css';
 
 interface Props {
-    size: number,
-    circle: number
+  size: number;
+  circle: number;
 }
 
 const Clock: React.FC<Props> = ({ size, circle }) => {
-    const [time, setTime] = useState(moment().format("HH:mm"))
-    const [tilt, setTilt] = useState(0)
+  const [time, setTime] = useState(moment().format('HH:mm'));
+  const [tilt, setTilt] = useState(0);
 
-    const _style = {
-        container: {
-            height: size,
-            width: size,
-            fontSize: `${size/4.5}px`
-        },
-        hand: {
-            height: circle,
-            transform: `rotate(${tilt}deg)`
-        }
-    }
+  const _style = {
+    container: {
+      height: size,
+      width: size,
+      fontSize: `${size / 4.5}px`,
+    },
+    hand: {
+      height: circle,
+      transform: `rotate(${tilt}deg)`,
+    },
+  };
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setTime(moment().format("HH:mm"))
-        }, 1000)
-        
-        return () => clearInterval(interval)
-    }, [])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(moment().format('HH:mm'));
+    }, 1000);
 
-    useEffect(() => {
-        const minute = Number(moment().minute()) / 60
-        const hour = (Number(moment().hour()) + minute) / 24
+    return () => clearInterval(interval);
+  }, []);
 
-        setTilt(360 * hour)
-    }, [time])
+  useEffect(() => {
+    const minute = Number(moment().minute()) / 60;
+    const hour = (Number(moment().hour()) + minute) / 24;
 
-    return (
-        <div className="clock-container" style={_style.container}>
-            <div className="clock-time">
-                {time}
-            </div>
-            <div className="clock-hand" style={_style.hand}></div>
-        </div>
-    )
-}
+    setTilt(360 * hour);
+  }, [time]);
 
-export default Clock
+  return (
+    <div className="clock-container" style={_style.container}>
+      <div className="clock-time">{time}</div>
+      <div className="clock-hand" style={_style.hand} />
+    </div>
+  );
+};
+
+export default Clock;
