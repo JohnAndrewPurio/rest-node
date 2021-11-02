@@ -25,27 +25,23 @@ const DateAndLocation: React.FC = ({ children }) => {
     },
   };
 
-  const [location, setLocation] = useState<any>('');
+    const [location, setLocation] = useState<string>("")
 
-  const options: NativeGeocoderOptions = {
-    useLocale: true,
-    maxResults: 5,
-  };
-
-  const getCurrentPosition = async () => {
-    try {
-      const coordinates = await Geolocation.getCurrentPosition();
-      const { latitude, longitude } = coordinates.coords;
-      const res = await NativeGeocoder.reverseGeocode(
-        latitude,
-        longitude,
-        options
-      );
-      setLocation(res[0].locality);
-    } catch (e) {
-      alert(e);
-    }
-  };
+    const getCurrentPosition = async () => {
+        try {
+            const options: NativeGeocoderOptions = {
+                useLocale: true,
+                maxResults: 5
+            };
+            const coordinates = await Geolocation.getCurrentPosition();
+            const { latitude, longitude } = coordinates.coords
+            const res = await NativeGeocoder.reverseGeocode(latitude, longitude, options)
+            setLocation(res[0].locality)
+        }
+        catch(e) {
+            alert(e)
+        }
+    };
 
   useEffect(() => {
     getCurrentPosition();
