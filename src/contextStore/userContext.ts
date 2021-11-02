@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { User } from 'firebase/auth'
+import { User } from 'firebase/auth';
 
-const UserContext = createContext<User | null>(null)
+const UserContext = createContext<User | null>(null);
 
-export default UserContext
+export default UserContext;

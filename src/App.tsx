@@ -1,18 +1,18 @@
 import { useEffect } from 'react';
 import { IonApp } from '@ionic/react';
-import { App as CapApp } from '@capacitor/app';
-import { Browser } from '@capacitor/browser';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { App as CapApp } from '@capacitor/app';
+// import { Browser } from '@capacitor/browser';
+// import { useAuth0 } from '@auth0/auth0-react';
 
 import AppRouter from './components/AppRouter';
 
-import './styles'
+import './styles';
 
 const App: React.FC = () => {
   // const { handleRedirectCallback } = useAuth0()
 
   useEffect(() => {
-    // document.body.classList.add('dark');
+    document.body.classList.add('dark');
     // eslint-disable-next-line
   }, [])
 
@@ -24,7 +24,7 @@ const App: React.FC = () => {
   //       await handleRedirectCallback(url);
   //     }
   //     // No-op on Android
-  //     await Browser.close();
+  //     await Browser.close()
   //   });
 
   // }, [handleRedirectCallback]);
@@ -33,7 +33,7 @@ const App: React.FC = () => {
     <IonApp>
       <AppRouter />
     </IonApp>
-  )
+  );
 };
 
 export default App;
