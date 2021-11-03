@@ -3,5 +3,6 @@
     "HOME": "/home",
     "REST_NODE": "/restnode",
     "SETTINGS": "/settings",
+    "NETWORK": "/network",
     "DEFAULT": "/restnode"
 }
