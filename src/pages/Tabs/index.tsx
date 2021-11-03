@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   IonTabBar,
   IonTabs,
@@ -13,7 +14,7 @@ import Dashboard from './Dashboard';
 import History from './History';
 import Help from './Help';
 
-const BottomNavigationTabs: React.FC<RouteComponentProps> = ({ match }) => {
+const BottomNavigationTabs: React.FC<RouteComponentProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>

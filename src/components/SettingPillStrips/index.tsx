@@ -1,6 +1,5 @@
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import { alarm, arrowForward, bed, bulb, musicalNotes } from 'ionicons/icons';
-import { Link } from 'react-router-dom';
 import './styles.css';
 
 interface Props {
