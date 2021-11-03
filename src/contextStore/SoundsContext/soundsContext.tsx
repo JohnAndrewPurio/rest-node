@@ -1,22 +1,16 @@
 import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
+import { Action } from './soundsActions';
 
 interface State {
-  nightSound: boolean;
-  nightSoundVolume: number;
-  nightAudio: null | any;
-  nightSoundStart: null | moment.Moment;
-  nightSoundEnd: null | moment.Moment;
-  wakeSound: boolean;
-  wakeSoundVolume: number;
-  wakeAudio: null | any;
-  wakeSoundStart: null | moment.Moment;
-  wakeSoundEnd: null | moment.Moment;
-}
-
-interface Action {
-  payload: any;
-  type: string;
+  sound: { [key: string]: boolean };
+  volume: { [key: string]: number };
+  audio: { [key: string]: any };
+  nightSoundSchedule: {
+    start: null | moment.Moment;
+    end: null | moment.Moment;
+  };
+  wakeSoundSchedule: { start: null | moment.Moment; end: null | moment.Moment };
 }
 
 interface Context {
@@ -25,16 +19,11 @@ interface Context {
 }
 
 const initialState = {
-  nightSound: false,
-  nightSoundVolume: 50,
-  nightAudio: null,
-  wakeSoundStart: null,
-  wakeSoundEnd: null,
-  wakeSound: false,
-  wakeSoundVolume: 50,
-  wakeAudio: null,
-  nightSoundStart: null,
-  nightSoundEnd: null,
+  sound: { night: false, wake: false },
+  volume: { night: 50, wake: 50 },
+  audio: { night: null, wake: null },
+  nightSoundSchedule: { start: null, end: null },
+  wakeSoundSchedule: { start: null, end: null },
 };
 
 const initialContext = {

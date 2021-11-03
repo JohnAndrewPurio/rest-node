@@ -14,10 +14,12 @@ import VolumeSlider from '../VolumeSlider';
 import AudioStrip from '../AudioStrip';
 import { songs } from '../../pages/Settings/Sounds/songs.json';
 import './styles.css';
+import { useContext } from 'react';
+import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
 
 interface Props {
+  component: string;
   index: number;
-  title: string;
   playing: boolean;
   playBtnClicked: (index: number) => void;
 
@@ -34,8 +36,8 @@ interface Props {
 }
 
 const SoundAccordion: React.FC<Props> = ({
+  component,
   index,
-  title,
   open,
   playing,
   sliderOpen,
@@ -47,6 +49,12 @@ const SoundAccordion: React.FC<Props> = ({
   activeSong,
   chooseSong,
 }) => {
+  const { state, dispatch } = useContext(SoundsContext);
+  const { audio, volume } = state;
+
+  type titlesType = { [key: string]: string };
+  const titles: titlesType = { night: 'Night Sounds', light: 'Wake Sounds' };
+
   const _styles = {
     titleHead: {
       display: 'flex',
@@ -88,7 +96,7 @@ const SoundAccordion: React.FC<Props> = ({
   return (
     <IonRow onClick={openAccordion} className={getClassName()}>
       <IonRow className="title-head" style={_styles.titleHead}>
-        <IonCol>{title}</IonCol>
+        <IonCol>{titles[component]}</IonCol>
         {open && <Chevron index={1} onclick={closeAccordion} />}
       </IonRow>
       {open && (

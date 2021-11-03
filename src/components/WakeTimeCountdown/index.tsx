@@ -7,14 +7,10 @@ import {
   IonRow,
 } from '@ionic/react';
 import moment from 'moment';
-import momentTz from 'moment-timezone';
-import { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
 
-const BedTimeStartTime: React.FC = () => {
-  const { state } = useContext(BedTimeContext);
-  const { bedtimeStart } = state;
-
+const WakeTimeCountdown: React.FC = () => {
   const _styles = {
     headerText: {
       fontSize: '1.1rem',
@@ -40,23 +36,31 @@ const BedTimeStartTime: React.FC = () => {
     },
   };
 
+  const { state } = useContext(BedTimeContext);
+  const { wakeUpTime } = state;
+
+  const [diff, setDiff] = useState(wakeUpTime.diff(moment(), 'hours', true));
+  const hour = Math.floor(diff);
+  const minute = Math.floor(60 * (diff % 1));
+  const second = Math.floor(60 * ((60 * (diff % 1)) % 1));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDiff(wakeUpTime.diff(moment(), 'hours', true));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [wakeUpTime]);
+
   return (
     <IonRow className="time-control-container">
       <IonList className="song-list">
         <IonListHeader lines="full">
-          <IonLabel style={_styles.headerText}>
-            Scheduled bed time start
-          </IonLabel>
+          <IonLabel style={_styles.headerText}>Hours until wake time</IonLabel>
         </IonListHeader>
         <IonItem lines="none" className="transparent-bg-ion-item">
           <IonGrid style={_styles.grid}>
             <IonRow style={_styles.time}>
-              {moment(bedtimeStart).format('HH:mm')}
-            </IonRow>
-            <IonRow style={_styles.date}>
-              {`${moment(bedtimeStart).format('MMMM DD, YYYY z')} ${momentTz
-                .tz(momentTz.tz.guess())
-                .zoneAbbr()}`}
+              {hour}h {minute}m {second}s
             </IonRow>
           </IonGrid>
         </IonItem>
@@ -65,4 +69,4 @@ const BedTimeStartTime: React.FC = () => {
   );
 };
 
-export default BedTimeStartTime;
+export default WakeTimeCountdown;

@@ -4,6 +4,7 @@ import TimeBar from '../../../components/TimeBar';
 import './styles.css';
 import SettingsHeader from '../../../components/SettingsHeader';
 import SoundAccordion from '../../../components/SoundAccordion';
+import { SoundsContextProvider } from '../../../contextStore/SoundsContext/soundsContext';
 
 const Sounds: React.FC = () => {
   const _styles = {
@@ -72,44 +73,46 @@ const Sounds: React.FC = () => {
   };
 
   return (
-    <IonPage>
-      <SettingsHeader title="Sounds Settings" />
-      <IonContent style={_styles.fullHeight}>
-        <IonGrid style={_styles.innerGrid}>
-          <TimeBar />
-          <IonGrid style={_styles.accordions}>
-            <SoundAccordion
-              index={0}
-              title="Night Sounds"
-              playing={playing[0]}
-              playBtnClicked={playBtnClicked}
-              open={accordions[0]}
-              openAccordion={() => toggleAccordion(0)}
-              closeSlider={() => closeSlider(0)}
-              sliderOpen={sliderOpen[0]}
-              closeAccordion={() => closeAccordion(0)}
-              openSlider={() => sliderOpenSlider(0)}
-              activeSong={activeSong}
-              chooseSong={chooseSong}
-            />
-            <SoundAccordion
-              index={1}
-              title="Wake Sounds"
-              playing={playing[1]}
-              playBtnClicked={playBtnClicked}
-              open={accordions[1]}
-              openAccordion={() => toggleAccordion(1)}
-              closeSlider={() => closeSlider(1)}
-              sliderOpen={sliderOpen[1]}
-              closeAccordion={() => closeAccordion(1)}
-              openSlider={() => sliderOpenSlider(1)}
-              activeSong={activeSong}
-              chooseSong={chooseSong}
-            />
+    <SoundsContextProvider>
+      <IonPage>
+        <SettingsHeader title="Sounds Settings" />
+        <IonContent style={_styles.fullHeight}>
+          <IonGrid style={_styles.innerGrid}>
+            <TimeBar />
+            <IonGrid style={_styles.accordions}>
+              <SoundAccordion
+                component="night"
+                index={0}
+                playing={playing[0]}
+                playBtnClicked={playBtnClicked}
+                open={accordions[0]}
+                openAccordion={() => toggleAccordion(0)}
+                closeSlider={() => closeSlider(0)}
+                sliderOpen={sliderOpen[0]}
+                closeAccordion={() => closeAccordion(0)}
+                openSlider={() => sliderOpenSlider(0)}
+                activeSong={activeSong}
+                chooseSong={chooseSong}
+              />
+              <SoundAccordion
+                component="wake"
+                index={1}
+                playing={playing[1]}
+                playBtnClicked={playBtnClicked}
+                open={accordions[1]}
+                openAccordion={() => toggleAccordion(1)}
+                closeSlider={() => closeSlider(1)}
+                sliderOpen={sliderOpen[1]}
+                closeAccordion={() => closeAccordion(1)}
+                openSlider={() => sliderOpenSlider(1)}
+                activeSong={activeSong}
+                chooseSong={chooseSong}
+              />
+            </IonGrid>
           </IonGrid>
-        </IonGrid>
-      </IonContent>
-    </IonPage>
+        </IonContent>
+      </IonPage>
+    </SoundsContextProvider>
   );
 };
 

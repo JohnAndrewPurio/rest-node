@@ -3,6 +3,8 @@ import moment from 'moment';
 export enum BedtimeActionTypes {
   SET_BEDTIME_HOURS = 'SET_BEDTIME_HOURS',
   SET_WAKE_UP_TIME = 'SET_WAKE_UP_TIME',
+  START_BEDTIME_NOW = 'START_BEDTIME_NOW',
+  STOP_BEDTIME_NOW = 'STOP_BEDTIME_NOW',
 }
 
 interface setBedtimeHoursType {
@@ -10,9 +12,9 @@ interface setBedtimeHoursType {
   payload: boolean;
 }
 
-export const setBedtimeHours = (add: boolean): setBedtimeHoursType => ({
+export const setBedtimeHours = (isAdd: boolean): setBedtimeHoursType => ({
   type: BedtimeActionTypes.SET_BEDTIME_HOURS,
-  payload: add,
+  payload: isAdd,
 });
 
 interface setWakeUpTimeType {
@@ -25,4 +27,28 @@ export const setWakeUpTime = (time: moment.Moment): setWakeUpTimeType => ({
   payload: time,
 });
 
-export type Action = setBedtimeHoursType | setWakeUpTimeType;
+interface startBedTimeNowType {
+  type: BedtimeActionTypes.START_BEDTIME_NOW;
+  payload: null;
+}
+
+export const startBedTimeNow = (): startBedTimeNowType => ({
+  type: BedtimeActionTypes.START_BEDTIME_NOW,
+  payload: null,
+});
+
+interface stopBedTimeNowType {
+  type: BedtimeActionTypes.STOP_BEDTIME_NOW;
+  payload: null;
+}
+
+export const stopBedTimeNow = (): stopBedTimeNowType => ({
+  type: BedtimeActionTypes.STOP_BEDTIME_NOW,
+  payload: null,
+});
+
+export type Action =
+  | setBedtimeHoursType
+  | setWakeUpTimeType
+  | startBedTimeNowType
+  | stopBedTimeNowType;

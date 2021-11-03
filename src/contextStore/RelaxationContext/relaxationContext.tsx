@@ -7,6 +7,7 @@ interface State {
   relaxationPlaying: boolean;
   relaxationStart: null | moment.Moment;
   relaxationEnd: null | moment.Moment;
+  relaxationVolume: number;
 }
 
 interface Action {
@@ -25,6 +26,7 @@ const initialState = {
   relaxationPlaying: false,
   relaxationStart: null,
   relaxationEnd: null,
+  relaxationVolume: 50,
 };
 
 const initialContext = {
