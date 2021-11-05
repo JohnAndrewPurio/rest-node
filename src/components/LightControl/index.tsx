@@ -21,7 +21,7 @@ interface controlProps {
   index: number;
 }
 
-const LightControl: React.FC<controlProps> = ({ component, index }) => {
+const LightControl: React.FC<controlProps> = ({ component }) => {
   const { state, dispatch } = useContext(LightsContext);
   const { light, brightness } = state;
 
@@ -55,7 +55,6 @@ const LightControl: React.FC<controlProps> = ({ component, index }) => {
 
   type iconsType = { [key: string]: any };
   type titlesType = { [key: string]: string };
-  type booleanType = { [key: string]: boolean };
 
   const icons: iconsType = { night: moon, wake: sunny };
   const title: titlesType = { night: 'Night Light', wake: 'Wake Light' };

@@ -40,14 +40,6 @@ const Sounds: React.FC = () => {
     setSliderOpen(new Array(sliderOpen.length).fill(false));
   };
 
-  const [playing, setPlaying] = useState([false, false]);
-
-  const playBtnClicked = (index: number) => {
-    const newArr = new Array(playing.length).fill(false);
-    newArr[index] = !playing[index];
-    setPlaying(newArr);
-  };
-
   const [sliderOpen, setSliderOpen] = useState([false, false]);
 
   const sliderOpenSlider = (index: number) => {
@@ -83,9 +75,7 @@ const Sounds: React.FC = () => {
               <SoundAccordion
                 component="night"
                 index={0}
-                playing={playing[0]}
-                playBtnClicked={playBtnClicked}
-                open={accordions[0]}
+                accordionOpen={accordions[0]}
                 openAccordion={() => toggleAccordion(0)}
                 closeSlider={() => closeSlider(0)}
                 sliderOpen={sliderOpen[0]}
@@ -97,9 +87,7 @@ const Sounds: React.FC = () => {
               <SoundAccordion
                 component="wake"
                 index={1}
-                playing={playing[1]}
-                playBtnClicked={playBtnClicked}
-                open={accordions[1]}
+                accordionOpen={accordions[1]}
                 openAccordion={() => toggleAccordion(1)}
                 closeSlider={() => closeSlider(1)}
                 sliderOpen={sliderOpen[1]}

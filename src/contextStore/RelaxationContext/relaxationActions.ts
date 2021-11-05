@@ -6,6 +6,7 @@ export enum RelaxationActionTypes {
   SET_SCHEDULE = 'SET_SCHEDULE',
   CHOOSE_AUDIO = 'CHOOSE_AUDIO',
   REWIND_OR_FORWARD = 'REWIND_OR_FORWARD',
+  TOGGLE_FAVORITE = 'TOGGLE_FAVORITE',
 }
 
 interface toggleRelaxationType {
@@ -59,9 +60,20 @@ export const rewindOrForward = (isRewind: boolean): rewindOrForwardType => ({
   payload: isRewind,
 });
 
+interface toggleFavoriteType {
+  type: RelaxationActionTypes.TOGGLE_FAVORITE;
+  payload: string;
+}
+
+export const toggleFavorite = (id: string): toggleFavoriteType => ({
+  type: RelaxationActionTypes.TOGGLE_FAVORITE,
+  payload: id,
+});
+
 export type Action =
   | toggleRelaxationType
   | adjustVolumeType
   | setScheduleType
   | chooseAudioType
-  | rewindOrForwardType;
+  | rewindOrForwardType
+  | toggleFavoriteType;

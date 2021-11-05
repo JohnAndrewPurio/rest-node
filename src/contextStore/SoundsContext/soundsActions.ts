@@ -5,6 +5,7 @@ export enum SoundsActionTypes {
   ADJUST_VOLUME = 'ADJUST_VOLUME',
   SET_SCHEDULE = 'SET_SCHEDULE',
   CHOOSE_AUDIO = 'CHOOSE_AUDIO',
+  PLAY_SAMPLE = 'PLAY_SAMPLE',
 }
 
 interface toggleSoundType {
@@ -56,8 +57,19 @@ export const chooseAudio = (
   payload: { isNight, filename },
 });
 
+interface playSampleType {
+  type: SoundsActionTypes.PLAY_SAMPLE;
+  payload: string;
+}
+
+export const playSample = (id: string): playSampleType => ({
+  type: SoundsActionTypes.PLAY_SAMPLE,
+  payload: id,
+});
+
 export type Action =
   | toggleSoundType
   | adjustVolumeType
   | setScheduleType
-  | chooseAudioType;
+  | chooseAudioType
+  | playSampleType;

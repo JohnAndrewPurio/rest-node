@@ -7,10 +7,15 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
-import { heartOutline } from 'ionicons/icons';
+import { heart, heartOutline } from 'ionicons/icons';
+import { useContext } from 'react';
+import { toggleFavorite } from '../../contextStore/RelaxationContext/relaxationActions';
+import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 import { techniques } from '../../pages/Settings/RelaxationTechniques/techniques.json';
 
 const RelaxationList: React.FC = () => {
+  const { state, dispatch } = useContext(RelaxationContext);
+
   const _styles = {
     container: {
       margin: '1em .5em',
@@ -60,7 +65,7 @@ const RelaxationList: React.FC = () => {
         <IonRow style={_styles.gridContainer}>
           <IonGrid style={_styles.grid}>
             {techniques.map((el) => (
-              <IonCol style={_styles.card}>
+              <IonCol key={el.id} style={_styles.card}>
                 <IonRow className="grid-picture">
                   <IonImg
                     className="grid-ion-image"
@@ -83,8 +88,13 @@ const RelaxationList: React.FC = () => {
                       fill="clear"
                       size="small"
                       style={_styles.favBtn}
+                      onClick={() => dispatch(toggleFavorite(el.id))}
                     >
-                      <IonIcon slot="icon-only" icon={heartOutline} />
+                      {state.favorites.includes(el.id) ? (
+                        <IonIcon slot="icon-only" icon={heart} />
+                      ) : (
+                        <IonIcon slot="icon-only" icon={heartOutline} />
+                      )}
                     </IonButton>
                   </IonCol>
                 </IonGrid>

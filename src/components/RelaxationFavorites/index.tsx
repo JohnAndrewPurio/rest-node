@@ -11,10 +11,14 @@ import {
   IonSlides,
 } from '@ionic/react';
 import { heart, pause, play } from 'ionicons/icons';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { toggleFavorite } from '../../contextStore/RelaxationContext/relaxationActions';
+import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 import { techniques } from '../../pages/Settings/RelaxationTechniques/techniques.json';
 
 const RelaxationFavorites: React.FC = () => {
+  const { state, dispatch } = useContext(RelaxationContext);
+
   const _styles = {
     container: {
       margin: '1em .5em',
@@ -77,18 +81,17 @@ const RelaxationFavorites: React.FC = () => {
   const [playing, setPlaying] = useState(false);
 
   const showPlay = (index: number) => {
-    console.log('showplay');
     if (index !== playingIndex) {
-      console.log('showplay inside');
       setPlaying(false);
       setPlayingIndex(index);
     }
   };
 
   const playSong = () => {
-    console.log('click playing');
     setPlaying((p) => !p);
   };
+
+  const favorites = techniques.filter((el) => state.favorites.includes(el.id));
 
   return (
     <IonRow style={_styles.container}>
@@ -98,9 +101,13 @@ const RelaxationFavorites: React.FC = () => {
         </IonRow>
         <IonRow style={_styles.slider}>
           <IonContent style={_styles.fullHeight}>
-            <IonSlides options={slideOpt} style={_styles.fullHeight}>
-              {techniques.map((el, i) => (
-                <IonSlide style={_styles.slide}>
+            <IonSlides
+              key={favorites.map((el) => el.id).join('_')}
+              options={slideOpt}
+              style={_styles.fullHeight}
+            >
+              {favorites.map((el, i) => (
+                <IonSlide key={el.id} style={_styles.slide}>
                   <IonCol style={_styles.card}>
                     <IonRow
                       className="slider-picture"
@@ -150,6 +157,7 @@ const RelaxationFavorites: React.FC = () => {
                           fill="clear"
                           size="small"
                           style={_styles.favBtn}
+                          onClick={() => dispatch(toggleFavorite(el.id))}
                         >
                           <IonIcon slot="icon-only" icon={heart} />
                         </IonButton>
