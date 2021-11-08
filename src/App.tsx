@@ -13,7 +13,7 @@ import toggleDarkMode from './utils/toggleDarkMode';
 import './styles';
 
 const App: React.FC = () => {
-  const loadingState = useState<Boolean>(false)
+  const loadingState = useState<boolean>(false)
   const darkModeState = useState<boolean>(false)
   const { user, handleRedirectCallback } = useAuth0()
 
@@ -29,7 +29,6 @@ const App: React.FC = () => {
 
     await Browser.close()
   }
-
 
   useEffect(() => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
