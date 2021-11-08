@@ -11,6 +11,7 @@ import './styles';
 const App: React.FC = () => {
   // const { handleRedirectCallback } = useAuth0()
 
+
   useEffect(() => {
     document.body.classList.add('dark');
     // eslint-disable-next-line
@@ -31,7 +32,7 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <AppRouter />
+        <AppRouter />
     </IonApp>
   );
 };
