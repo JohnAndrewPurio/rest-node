@@ -1,0 +1,4 @@
+
+  type iconsType = { [key: string]: any }
+  type titlesType = { [key: string]: string }
+  type booleanType = { [key: string]: boolean }

@@ -1,13 +1,13 @@
 import { IonContent, IonPage } from '@ionic/react';
 import { RouteComponentProps } from 'react-router';
 
-import BottomNavigationTabs from '../../components/BottomNavigationTabs';
+import Tabs from '../Tabs';
 
 const RestNode: React.FC<RouteComponentProps> = (props) => {
   return (
     <IonPage>
       <IonContent>
-        <BottomNavigationTabs {...props} />
+        <Tabs {...props} />
       </IonContent>
     </IonPage>
   );
