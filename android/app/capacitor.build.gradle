@@ -16,7 +16,8 @@ dependencies {
     implementation project(':capacitor-keyboard')
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
-
+    implementation "com.loopj.android:android-async-http:1.4.9"
+    implementation "org.jmdns:jmdns:3.5.5"
 }
 
 
