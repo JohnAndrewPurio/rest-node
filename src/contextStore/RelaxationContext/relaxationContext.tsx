@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
+import { Action, RelaxationActionTypes } from './relaxationActions';
 
 interface State {
   relaxationAudio: null | any;
@@ -7,11 +8,8 @@ interface State {
   relaxationPlaying: boolean;
   relaxationStart: null | moment.Moment;
   relaxationEnd: null | moment.Moment;
-}
-
-interface Action {
-  payload: any;
-  type: string;
+  relaxationVolume: number;
+  favorites: string[];
 }
 
 interface Context {
@@ -25,6 +23,8 @@ const initialState = {
   relaxationPlaying: false,
   relaxationStart: null,
   relaxationEnd: null,
+  relaxationVolume: 50,
+  favorites: [],
 };
 
 const initialContext = {
@@ -36,6 +36,25 @@ const RelaxationContext = createContext<Context>(initialContext);
 
 const reducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
+    case RelaxationActionTypes.TOGGLE_RELAXATION:
+      return { ...state, relaxationPlaying: !state.relaxationPlaying };
+    case RelaxationActionTypes.TOGGLE_FAVORITE: {
+      console.log(state.favorites);
+      if (state.favorites.includes(action.payload)) {
+        const favorites = state.favorites.filter((el) => el !== action.payload);
+        return {
+          ...state,
+          favorites,
+        };
+      } else {
+        const favorites = state.favorites.slice();
+        favorites.push(action.payload);
+        return {
+          ...state,
+          favorites,
+        };
+      }
+    }
     default:
       return state;
   }

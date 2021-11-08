@@ -45,3 +45,16 @@ p {
 .transparent-bg-ion-item {
     --backgroud: "transparent";
 }
+
+.p-block {
+    display: block;
+    color: var(--ion-color-light);
+}
+
+.countdown-time {
+    text-transform: none;
+}
+
+.countdown-text {
+    font-size: 2vh;
+}

@@ -1,7 +1,11 @@
 import { IonButton, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
-import { useState } from 'react';
 
-const RelaxationFilter: React.FC = () => {
+interface Props {
+  selected: string;
+  onSelect: (val: string) => void;
+}
+
+const RelaxationFilter: React.FC<Props> = ({ selected, onSelect }) => {
   const _styles = {
     container: {
       margin: '1em .5em',
@@ -27,12 +31,6 @@ const RelaxationFilter: React.FC = () => {
 
   const filters = ['All', '5', '10', '15', '20', '30', '30+'];
 
-  const [selected, setSelected] = useState('All');
-
-  const select = (time: string) => {
-    setSelected(time);
-  };
-
   return (
     <IonRow style={_styles.container}>
       <IonGrid>
@@ -42,9 +40,9 @@ const RelaxationFilter: React.FC = () => {
         <IonRow>
           <IonGrid style={_styles.filtersGrid}>
             {filters.map((time) => (
-              <IonCol>
+              <IonCol key={time}>
                 <IonButton
-                  onClick={() => select(time)}
+                  onClick={() => onSelect(time)}
                   size="small"
                   shape="round"
                   style={_styles.btn}

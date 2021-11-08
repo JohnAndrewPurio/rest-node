@@ -12,20 +12,14 @@ import {
 } from '@ionic/react';
 import { add, alarm, remove } from 'ionicons/icons';
 import moment from 'moment';
+import { useContext } from 'react';
+import {
+  setBedtimeHours,
+  setWakeUpTime,
+} from '../../contextStore/BedTimeContext/bedtimeActions';
+import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
 
-interface BedTimeControlProps {
-  sleepHours: number;
-  handleChangeHours: (add: boolean) => void;
-  wakeUpTime: moment.Moment;
-  handleChangeWakeTime: (val: string) => void;
-}
-
-const BedTimeControl: React.FC<BedTimeControlProps> = ({
-  sleepHours,
-  handleChangeHours,
-  wakeUpTime,
-  handleChangeWakeTime,
-}) => {
+const BedTimeControl: React.FC = () => {
   const _styles = {
     headerText: {
       fontSize: '1.1rem',
@@ -54,10 +48,7 @@ const BedTimeControl: React.FC<BedTimeControlProps> = ({
               </IonLabel>
             </IonRow>
             <IonRow>
-              <HoursSetter
-                sleepHours={sleepHours}
-                handleChangeHours={handleChangeHours}
-              />
+              <HoursSetter />
             </IonRow>
           </IonGrid>
         </IonItem>
@@ -71,10 +62,7 @@ const BedTimeControl: React.FC<BedTimeControlProps> = ({
               </IonLabel>
             </IonRow>
             <IonRow>
-              <TimePicker
-                wakeUpTime={wakeUpTime}
-                handleChangeWakeTime={handleChangeWakeTime}
-              />
+              <TimePicker />
             </IonRow>
           </IonGrid>
         </IonItem>
@@ -83,15 +71,10 @@ const BedTimeControl: React.FC<BedTimeControlProps> = ({
   );
 };
 
-interface HoursSetterProps {
-  sleepHours: number;
-  handleChangeHours: (add: boolean) => void;
-}
+const HoursSetter: React.FC = () => {
+  const { state, dispatch } = useContext(BedTimeContext);
+  const { bedtimeHours } = state;
 
-const HoursSetter: React.FC<HoursSetterProps> = ({
-  sleepHours,
-  handleChangeHours,
-}) => {
   const _styles = {
     container: {
       width: '100%',
@@ -137,7 +120,7 @@ const HoursSetter: React.FC<HoursSetterProps> = ({
     <IonRow style={_styles.container}>
       <IonCol style={{ ..._styles.col, ..._styles.buttonColMinus }}>
         <IonButton
-          onClick={() => handleChangeHours(false)}
+          onClick={() => dispatch(setBedtimeHours(false))}
           size="small"
           style={_styles.button}
           fill="clear"
@@ -150,10 +133,10 @@ const HoursSetter: React.FC<HoursSetterProps> = ({
           />
         </IonButton>
       </IonCol>
-      <IonCol style={_styles.col}>{sleepHours}</IonCol>
+      <IonCol style={_styles.col}>{bedtimeHours}</IonCol>
       <IonCol style={{ ..._styles.col, ..._styles.buttonColAdd }}>
         <IonButton
-          onClick={() => handleChangeHours(true)}
+          onClick={() => dispatch(setBedtimeHours(true))}
           size="small"
           style={_styles.button}
           fill="clear"
@@ -170,15 +153,10 @@ const HoursSetter: React.FC<HoursSetterProps> = ({
   );
 };
 
-interface TimePickerProps {
-  wakeUpTime: moment.Moment;
-  handleChangeWakeTime: (val: string) => void;
-}
+const TimePicker: React.FC = () => {
+  const { state, dispatch } = useContext(BedTimeContext);
+  const { wakeUpTime } = state;
 
-const TimePicker: React.FC<TimePickerProps> = ({
-  wakeUpTime,
-  handleChangeWakeTime,
-}) => {
   const _styles = {
     picker: {
       fontSize: '6vw',
@@ -205,7 +183,8 @@ const TimePicker: React.FC<TimePickerProps> = ({
         style={_styles.picker}
         displayFormat="HH:mm"
         value={wakeUpTime.format()}
-        onIonChange={(e) => handleChangeWakeTime(e.detail.value!)}
+        onIonChange={(e) => dispatch(setWakeUpTime(moment(e.detail.value!)))}
+        min={moment().add(24, 'h').format('YYYY-MM-DD')}
       />
       <IonLabel slot="end" style={_styles.label}>
         <IonIcon color="tertiary" icon={alarm} />

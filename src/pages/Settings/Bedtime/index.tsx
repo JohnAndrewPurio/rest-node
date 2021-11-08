@@ -3,15 +3,12 @@ import React, { useContext } from 'react';
 import SettingsHeader from '../../../components/SettingsHeader';
 import TimeBar from '../../../components/TimeBar';
 import './styles.css';
-import moment from 'moment';
 import BedTimeStartBtn from '../../../components/BedTimeStartBtn';
 import BedTimeStartTime from '../../../components/BedTimeStartTime';
 import BedTimeControl from '../../../components/BedTimeControl';
+import moment from 'moment';
 import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
-import {
-  setBedtimeHours,
-  setWakeUpTime,
-} from '../../../contextStore/BedTimeContext/bedtimeActions';
+import WakeTimeCountdown from '../../../components/WakeTimeCountdown';
 
 const Bedtime: React.FC = () => {
   const _styles = {
@@ -20,17 +17,8 @@ const Bedtime: React.FC = () => {
     },
   };
 
-  const { state, dispatch } = useContext(BedTimeContext);
-  const { bedtimeHours, bedtimeStart, wakeUpTime } = state;
-
-  const handleChangeHours = (add: boolean) => {
-    dispatch(setBedtimeHours(add));
-  };
-
-  const handleChangeWakeTime = (val: string) => {
-    console.log(val);
-    dispatch(setWakeUpTime(moment(val)));
-  };
+  const { state } = useContext(BedTimeContext);
+  const started = moment().isSameOrAfter(state.bedtimeStart);
 
   return (
     <IonPage style={_styles.page}>
@@ -39,13 +27,8 @@ const Bedtime: React.FC = () => {
         <IonGrid>
           <TimeBar />
           <BedTimeStartBtn />
-          <BedTimeStartTime bedtime={bedtimeStart} />
-          <BedTimeControl
-            sleepHours={bedtimeHours}
-            handleChangeHours={handleChangeHours}
-            wakeUpTime={wakeUpTime}
-            handleChangeWakeTime={handleChangeWakeTime}
-          />
+          {started ? <WakeTimeCountdown /> : <BedTimeStartTime />}
+          <BedTimeControl />
         </IonGrid>
       </IonContent>
     </IonPage>

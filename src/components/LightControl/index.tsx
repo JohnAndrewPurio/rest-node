@@ -9,24 +9,22 @@ import {
   IonToggle,
 } from '@ionic/react';
 import { moon, sunny } from 'ionicons/icons';
+import { useContext } from 'react';
+import {
+  adjustBrightness,
+  toggleLight,
+} from '../../contextStore/LightsContext/lightsActions';
+import LightsContext from '../../contextStore/LightsContext/lightsContext';
 
 interface controlProps {
-  title: string;
+  component: string;
   index: number;
-  onclick: (index: number) => void;
-  open: boolean;
-  rangeChange: (index: number, e: any) => void;
-  rangeVal: number;
 }
 
-const LightControl: React.FC<controlProps> = ({
-  title,
-  index,
-  onclick,
-  open,
-  rangeChange,
-  rangeVal,
-}) => {
+const LightControl: React.FC<controlProps> = ({ component }) => {
+  const { state, dispatch } = useContext(LightsContext);
+  const { light, brightness } = state;
+
   const _styles = {
     header: {
       width: '100%',
@@ -55,26 +53,43 @@ const LightControl: React.FC<controlProps> = ({
     },
   };
 
-  const icons = [moon, sunny];
+  type iconsType = { [key: string]: any };
+  type titlesType = { [key: string]: string };
+
+  const icons: iconsType = { night: moon, wake: sunny };
+  const title: titlesType = { night: 'Night Light', wake: 'Wake Light' };
+
+  const handleToggleClicked = () => {
+    dispatch(toggleLight(component === 'night'));
+  };
+
+  const handleRangeChange = (e: any) => {
+    const val = e.target.value;
+    if (val > 0 || light[component]) {
+      dispatch(adjustBrightness(component === 'night', val));
+    }
+  };
 
   return (
     <IonRow
       className={
-        open ? 'light-control-container open' : 'light-control-container'
+        light[component]
+          ? 'light-control-container open'
+          : 'light-control-container'
       }
     >
       <IonItem lines="none" style={_styles.header}>
         <IonIcon
           slot="start"
-          color={open ? 'tertiary' : undefined}
+          color={light[component] ? 'tertiary' : undefined}
           style={_styles.icon}
-          icon={icons[index]}
+          icon={icons[component]}
         />
-        <IonLabel style={_styles.headerTxt}>{title}</IonLabel>
+        <IonLabel style={_styles.headerTxt}>{title[component]}</IonLabel>
         <IonToggle
           color="tertiary"
-          checked={open}
-          onClick={() => onclick(index)}
+          checked={light[component]}
+          onClick={handleToggleClicked}
           slot="end"
           className="light-switch-toggle"
         />
@@ -86,13 +101,13 @@ const LightControl: React.FC<controlProps> = ({
           </IonRow>
           <IonRow>
             <IonRange
-              onIonChange={(e) => rangeChange(index, e)}
-              value={rangeVal}
+              onIonChange={handleRangeChange}
+              value={brightness[component]}
               color="primary"
               className="range-slider"
             >
-              <IonIcon slot="start" size="small" icon={icons[index]} />
-              <IonIcon slot="end" color="primary" icon={icons[index]} />
+              <IonIcon slot="start" size="small" icon={icons[component]} />
+              <IonIcon slot="end" color="primary" icon={icons[component]} />
             </IonRange>
           </IonRow>
         </IonGrid>
