@@ -1,5 +1,8 @@
 import { useEffect, useState, Dispatch, SetStateAction, FC } from 'react'
 import { IonHeader, IonPage, IonText } from '@ionic/react'
+import { ServiceDiscovery } from '@ionic-native/service-discovery'
+import { xml2js } from 'xml-js'
+import { Zeroconf, ZeroconfOriginal } from '@ionic-native/zeroconf'
 
 const url = 'http://raspberrypi.local/restnode/test'
 
@@ -13,12 +16,48 @@ const Network: FC = () => {
 
             storeResponse(test)
         } catch (error) {
-            storeResponse( (error as Error).message )
+            storeResponse((error as Error).message)
         }
     }
 
+    const discoverService = async (storeResponse: Dispatch<SetStateAction<string>>) => {
+        const serviceType = 'zeroconf:_http._tcp'
+        try {
+            const services = await ServiceDiscovery.getNetworkServices(serviceType)
+            const str_services = JSON.stringify(services)
+
+            interface Service {
+                xml: string
+            }
+
+            services.forEach((service: Service) => {
+                console.log(xml2js(service.xml))
+            })
+
+            console.log("Services:", services)
+
+            // storeResponse(str_services)
+        } catch (error) {
+            // storeResponse((error as Error).message)
+        }
+    }
+
+    const serviceListener = async (zeroconf: ZeroconfOriginal) => {
+        zeroconf.registerAddressFamily = 'ipv4'; // or 'ipv6' ('any' by default)
+        zeroconf.watchAddressFamily = 'ipv4'; // or 'ipv6' ('any' by default)
+
+        const watcher = zeroconf.watch("_http._tcp.", "local.")
+
+        watcher.subscribe(({ action, service }) => {
+            if(action === "resolved")
+                console.log(service)
+        })
+    }
+
     useEffect(() => {
-        getRequest(url, setMessage)
+        // getRequest(url, setMessage)
+        serviceListener(Zeroconf)
+        discoverService( setMessage )
     }, [])
 
     return (
@@ -30,11 +69,10 @@ const Network: FC = () => {
         }}>
             <IonHeader>
                 <IonText style={{
-                    color: 'white'
+                    color: 'white',
+                    overflowY: 'auto'
                 }}>
-                    {
-                        message
-                    }
+                    Network
                 </IonText>
             </IonHeader>
         </IonPage>

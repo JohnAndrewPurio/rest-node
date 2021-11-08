@@ -49,7 +49,7 @@ const EmailAccountSignup = () => {
         </IonItem>
       </IonList>
       <IonGrid>
-        <IonRow class="ion-justify-content-center">
+        <IonRow className="ion-justify-content-center">
           <IonButton type="submit" color="primary">
             Sign Up
           </IonButton>

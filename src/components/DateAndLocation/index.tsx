@@ -1,53 +1,28 @@
+import { useEffect, useState, useContext } from 'react';
 import {
-    IonGrid,
     IonRow,
     IonCol,
     IonHeader,
     IonContent,
-    IonPage,
     IonToolbar,
 } from '@ionic/react';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
 
-import { Geolocation } from '@capacitor/geolocation';
-import {
-    NativeGeocoder,
-    NativeGeocoderOptions,
-} from '@ionic-native/native-geocoder';
-import MainClock from '../MainClock';
+import UserContext, { geoip } from '../../contextStore/userContext';
+import { getCurrentPosition } from '../../utils/getCurrentPosition';
+import { place, header } from './styles'
 
 const DateAndLocation: React.FC = ({ children }) => {
-    const _styles = {
-        place: {
-            height: 'fit-content',
-            fontWeight: 700,
-        },
-        header: {
-            padding: '.5em 0em',
-        },
-    };
-
+    const user = useContext(UserContext)
     const [location, setLocation] = useState<string>("")
+    const date = moment()
 
-    const getCurrentPosition = async () => {
-        try {
-            const options: NativeGeocoderOptions = {
-                useLocale: true,
-                maxResults: 5
-            };
-            const coordinates = await Geolocation.getCurrentPosition();
-            const { latitude, longitude } = coordinates.coords
-            const res = await NativeGeocoder.reverseGeocode(latitude, longitude, options)
-            setLocation(res[0].locality)
-        }
-        catch (e) {
-            alert(e)
-        }
-    };
+    const geoLocation = user ? user[geoip] : ""
+
+    console.log("Date and Location:", user, geoLocation)
 
     useEffect(() => {
-        getCurrentPosition();
+        getCurrentPosition(setLocation)
     }, []);
 
     return (
@@ -55,13 +30,13 @@ const DateAndLocation: React.FC = ({ children }) => {
             <IonHeader>
                 <IonToolbar>
                     <IonRow>
-                        <IonCol class="ion-text-center" style={_styles.place}>
-                            {location}
+                        <IonCol className="ion-text-center" style={place}>
+                            {location || `${geoLocation.city_name}, ${geoLocation.country_name}`}
                         </IonCol>
                     </IonRow>
                     <IonRow>
-                        <IonCol class="ion-text-center">
-                            {moment().format('DD MMMM YYYY')}
+                        <IonCol className="ion-text-center">
+                            {date.format('DD MMMM YYYY')}
                         </IonCol>
                     </IonRow>
                 </IonToolbar>
