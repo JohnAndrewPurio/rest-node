@@ -3,8 +3,8 @@ import {
     IonAvatar, IonBackButton, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemGroup, IonLabel, IonList, IonListHeader, 
     IonPage, IonRow, IonTitle, IonToggle, useIonLoading } 
 from "@ionic/react";
-import UserContext, { geoip } from '../../contextStore/userContext';
-import LoadingContext from '../../contextStore/loadingContext';
+import UserContext from '../../contextStore/UserContext/userContext';
+import LoadingContext from '../../contextStore/AppContext/loadingContext';
 
 import logOut from '../../utils/logOut'
 import { Browser } from '@capacitor/browser';
@@ -13,9 +13,13 @@ import { logoutUri } from '../../auth0.config';
 import { helpCircle, logOutOutline, mail, moon, navigate } from 'ionicons/icons';
 import { getAddress } from '../../utils/userGeoIP';
 import { REST_NODE } from '../paths.json'
+import toggleDarkMode from '../../utils/toggleDarkMode';
+import { ToggleChangeEventDetail } from '@ionic/core';
+import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 const Profile: FC = () => {
     const user = useContext(UserContext)
+    const [dark, setDarkMode ] = useContext(DarkModeContext) || [null, null]
     const [loading, setIsLoading] = useContext(LoadingContext) || [null, null]
     const { buildLogoutUrl, isLoading, logout } = useAuth0()
     const [startLoading, stopLoading] = useIonLoading()
@@ -23,6 +27,15 @@ const Profile: FC = () => {
 
     const logoutHandler = () => {
         logOut(Browser, buildLogoutUrl, logout, logoutUri)
+    }
+
+    const darkModeHandler = ({ detail }: CustomEvent<ToggleChangeEventDetail>) => {
+        const darkMode = detail.checked
+
+        console.log("Dark:", dark)
+
+        if(setDarkMode)
+            setDarkMode(darkMode)
     }
 
     useEffect(() => {
@@ -67,10 +80,10 @@ const Profile: FC = () => {
                         <IonList style={{
                             width: '100%'
                         }}>
-                            <IonItem button onClick={logoutHandler}>
+                            <IonItem>
                                 <IonIcon icon={moon} slot="start" />
                                 <IonLabel>Dark Mode</IonLabel>
-                                <IonToggle />
+                                <IonToggle onIonChange={darkModeHandler} />
                             </IonItem>
                         </IonList>
                     </IonRow>
