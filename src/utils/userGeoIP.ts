@@ -1,5 +1,5 @@
 import { User } from "@auth0/auth0-spa-js";
-import { geoip } from "../contextStore/userContext";
+import { geoip } from "../contextStore/UserContext/userContext";
 
 type getAddress = (user: User | undefined) => string
 
