@@ -9,9 +9,8 @@ import './styles.css';
 const Login: FC = () => {
   const { user, isLoading } = useAuth0();
 
-  if (isLoading) return <div>Loading...</div>;
-
-  if (user) return <Redirect to="/profile" />;
+  if (user) 
+    return <Redirect to="/profile" />
 
   console.log(user);
 

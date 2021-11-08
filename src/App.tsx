@@ -6,34 +6,41 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 import AppRouter from './components/AppRouter';
 
+import DarkModeContext from './contextStore/AppContext/darkMode';
+import UserContext from './contextStore/UserContext/userContext';
+import LoadingContext from './contextStore/AppContext/loadingContext';
+import toggleDarkMode from './utils/toggleDarkMode';
 import './styles';
-import UserContext from './contextStore/userContext';
-import LoadingContext from './contextStore/loadingContext';
-
-interface handleRedirect {
-  url: string;
-}
 
 const App: React.FC = () => {
-  const loadingState = useState<boolean>(false);
-  const { user, handleRedirectCallback } = useAuth0();
+  const loadingState = useState<Boolean>(false)
+  const darkModeState = useState<boolean>(false)
+  const { user, handleRedirectCallback } = useAuth0()
 
-  const handleRedirect: (params: handleRedirect) => void = async ({ url }) => {
-    const stateIncluded = url.includes('state');
-    const codeIncluded = url.includes('code');
-    const errorIncluded = url.includes('error');
+  const [darkMode, setDarkMode] = darkModeState
+
+  const handleRedirect: (params: { url: string }) => void = async ({ url }) => {
+    const stateIncluded = url.includes('state')
+    const codeIncluded = url.includes('code')
+    const errorIncluded = url.includes('error')
 
     if (stateIncluded && (codeIncluded || errorIncluded))
       await handleRedirectCallback(url);
 
-    // No-op on Android
-    await Browser.close();
-  };
+    await Browser.close()
+  }
+
 
   useEffect(() => {
-    document.body.classList.add('dark');
-    // eslint-disable-next-line
-  }, [])
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
+    toggleDarkMode(document, prefersDark.matches)
+
+    setDarkMode(prefersDark.matches)
+  }, []) 
+
+  useEffect(() => {
+    toggleDarkMode(document, darkMode)
+  }, [darkMode])
 
   useEffect(() => {
     CapApp.addListener('appUrlOpen', handleRedirect);
@@ -41,13 +48,15 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <UserContext.Provider value={user}>
-        <LoadingContext.Provider value={loadingState}>
-          <AppRouter />
-        </LoadingContext.Provider>
-      </UserContext.Provider>
+      <DarkModeContext.Provider value={darkModeState}>
+        <UserContext.Provider value={user}>
+          <LoadingContext.Provider value={loadingState}>
+            <AppRouter />
+          </LoadingContext.Provider>
+        </UserContext.Provider>
+      </DarkModeContext.Provider>
     </IonApp>
-  );
-};
+  )
+}
 
 export default App;
