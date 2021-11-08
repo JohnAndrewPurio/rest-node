@@ -46,14 +46,13 @@ const reducer = (state: State = initialState, action: Action) => {
           ...state,
           favorites,
         };
-      } else {
-        const favorites = state.favorites.slice();
-        favorites.push(action.payload);
-        return {
-          ...state,
-          favorites,
-        };
       }
+      const favorites = state.favorites.slice();
+      favorites.push(action.payload);
+      return {
+        ...state,
+        favorites,
+      };
     }
     default:
       return state;

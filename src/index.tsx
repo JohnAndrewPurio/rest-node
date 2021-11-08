@@ -12,10 +12,10 @@ ReactDOM.render(
       domain={domain}
       clientId={clientId}
       redirectUri={redirectUri}
-      useRefreshTokens={true}
+      useRefreshTokens
       cacheLocation="localstorage"
     >
-    <App />
+      <App />
     </Auth0Provider>
   </React.StrictMode>,
   document.getElementById('root')

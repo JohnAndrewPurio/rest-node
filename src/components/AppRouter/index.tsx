@@ -9,7 +9,15 @@ import Profile from '../../pages/Profile';
 import RestNode from '../../pages/RestNode';
 import SettingsRouter from '../../pages/Settings';
 
-import { DEFAULT, LOGIN, HOME, NETWORK, PROFILE, REST_NODE, SETTINGS } from '../../pages/paths.json';
+import {
+  DEFAULT,
+  LOGIN,
+  HOME,
+  NETWORK,
+  PROFILE,
+  REST_NODE,
+  SETTINGS,
+} from '../../pages/paths.json';
 
 const AppRouter: React.FC = () => {
   return (
@@ -26,14 +34,8 @@ const AppRouter: React.FC = () => {
           path={SETTINGS}
           render={(props) => <SettingsRouter {...props} />}
         />
-        <Route
-          path={NETWORK}
-          component={Network}
-        />
-        <Route
-          path={PROFILE}
-          component={Profile}
-        />
+        <Route path={NETWORK} component={Network} />
+        <Route path={PROFILE} component={Profile} />
         <Route render={() => <Redirect to={DEFAULT} />} />
       </IonRouterOutlet>
     </IonReactRouter>

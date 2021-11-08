@@ -5,10 +5,10 @@ const config: CapacitorConfig = {
   appName: 'REST Node',
   webDir: 'build',
   plugins: {
-    "SplashScreen": {
-      "androidScaleType": "CENTER_CROP",
-      "launchShowDuration": 1000,
-    }
+    SplashScreen: {
+      androidScaleType: 'CENTER_CROP',
+      launchShowDuration: 1000,
+    },
   },
 };
 

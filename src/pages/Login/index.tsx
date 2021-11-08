@@ -7,15 +7,13 @@ import LoginButton from '../../components/LoginButton';
 import './styles.css';
 
 const Login: FC = () => {
-  const { user, isLoading } = useAuth0()
+  const { user, isLoading } = useAuth0();
 
-  if(isLoading)
-    return <div>Loading...</div>
+  if (isLoading) return <div>Loading...</div>;
 
-  if (user) 
-    return <Redirect to="/profile" />
+  if (user) return <Redirect to="/profile" />;
 
-  console.log(user)
+  console.log(user);
 
   return (
     <IonPage>
@@ -29,7 +27,7 @@ const Login: FC = () => {
           </IonRow>
         </IonGrid>
       </IonContent>
-    </IonPage >
+    </IonPage>
   );
 };
 
