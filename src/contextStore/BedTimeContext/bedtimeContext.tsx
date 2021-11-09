@@ -6,6 +6,7 @@ interface State {
   bedtimeStart: moment.Moment;
   bedtimeHours: number;
   wakeUpTime: moment.Moment;
+  started: boolean;
 }
 
 interface Context {
@@ -14,6 +15,8 @@ interface Context {
 }
 
 const initialState = {
+  started: moment().isSameOrAfter(moment('21:00', 'HH:mm')) &&
+  moment().isSameOrBefore(moment('21:00', 'HH:mm').add(8, 'h')),
   bedtimeStart: moment('21:00', 'HH:mm'),
   bedtimeHours: 8,
   wakeUpTime: moment('21:00', 'HH:mm').add(8, 'h'),
@@ -71,7 +74,6 @@ const reducer = (state: State = initialState, action: Action): State => {
           bedtimeStart,
         };
       }
-
       return {
         ...state,
         wakeUpTime: action.payload,
@@ -83,13 +85,20 @@ const reducer = (state: State = initialState, action: Action): State => {
         ...state,
         bedtimeStart: moment(),
         wakeUpTime: moment().add(state.bedtimeHours, 'h'),
+        started: true
       };
     case BedtimeActionTypes.STOP_BEDTIME_NOW:
       return {
         ...state,
         bedtimeStart: moment().add(1, 'h'),
         wakeUpTime: moment().add(1 + state.bedtimeHours, 'h'),
+        started: false
       };
+    case BedtimeActionTypes.BEDTIME_STARTED: 
+      return {
+        ...state, 
+        started: true
+      }
     default:
       return state;
   }

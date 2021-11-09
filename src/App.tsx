@@ -26,7 +26,6 @@ const App: React.FC = () => {
 
     if (stateIncluded && (codeIncluded || errorIncluded))
       await handleRedirectCallback(url);
-
     await Browser.close()
   }
 
@@ -35,7 +34,8 @@ const App: React.FC = () => {
     toggleDarkMode(document, prefersDark.matches)
 
     setDarkMode(prefersDark.matches)
-  }, []) 
+
+  }, [])
 
   useEffect(() => {
     toggleDarkMode(document, darkMode)

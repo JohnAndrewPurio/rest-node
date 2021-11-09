@@ -31,7 +31,7 @@ const SettingPillStrips: React.FC<Props> = ({ title, icon }) => {
         slot="start"
       />
       <IonLabel style={_styles.title}>{title}</IonLabel>
-      <IonButton fill="clear" slot="end" routerLink={`/settings/${title}`}>
+      <IonButton fill="clear" slot="end" routerLink={`/restnode/settings/${title}`}>
         <IonIcon slot="icon-only" icon={arrowForward} />
       </IonButton>
     </IonItem>

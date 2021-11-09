@@ -1,24 +1,23 @@
 import { IonPage, IonRouterOutlet } from '@ionic/react';
 import { Redirect, Route, RouteComponentProps } from 'react-router';
-import { BedTimeContextProvider } from '../../contextStore/BedTimeContext/bedtimeContext';
 import Bedtime from './Bedtime';
 import Lights from './Lights';
 import Relaxation from './RelaxationTechniques';
 import Sounds from './Sounds';
+import { LIGHTS, SOUNDS, BEDTIME, RELAXATION } from './paths.json'
+import { DASHBOARD } from "../Tabs/paths.json"
 
 const SettingsRouter: React.FC<RouteComponentProps> = () => {
   return (
-    <BedTimeContextProvider>
       <IonPage>
         <IonRouterOutlet>
-          <Route path="/settings/bedtime" component={Bedtime} />
-          <Route path="/settings/sounds" component={Sounds} />
-          <Route path="/settings/lights" component={Lights} />
-          <Route path="/settings/relaxation" component={Relaxation} />
-          <Route render={() => <Redirect to="/restnode/dashboard" />} />
+          <Route path={BEDTIME} component={Bedtime} />
+          <Route path={SOUNDS} component={Sounds} />
+          <Route path={LIGHTS} component={Lights} />
+          <Route path={RELAXATION} component={Relaxation} />
+          <Route render={() => <Redirect to={DASHBOARD} />} />
         </IonRouterOutlet>
       </IonPage>
-    </BedTimeContextProvider>
   );
 };
 

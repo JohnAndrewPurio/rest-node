@@ -1,0 +1,5 @@
+{
+    "HELP": "/restnode/tabs/help",
+    "HISTORY": "/restnode/tabs/history",
+    "DASHBOARD": "/restnode/tabs/dashboard"
+}

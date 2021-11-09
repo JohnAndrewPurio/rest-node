@@ -7,8 +7,5 @@
 			"androidScaleType": "CENTER_CROP",
 			"launchShowDuration": 1000
 		}
-	},
-	"server": {
-		"url": "http://192.168.100.32:8100"
 	}
 }

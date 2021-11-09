@@ -1,12 +1,28 @@
 import { IonContent, IonGrid, IonPage } from '@ionic/react';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import TimeBar from '../../../components/TimeBar';
 import './styles.css';
 import SettingsHeader from '../../../components/SettingsHeader';
 import SoundAccordion from '../../../components/SoundAccordion';
 import { SoundsContextProvider } from '../../../contextStore/SoundsContext/soundsContext';
+import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
+import moment from 'moment';
+import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
 
 const Sounds: React.FC = () => {
+
+  const { state, dispatch } = useContext(BedTimeContext)
+  const { started, bedtimeStart, wakeUpTime } = state
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (!started && moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime)) {
+        dispatch(bedtimeStarted())
+      }
+    }, 1000)
+    return () => clearInterval(interval)
+  })
+
   const _styles = {
     fullHeight: {
       height: '100%',

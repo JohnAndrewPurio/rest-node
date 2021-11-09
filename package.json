@@ -5,7 +5,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
     "@capacitor/android": "3.2.5",
-    "@capacitor/app": "1.0.5",
+    "@capacitor/app": "^1.0.5",
     "@capacitor/browser": "^1.0.5",
     "@capacitor/core": "3.2.5",
     "@capacitor/geolocation": "^1.1.2",
@@ -14,6 +14,7 @@
     "@capacitor/keyboard": "1.1.2",
     "@capacitor/splash-screen": "^1.1.6",
     "@capacitor/status-bar": "1.0.5",
+    "@capacitor/storage": "^1.2.3",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/native-geocoder": "^5.36.0",
     "@ionic-native/service-discovery": "^5.36.0",

@@ -5,6 +5,7 @@ export enum BedtimeActionTypes {
   SET_WAKE_UP_TIME = 'SET_WAKE_UP_TIME',
   START_BEDTIME_NOW = 'START_BEDTIME_NOW',
   STOP_BEDTIME_NOW = 'STOP_BEDTIME_NOW',
+  BEDTIME_STARTED = 'BEDTIME_STARTED'
 }
 
 interface setBedtimeHoursType {
@@ -47,8 +48,19 @@ export const stopBedTimeNow = (): stopBedTimeNowType => ({
   payload: null,
 });
 
+interface bedtimeStartedType {
+  type: BedtimeActionTypes.BEDTIME_STARTED;
+  payload: null;
+}
+
+export const bedtimeStarted = (): bedtimeStartedType => ({
+  type: BedtimeActionTypes.BEDTIME_STARTED,
+  payload: null,
+});
+
 export type Action =
   | setBedtimeHoursType
   | setWakeUpTimeType
   | startBedTimeNowType
-  | stopBedTimeNowType;
+  | stopBedTimeNowType
+  | bedtimeStartedType;

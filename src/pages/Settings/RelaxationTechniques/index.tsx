@@ -1,5 +1,5 @@
 import { IonContent, IonGrid, IonPage } from '@ionic/react';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import SettingsHeader from '../../../components/SettingsHeader';
 import TimeBar from '../../../components/TimeBar';
 import RelaxationList from '../../../components/RelaxationList';
@@ -8,6 +8,9 @@ import RelaxationFilter from '../../../components/RelaxationFilter';
 import RelaxationFavorites from '../../../components/RelaxationFavorites';
 import { RelaxationContextProvider } from '../../../contextStore/RelaxationContext/relaxationContext';
 import RelaxationFooter from '../../../components/RelaxationPlayer';
+import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
+import moment from 'moment';
+import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
 
 const Relaxation: React.FC = () => {
   const [selected, setSelected] = useState('All');
@@ -15,6 +18,18 @@ const Relaxation: React.FC = () => {
   const onSelect = (time: string) => {
     setSelected(time);
   };
+
+  const { state, dispatch } = useContext(BedTimeContext)
+  const { started, bedtimeStart, wakeUpTime } = state
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (!started && moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime)) {
+        dispatch(bedtimeStarted())
+      }
+    }, 1000)
+    return () => clearInterval(interval)
+  })
 
   return (
     <RelaxationContextProvider>

@@ -1,5 +1,5 @@
 import { IonContent, IonGrid, IonPage } from '@ionic/react';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import SettingsHeader from '../../../components/SettingsHeader';
 import TimeBar from '../../../components/TimeBar';
 import './styles.css';
@@ -9,6 +9,8 @@ import BedTimeControl from '../../../components/BedTimeControl';
 import moment from 'moment';
 import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
 import WakeTimeCountdown from '../../../components/WakeTimeCountdown';
+import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
+// import { Storage } from '@capacitor/storage'
 
 const Bedtime: React.FC = () => {
   const _styles = {
@@ -17,8 +19,24 @@ const Bedtime: React.FC = () => {
     },
   };
 
-  const { state } = useContext(BedTimeContext);
-  const started = moment().isSameOrAfter(state.bedtimeStart);
+  const { state, dispatch } = useContext(BedTimeContext);
+  const { started, bedtimeStart, wakeUpTime }  = state
+
+  const getState = async () => {
+    // let { value } = await Storage.get({key: 'bedtime'})
+  }
+
+  useEffect(() => {
+    let interval = setInterval(() => {
+      if (!started && moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime)) {
+        dispatch(bedtimeStarted())
+      }
+      getState()
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
+
 
   return (
     <IonPage style={_styles.page}>
