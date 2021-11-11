@@ -67,7 +67,7 @@ const reducer = (state: State = initialState, action: Action) => {
         sound: { night: false, wake: false },
       };
     case SoundsActionTypes.SET_STATE:
-      return action.payload
+      return action.payload;
     default:
       return state;
   }

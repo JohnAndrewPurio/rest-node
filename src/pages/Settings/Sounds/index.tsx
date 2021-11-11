@@ -1,19 +1,20 @@
 import { IonContent, IonGrid, IonPage } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
+import { Storage } from '@capacitor/storage';
 import TimeBar from '../../../components/TimeBar';
 import './styles.css';
 import SettingsHeader from '../../../components/SettingsHeader';
 import SoundAccordion from '../../../components/SoundAccordion';
-import SoundsContext, { SoundsContextProvider } from '../../../contextStore/SoundsContext/soundsContext';
+import SoundsContext, {
+  SoundsContextProvider,
+} from '../../../contextStore/SoundsContext/soundsContext';
 import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
 import moment from 'moment';
 import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
-import { Storage } from '@capacitor/storage';
 import { storage } from '../../../services/constants';
 import { setState } from '../../../contextStore/SoundsContext/soundsActions';
 
 const Sounds: React.FC = () => {
-
   return (
     <SoundsContextProvider>
       <IonPage>
@@ -27,43 +28,62 @@ const Sounds: React.FC = () => {
 export default Sounds;
 
 const Content: React.FC = () => {
-
   const bedtimeState = useContext(BedTimeContext);
-  const soundsState = useContext(SoundsContext)
+  const soundsState = useContext(SoundsContext);
   const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
 
   const getState = async () => {
-    const { value } = await Storage.get({ key: storage.RED_NODE_STATES })
+    const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
-      const defaultStates = JSON.parse(value)
-      const nightStart = moment(defaultStates.bedtime.time, 'H:mm').add(defaultStates.bedtime.sound.onoffset, 'minutes')
-      const nightEnd = moment(defaultStates.bedtime.time, 'H:mm').add(defaultStates.bedtime.sound.offoffset, 'minutes')
-      const wakeStart = moment(defaultStates.waketime.time, 'H:mm').add(defaultStates.waketime.sound.onoffset, 'minutes')
-      const wakeEnd = moment(defaultStates.waketime.time, 'H:mm').add(defaultStates.waketime.sound.offoffset, 'minutes')
-      const isNightSoundOn = moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd)
-      const isWakeSoundOn = moment().isSameOrAfter(wakeStart) && moment().isBefore(wakeEnd)
+      const defaultStates = JSON.parse(value);
+      const nightStart = moment(defaultStates.bedtime.time, 'H:mm').add(
+        defaultStates.bedtime.sound.onoffset,
+        'minutes'
+      );
+      const nightEnd = moment(defaultStates.bedtime.time, 'H:mm').add(
+        defaultStates.bedtime.sound.offoffset,
+        'minutes'
+      );
+      const wakeStart = moment(defaultStates.waketime.time, 'H:mm').add(
+        defaultStates.waketime.sound.onoffset,
+        'minutes'
+      );
+      const wakeEnd = moment(defaultStates.waketime.time, 'H:mm').add(
+        defaultStates.waketime.sound.offoffset,
+        'minutes'
+      );
+      const isNightSoundOn =
+        moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd);
+      const isWakeSoundOn =
+        moment().isSameOrAfter(wakeStart) && moment().isBefore(wakeEnd);
       const newState = {
         sound: { night: isNightSoundOn, wake: isWakeSoundOn },
-        volume: { night: defaultStates.bedtime.sound.onpayload.max_volume, wake: defaultStates.bedtime.sound.onpayload.max_volume },
-        audio: { night: defaultStates.bedtime.sound.onpayload.audio_file, wake: defaultStates.bedtime.sound.onpayload.audio_file },
+        volume: {
+          night: defaultStates.bedtime.sound.onpayload.max_volume,
+          wake: defaultStates.bedtime.sound.onpayload.max_volume,
+        },
+        audio: {
+          night: defaultStates.bedtime.sound.onpayload.audio_file,
+          wake: defaultStates.bedtime.sound.onpayload.audio_file,
+        },
         nightSoundSchedule: { start: nightStart, end: nightEnd },
         wakeSoundSchedule: { start: wakeStart, end: wakeEnd },
         sample: { playing: false, audio: null },
-      }
-      soundsState.dispatch(setState(newState))
+      };
+      soundsState.dispatch(setState(newState));
     }
   };
 
-  const isBedtime = () => moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime)
+  const isBedtime = () =>
+    moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (
-        !started && isBedtime()) {
+      if (!started && isBedtime()) {
         bedtimeState.dispatch(bedtimeStarted());
       }
     }, 1000);
-    getState()
+    getState();
     return () => clearInterval(interval);
   }, []);
 
@@ -156,5 +176,5 @@ const Content: React.FC = () => {
         </IonGrid>
       </IonGrid>
     </IonContent>
-  )
-}
+  );
+};

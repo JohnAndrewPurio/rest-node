@@ -101,7 +101,7 @@ const reducer = (state: State = initialState, action: Action): State => {
         started: true,
       };
     case BedtimeActionTypes.SET_STATE:
-      return action.payload
+      return action.payload;
     default:
       return state;
   }

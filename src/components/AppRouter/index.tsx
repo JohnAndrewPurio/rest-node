@@ -3,13 +3,14 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import { App as CapApp } from '@capacitor/app';
 
+import { RouteComponentProps, withRouter } from 'react-router';
+import { useEffect } from 'react';
 import Home from '../../pages/Home';
 import Login from '../../pages/Login';
 import Network from '../../pages/Network';
 import Profile from '../../pages/Profile';
 import RestNode from '../../pages/RestNode';
 import SettingsRouter from '../../pages/Settings';
-import { RouteComponentProps, withRouter } from 'react-router';
 
 import {
   DEFAULT,
@@ -19,7 +20,6 @@ import {
   PROFILE,
   REST_NODE,
 } from '../../pages/paths.json';
-import { useEffect } from 'react';
 
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();

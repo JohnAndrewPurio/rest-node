@@ -55,7 +55,7 @@ const reducer = (state: State = initialState, action: Action) => {
       };
     }
     case RelaxationActionTypes.SET_STATE:
-      return action.payload
+      return action.payload;
     default:
       return state;
   }

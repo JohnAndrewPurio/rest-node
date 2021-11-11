@@ -11,7 +11,7 @@ export interface State {
   };
   wakeLightSchedule: {
     start: null | moment.Moment;
-    end: null | moment.Moment
+    end: null | moment.Moment;
   };
 }
 
@@ -73,8 +73,8 @@ const reducer = (state: State = initialState, action: Action) => {
       };
     }
     case LightsActionTypes.SET_STATE:
-      console.log('contextlight')
-      return action.payload
+      console.log('contextlight');
+      return action.payload;
     default:
       return state;
   }

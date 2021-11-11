@@ -46,6 +46,6 @@ interface Time {
 }
 
 export interface RestNodeStateType {
-    bedtime: Time;
-    waketime: Time;
+  bedtime: Time;
+  waketime: Time;
 }

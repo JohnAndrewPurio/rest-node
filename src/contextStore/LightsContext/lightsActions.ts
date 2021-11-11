@@ -54,8 +54,8 @@ export const setSchedule = (
   payload: { bedtime, waketime },
 });
 
-export type Action = 
-| setStateType 
-| toggleLightType 
-| adjustBrightnessType 
-| setScheduleType;
+export type Action =
+  | setStateType
+  | toggleLightType
+  | adjustBrightnessType
+  | setScheduleType;

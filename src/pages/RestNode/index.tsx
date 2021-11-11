@@ -6,12 +6,12 @@ import {
   useIonLoading,
 } from '@ionic/react';
 import { Redirect, Route, RouteComponentProps } from 'react-router';
+import { useEffect, useState } from 'react';
 import { BedTimeContextProvider } from '../../contextStore/BedTimeContext/bedtimeContext';
 import SettingsRouter from '../Settings';
 import { DASHBOARD } from '../Tabs/paths.json';
 
 import Tabs from '../Tabs';
-import { useEffect, useState } from 'react';
 import { RestnodeService } from '../../services/restnodeServices';
 
 const RestNode: React.FC<RouteComponentProps> = (props) => {
