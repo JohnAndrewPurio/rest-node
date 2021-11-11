@@ -9,7 +9,7 @@ import Network from '../../pages/Network';
 import Profile from '../../pages/Profile';
 import RestNode from '../../pages/RestNode';
 import SettingsRouter from '../../pages/Settings';
-import { RouteComponentProps, withRouter } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import {
   DEFAULT,
@@ -22,7 +22,6 @@ import {
 import { useEffect } from 'react';
 
 const AppRouter: React.FC = () => {
-
   const [present] = useIonAlert();
 
   const hardwareBackHandlers = (ev: any) => {
@@ -34,19 +33,17 @@ const AppRouter: React.FC = () => {
           cssClass: 'my-css',
           header: 'Exit app?',
           message: '',
-          buttons: [
-            'No',
-            { text: 'Yes', handler: (d) => CapApp.exitApp() },
-          ]
-        })
+          buttons: ['No', { text: 'Yes', handler: (d) => CapApp.exitApp() }],
+        });
       }
     });
-  }
+  };
 
   useEffect(() => {
-    document.addEventListener('ionBackButton', hardwareBackHandlers)
-    return () => document.removeEventListener('ionBackButton', hardwareBackHandlers)
-  }, [])
+    document.addEventListener('ionBackButton', hardwareBackHandlers);
+    return () =>
+      document.removeEventListener('ionBackButton', hardwareBackHandlers);
+  }, []);
 
   return (
     <IonReactRouter>
@@ -67,4 +64,3 @@ const AppRouter: React.FC = () => {
 };
 
 export default AppRouter;
-

@@ -100,7 +100,9 @@ const HoursSetter: React.FC = () => {
       fontWeight: 900,
       fontSize: '8vw',
       padding: 0,
-      color: started ? 'var(--ion-color-secondary-shade)' : 'var(--ion-color-dark)'
+      color: started
+        ? 'var(--ion-color-secondary-shade)'
+        : 'var(--ion-color-dark)',
     },
     icon: {
       fontSize: '10vw',

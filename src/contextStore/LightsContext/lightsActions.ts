@@ -1,10 +1,22 @@
 import moment from 'moment';
+import { State } from './lightsContext';
 
 export enum LightsActionTypes {
   TOGGLE_LIGHT = 'TOGGLE_LIGHT',
   ADJUST_BRIGHTNESS = 'ADJUST_BRIGHTNESS',
   SET_SCHEDULE = 'SET_SCHEDULE',
+  SET_STATE = 'SET_STATE',
 }
+
+interface setStateType {
+  type: LightsActionTypes.SET_STATE;
+  payload: State;
+}
+
+export const setState = (state: State): setStateType => ({
+  type: LightsActionTypes.SET_STATE,
+  payload: state,
+});
 
 interface toggleLightType {
   type: LightsActionTypes.TOGGLE_LIGHT;
@@ -42,4 +54,8 @@ export const setSchedule = (
   payload: { bedtime, waketime },
 });
 
-export type Action = toggleLightType | adjustBrightnessType | setScheduleType;
+export type Action = 
+| setStateType 
+| toggleLightType 
+| adjustBrightnessType 
+| setScheduleType;

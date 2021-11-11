@@ -13,16 +13,16 @@ import { getCurrentPosition } from '../../utils/getCurrentPosition';
 import { place } from './styles';
 
 const DateAndLocation: React.FC = ({ children }) => {
-  const user = useContext(UserContext)
-  const [location, setLocation] = useState<string>("")
-  const date = moment()
+  const user = useContext(UserContext);
+  const [location, setLocation] = useState<string>('');
+  const date = moment();
 
-  const geoLocation = user ? user[geoip] : ""
+  const geoLocation = user ? user[geoip] : '';
 
-  console.log("Date and Location:", user, geoLocation)
+  console.log('Date and Location:', user, geoLocation);
 
   useEffect(() => {
-    getCurrentPosition(setLocation)
+    getCurrentPosition(setLocation);
   }, []);
 
   return (
@@ -31,7 +31,8 @@ const DateAndLocation: React.FC = ({ children }) => {
         <IonToolbar>
           <IonRow>
             <IonCol className="ion-text-center" style={place}>
-              {location || `${geoLocation.city_name}, ${geoLocation.country_name}`}
+              {location ||
+                `${geoLocation.city_name}, ${geoLocation.country_name}`}
             </IonCol>
           </IonRow>
           <IonRow>

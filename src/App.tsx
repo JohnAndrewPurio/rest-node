@@ -13,33 +13,32 @@ import toggleDarkMode from './utils/toggleDarkMode';
 import './styles';
 
 const App: React.FC = () => {
-  const loadingState = useState<boolean>(false)
-  const darkModeState = useState<boolean>(false)
-  const { user, handleRedirectCallback } = useAuth0()
+  const loadingState = useState<boolean>(false);
+  const darkModeState = useState<boolean>(false);
+  const { user, handleRedirectCallback } = useAuth0();
 
-  const [darkMode, setDarkMode] = darkModeState
+  const [darkMode, setDarkMode] = darkModeState;
 
   const handleRedirect: (params: { url: string }) => void = async ({ url }) => {
-    const stateIncluded = url.includes('state')
-    const codeIncluded = url.includes('code')
-    const errorIncluded = url.includes('error')
+    const stateIncluded = url.includes('state');
+    const codeIncluded = url.includes('code');
+    const errorIncluded = url.includes('error');
 
     if (stateIncluded && (codeIncluded || errorIncluded))
       await handleRedirectCallback(url);
-    await Browser.close()
-  }
+    await Browser.close();
+  };
 
   useEffect(() => {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
-    toggleDarkMode(document, prefersDark.matches)
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    toggleDarkMode(document, prefersDark.matches);
 
-    setDarkMode(prefersDark.matches)
-
-  }, [])
+    setDarkMode(prefersDark.matches);
+  }, []);
 
   useEffect(() => {
-    toggleDarkMode(document, darkMode)
-  }, [darkMode])
+    toggleDarkMode(document, darkMode);
+  }, [darkMode]);
 
   useEffect(() => {
     CapApp.addListener('appUrlOpen', handleRedirect);
@@ -55,7 +54,7 @@ const App: React.FC = () => {
         </UserContext.Provider>
       </DarkModeContext.Provider>
     </IonApp>
-  )
-}
+  );
+};
 
 export default App;

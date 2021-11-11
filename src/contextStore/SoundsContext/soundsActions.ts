@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { State } from './soundsContext';
 
 export enum SoundsActionTypes {
   TOGGLE_SOUND = 'TOGGLE_SOUND',
@@ -6,7 +7,18 @@ export enum SoundsActionTypes {
   SET_SCHEDULE = 'SET_SCHEDULE',
   CHOOSE_AUDIO = 'CHOOSE_AUDIO',
   PLAY_SAMPLE = 'PLAY_SAMPLE',
+  SET_STATE = 'SET_STATE',
 }
+
+interface setStateType {
+  type: SoundsActionTypes.SET_STATE;
+  payload: State;
+}
+
+export const setState = (state: State): setStateType => ({
+  type: SoundsActionTypes.SET_STATE,
+  payload: state,
+});
 
 interface toggleSoundType {
   type: SoundsActionTypes.TOGGLE_SOUND;
@@ -68,6 +80,7 @@ export const playSample = (id: string): playSampleType => ({
 });
 
 export type Action =
+  | setStateType
   | toggleSoundType
   | adjustVolumeType
   | setScheduleType

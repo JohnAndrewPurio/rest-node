@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
 import { Action, RelaxationActionTypes } from './relaxationActions';
 
-interface State {
+export interface State {
   relaxationAudio: null | any;
   relaxationFilter: string;
   relaxationPlaying: boolean;
@@ -54,6 +54,8 @@ const reducer = (state: State = initialState, action: Action) => {
         favorites,
       };
     }
+    case RelaxationActionTypes.SET_STATE:
+      return action.payload
     default:
       return state;
   }

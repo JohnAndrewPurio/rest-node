@@ -9,8 +9,7 @@ import './styles.css';
 const Login: FC = () => {
   const { user, isLoading } = useAuth0();
 
-  if (user) 
-    return <Redirect to="/profile" />
+  if (user) return <Redirect to="/profile" />;
 
   console.log(user);
 
@@ -21,7 +20,7 @@ const Login: FC = () => {
           <IonRow className="ion-justify-content-center">
             <CompanyLogo />
           </IonRow>
-          <IonRow className="ion=justify-content-center">
+          <IonRow className="ion-justify-content-center login-btn">
             <LoginButton />
           </IonRow>
         </IonGrid>

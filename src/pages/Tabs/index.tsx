@@ -13,34 +13,33 @@ import { home, informationCircle, time } from 'ionicons/icons';
 import Dashboard from './Dashboard';
 import History from './History';
 import Help from './Help';
-import { HELP, HISTORY, DASHBOARD } from "./paths.json"
+import { HELP, HISTORY, DASHBOARD } from './paths.json';
 
 const BottomNavigationTabs: React.FC<RouteComponentProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route path={HISTORY} component={History} />
-        <Route path={HELP} component={Help} />
+        {/* <Route path={HISTORY} component={History} />
+        <Route path={HELP} component={Help} /> */}
         <Route path={DASHBOARD} component={Dashboard} />
-        {/* <Route render={() => <Redirect to="/restnode/tabs/dashboard" />} /> */}
         <Redirect exact from="/restnode/tabs" to={DASHBOARD} />
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
-        <IonTabButton tab="history" href={HISTORY}>
+        {/* <IonTabButton tab="history" href={HISTORY}>
           <IonIcon icon={time} />
           <IonLabel>History</IonLabel>
-        </IonTabButton>
+        </IonTabButton> */}
 
         <IonTabButton tab="dashboard" href={DASHBOARD}>
           <IonIcon icon={home} />
           <IonLabel>Dashboard</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="help" href={HELP}>
+        {/* <IonTabButton tab="help" href={HELP}>
           <IonIcon icon={informationCircle} />
           <IonLabel>Help</IonLabel>
-        </IonTabButton>
+        </IonTabButton> */}
       </IonTabBar>
     </IonTabs>
   );

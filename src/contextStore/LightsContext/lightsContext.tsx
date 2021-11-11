@@ -2,14 +2,17 @@ import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
 import { Action, LightsActionTypes } from './lightsActions';
 
-interface State {
+export interface State {
   light: { [key: string]: boolean };
   brightness: { [key: string]: number };
   nightLightSchedule: {
     start: null | moment.Moment;
     end: null | moment.Moment;
   };
-  wakeLightSchedule: { start: null | moment.Moment; end: null | moment.Moment };
+  wakeLightSchedule: {
+    start: null | moment.Moment;
+    end: null | moment.Moment
+  };
 }
 
 interface Context {
@@ -69,6 +72,9 @@ const reducer = (state: State = initialState, action: Action) => {
         light: { night: false, wake: action.payload.val > 0 },
       };
     }
+    case LightsActionTypes.SET_STATE:
+      console.log('contextlight')
+      return action.payload
     default:
       return state;
   }
