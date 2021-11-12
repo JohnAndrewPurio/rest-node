@@ -1,20 +1,40 @@
-import { FC, useContext, useEffect } from 'react'
+import { FC, useContext, useEffect } from 'react';
 import {
-    IonAvatar, IonBackButton, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemGroup, IonLabel, IonList, IonListHeader,
-    IonPage, IonRow, IonTitle, IonToggle, useIonLoading
-}
-    from "@ionic/react";
+    IonAvatar,
+    IonBackButton,
+    IonContent,
+    IonGrid,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonItemGroup,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonPage,
+    IonRow,
+    IonTitle,
+    IonToggle,
+    useIonLoading,
+} from '@ionic/react';
+import { Browser } from '@capacitor/browser';
+import { useAuth0 } from '@auth0/auth0-react';
+import {
+    helpCircle,
+    logOutOutline,
+    mail,
+    moon,
+    navigate,
+} from 'ionicons/icons';
+import { ToggleChangeEventDetail } from '@ionic/core';
 import UserContext from '../../contextStore/UserContext/userContext';
 import LoadingContext from '../../contextStore/AppContext/loadingContext';
 
-import logOut from '../../utils/logOut'
-import { Browser } from '@capacitor/browser';
-import { useAuth0 } from '@auth0/auth0-react';
+import logOut from '../../utils/logOut';
 import { logoutUri } from '../../auth0.config';
-import { helpCircle, logOutOutline, mail, moon, navigate } from 'ionicons/icons';
 import { getAddress } from '../../utils/userGeoIP';
 import { REST_NODE } from '../paths.json'
-import { ToggleChangeEventDetail } from '@ionic/core';
+import toggleDarkMode from '../../utils/toggleDarkMode';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json'
@@ -32,12 +52,16 @@ const Profile: FC = () => {
         logOut(Browser, buildLogoutUrl, logout, logoutUri)
     }
 
-    const darkModeHandler = ({ detail }: CustomEvent<ToggleChangeEventDetail>) => {
-        const darkMode = detail.checked
+    const darkModeHandler = ({
+        detail,
+    }: CustomEvent<ToggleChangeEventDetail>) => {
+        const darkMode = detail.checked;
+
+        console.log('Dark:', darkMode);
 
         if (setDarkMode)
-            setDarkMode(darkMode)
-    }
+            setDarkMode(darkMode);
+    };
 
     useEffect(() => {
         if (setIsLoading)
@@ -45,14 +69,18 @@ const Profile: FC = () => {
     }, [isLoading])
 
     useEffect(() => {
-        if (loading) {
-            startLoading("Loading", undefined, "dots")
+        if (setIsLoading)
+            setIsLoading(isLoading);
+    }, [isLoading]);
 
-            return
+    useEffect(() => {
+        if (loading) {
+            startLoading('Loading', undefined, 'dots');
+
+            return;
         }
 
-        stopLoading()
-    }, [loading])
+    }, [isLoading])
 
     if (!user)
         return <Redirect to="/login" />
@@ -63,8 +91,8 @@ const Profile: FC = () => {
                 <IonItem>
                     <IonBackButton defaultHref={REST_NODE} />
                     <IonTitle>Profile</IonTitle>
-                </IonItem>
-            </IonHeader>
+                </IonItem >
+            </IonHeader >
             <IonContent className="ion-padding" fullscreen>
                 <IonGrid>
                     <IonRow className="ion-justify-content-center">
@@ -162,7 +190,7 @@ const Profile: FC = () => {
                     </IonRow>
                 </IonGrid>
             </IonContent>
-        </IonPage>
+        </IonPage >
     );
 };
 

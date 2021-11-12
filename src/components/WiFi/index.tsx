@@ -1,9 +1,5 @@
 const WiFi = () => {
-    return (
-        <div>
-            
-        </div>
-    )
-}
+  return <div />;
+};
 
-export default WiFi
+export default WiFi;

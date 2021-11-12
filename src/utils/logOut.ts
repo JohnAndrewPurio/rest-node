@@ -1,25 +1,30 @@
-import { LogoutOptions, LogoutUrlOptions } from "@auth0/auth0-spa-js";
-import { BrowserPlugin } from "@capacitor/browser";
+import { LogoutOptions, LogoutUrlOptions } from '@auth0/auth0-spa-js';
+import { BrowserPlugin } from '@capacitor/browser';
 
-type buildLogoutUrl = (options?: LogoutUrlOptions | undefined) => string
-type logout = (options?: LogoutOptions | undefined) => void
+type buildLogoutUrl = (options?: LogoutUrlOptions | undefined) => string;
+type logout = (options?: LogoutOptions | undefined) => void;
 
-const logOut = async (Browser: BrowserPlugin, buildLogoutUrl: buildLogoutUrl, logout: logout, logoutUri: string) => {
-    const logoutUrlOptions: LogoutUrlOptions = { 
-        returnTo: logoutUri 
-    }
-    
-    const browserOptions = {
-        url: buildLogoutUrl(logoutUrlOptions),
-        windowName: "_self"
-    }
+const logOut = async (
+  Browser: BrowserPlugin,
+  buildLogoutUrl: buildLogoutUrl,
+  logout: logout,
+  logoutUri: string
+) => {
+  const logoutUrlOptions: LogoutUrlOptions = {
+    returnTo: logoutUri,
+  };
 
-    const logoutOptions: LogoutOptions = {
-        localOnly: true
-    }
+  const browserOptions = {
+    url: buildLogoutUrl(logoutUrlOptions),
+    windowName: '_self',
+  };
 
-    await Browser.open(browserOptions)
-    logout(logoutOptions)
-}
+  const logoutOptions: LogoutOptions = {
+    localOnly: true,
+  };
 
-export default logOut
+  await Browser.open(browserOptions);
+  logout(logoutOptions);
+};
+
+export default logOut;
