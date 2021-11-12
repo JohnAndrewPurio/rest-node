@@ -1,4 +1,5 @@
-import { IonContent, IonRow } from '@ionic/react';
+import { IonContent, IonPage, IonRow } from '@ionic/react';
+import { useEffect, useRef, useState } from 'react';
 import DateAndLocation from '../../../components/DateAndLocation';
 import MainClock from '../../../components/MainClock';
 import SettingsList from '../../../components/SettingsList';
@@ -12,15 +13,35 @@ const Dashboard: React.FC = () => {
     },
   };
 
+  const ref = useRef<HTMLDivElement>(null);
+  const [biggest, setBiggest] = useState(0);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUpClock();
+    }, 500);
+  }, []);
+
+  const setUpClock = async () => {
+    if (ref.current?.offsetWidth) {
+      setBiggest(ref.current.offsetWidth * 0.75);
+      setLoading(false);
+    }
+  };
+
   return (
-    <IonContent>
-      <DateAndLocation>
+    <IonPage>
+      {biggest !== 0 && !loading && <DateAndLocation />}
+      <IonContent>
         <IonRow style={_styles.clock}>
-          <MainClock />
+          <div ref={ref} className="mainclock-container">
+            {biggest !== 0 && !loading && <MainClock biggest={biggest} />}
+          </div>
         </IonRow>
-        <SettingsList />
-      </DateAndLocation>
-    </IonContent>
+        {biggest !== 0 && !loading && <SettingsList />}
+      </IonContent>
+    </IonPage>
   );
 };
 

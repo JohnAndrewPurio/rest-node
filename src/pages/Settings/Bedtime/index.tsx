@@ -31,11 +31,12 @@ const Bedtime: React.FC = () => {
     if (value) {
       const defaultStates = JSON.parse(value);
       let start = moment(defaultStates.bedtime.time, 'H:mm');
-      if (start.isBefore(moment())) {
-        start = start.add(1, 'days');
-      }
       let end = moment(defaultStates.waketime.time, 'H:mm');
       if (end.isSameOrBefore(start)) {
+        end = end.add(1, 'days');
+      }
+      if (start.isBefore(moment()) && end.isBefore(moment())) {
+        start = start.add(1, 'days');
         end = end.add(1, 'days');
       }
       const newState = {
