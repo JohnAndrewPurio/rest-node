@@ -1,8 +1,9 @@
 import { FC, useContext, useEffect } from 'react'
-import { 
-    IonAvatar, IonBackButton, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemGroup, IonLabel, IonList, IonListHeader, 
-    IonPage, IonRow, IonTitle, IonToggle, useIonLoading } 
-from "@ionic/react";
+import {
+    IonAvatar, IonBackButton, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemGroup, IonLabel, IonList, IonListHeader,
+    IonPage, IonRow, IonTitle, IonToggle, useIonLoading
+}
+    from "@ionic/react";
 import UserContext from '../../contextStore/UserContext/userContext';
 import LoadingContext from '../../contextStore/AppContext/loadingContext';
 
@@ -13,13 +14,15 @@ import { logoutUri } from '../../auth0.config';
 import { helpCircle, logOutOutline, mail, moon, navigate } from 'ionicons/icons';
 import { getAddress } from '../../utils/userGeoIP';
 import { REST_NODE } from '../paths.json'
-import toggleDarkMode from '../../utils/toggleDarkMode';
 import { ToggleChangeEventDetail } from '@ionic/core';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
+import { layerise } from '../externalLinks.json'
+import { Redirect } from 'react-router';
+
 const Profile: FC = () => {
     const user = useContext(UserContext)
-    const [dark, setDarkMode ] = useContext(DarkModeContext) || [null, null]
+    const [, setDarkMode] = useContext(DarkModeContext) || [null, null]
     const [loading, setIsLoading] = useContext(LoadingContext) || [null, null]
     const { buildLogoutUrl, isLoading, logout } = useAuth0()
     const [startLoading, stopLoading] = useIonLoading()
@@ -32,14 +35,12 @@ const Profile: FC = () => {
     const darkModeHandler = ({ detail }: CustomEvent<ToggleChangeEventDetail>) => {
         const darkMode = detail.checked
 
-        console.log("Dark:", dark)
-
-        if(setDarkMode)
+        if (setDarkMode)
             setDarkMode(darkMode)
     }
 
     useEffect(() => {
-        if(setIsLoading)
+        if (setIsLoading)
             setIsLoading(isLoading)
     }, [isLoading])
 
@@ -54,13 +55,13 @@ const Profile: FC = () => {
     }, [loading])
 
     if (!user)
-        return null;
+        return <Redirect to="/login" />
 
     return (
         <IonPage>
             <IonHeader>
                 <IonItem>
-                    <IonBackButton defaultHref={ REST_NODE } />
+                    <IonBackButton defaultHref={REST_NODE} />
                     <IonTitle>Profile</IonTitle>
                 </IonItem>
             </IonHeader>
@@ -135,7 +136,7 @@ const Profile: FC = () => {
                                 </h4>
                             </IonListHeader>
 
-                            <IonItem href="#" >
+                            <IonItem href={layerise} >
                                 <IonIcon icon={helpCircle} slot="start" />
                                 <IonLabel>
                                     <h5>

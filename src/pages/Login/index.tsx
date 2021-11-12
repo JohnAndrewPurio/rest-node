@@ -7,7 +7,7 @@ import LoginButton from '../../components/LoginButton';
 import './styles.css';
 
 const Login: FC = () => {
-  const { user, isLoading } = useAuth0()
+  const { user } = useAuth0()
 
   if (user) 
     return <Redirect to="/profile" />
