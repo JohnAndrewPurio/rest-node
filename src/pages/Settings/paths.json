@@ -1,0 +1,6 @@
+{
+    "SOUNDS": "/restnode/settings/sounds",
+    "LIGHTS": "/restnode/settings/lights",
+    "BEDTIME": "/restnode/settings/bedtime",
+    "RELAXATION": "/restnode/settings/relaxation"
+}

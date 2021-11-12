@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
 import { Action, SoundsActionTypes } from './soundsActions';
 
-interface State {
+export interface State {
   sound: { [key: string]: boolean };
   volume: { [key: string]: number };
   audio: { [key: string]: any };
@@ -66,6 +66,8 @@ const reducer = (state: State = initialState, action: Action) => {
         sample: { audio: action.payload, playing: !state.sample.playing },
         sound: { night: false, wake: false },
       };
+    case SoundsActionTypes.SET_STATE:
+      return action.payload;
     default:
       return state;
   }

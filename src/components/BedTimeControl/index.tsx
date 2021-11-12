@@ -73,7 +73,7 @@ const BedTimeControl: React.FC = () => {
 
 const HoursSetter: React.FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
-  const { bedtimeHours } = state;
+  const { bedtimeHours, started } = state;
 
   const _styles = {
     container: {
@@ -100,6 +100,9 @@ const HoursSetter: React.FC = () => {
       fontWeight: 900,
       fontSize: '8vw',
       padding: 0,
+      color: started
+        ? 'var(--ion-color-secondary-shade)'
+        : 'var(--ion-color-dark)',
     },
     icon: {
       fontSize: '10vw',
@@ -124,6 +127,7 @@ const HoursSetter: React.FC = () => {
           size="small"
           style={_styles.button}
           fill="clear"
+          disabled={started}
         >
           <IonIcon
             color="tertiary"
@@ -140,6 +144,7 @@ const HoursSetter: React.FC = () => {
           size="small"
           style={_styles.button}
           fill="clear"
+          disabled={started}
         >
           <IonIcon
             color="tertiary"
@@ -155,7 +160,7 @@ const HoursSetter: React.FC = () => {
 
 const TimePicker: React.FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
-  const { wakeUpTime } = state;
+  const { wakeUpTime, started } = state;
 
   const _styles = {
     picker: {
@@ -185,6 +190,7 @@ const TimePicker: React.FC = () => {
         value={wakeUpTime.format()}
         onIonChange={(e) => dispatch(setWakeUpTime(moment(e.detail.value!)))}
         min={moment().add(24, 'h').format('YYYY-MM-DD')}
+        disabled={started}
       />
       <IonLabel slot="end" style={_styles.label}>
         <IonIcon color="tertiary" icon={alarm} />

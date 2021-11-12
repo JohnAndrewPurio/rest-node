@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { State } from './relaxationContext';
 
 export enum RelaxationActionTypes {
   TOGGLE_RELAXATION = 'TOGGLE_RELAXATION',
@@ -7,7 +8,18 @@ export enum RelaxationActionTypes {
   CHOOSE_AUDIO = 'CHOOSE_AUDIO',
   REWIND_OR_FORWARD = 'REWIND_OR_FORWARD',
   TOGGLE_FAVORITE = 'TOGGLE_FAVORITE',
+  SET_STATE = 'SET_STATE',
 }
+
+interface setStateType {
+  type: RelaxationActionTypes.SET_STATE;
+  payload: State;
+}
+
+export const setState = (state: State): setStateType => ({
+  type: RelaxationActionTypes.SET_STATE,
+  payload: state,
+});
 
 interface toggleRelaxationType {
   type: RelaxationActionTypes.TOGGLE_RELAXATION;
@@ -71,6 +83,7 @@ export const toggleFavorite = (id: string): toggleFavoriteType => ({
 });
 
 export type Action =
+  | setStateType
   | toggleRelaxationType
   | adjustVolumeType
   | setScheduleType

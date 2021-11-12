@@ -7,12 +7,11 @@ import LoginButton from '../../components/LoginButton';
 import './styles.css';
 
 const Login: FC = () => {
-  const { user, isLoading } = useAuth0()
+  const { user, isLoading } = useAuth0();
 
-  if (user) 
-    return <Redirect to="/profile" />
+  if (user) return <Redirect to="/profile" />;
 
-  console.log(user)
+  console.log(user);
 
   return (
     <IonPage>
@@ -21,12 +20,12 @@ const Login: FC = () => {
           <IonRow className="ion-justify-content-center">
             <CompanyLogo />
           </IonRow>
-          <IonRow className="ion=justify-content-center">
+          <IonRow className="ion-justify-content-center login-btn">
             <LoginButton />
           </IonRow>
         </IonGrid>
       </IonContent>
-    </IonPage >
+    </IonPage>
   );
 };
 
