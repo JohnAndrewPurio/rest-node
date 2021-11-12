@@ -27,6 +27,12 @@ import LightsContext from '../../contextStore/LightsContext/lightsContext';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 import { RestnodeService } from '../../services/restnodeServices';
 import { RestNodeStateType } from '../../types';
+import {
+  bedtimeStateChangeChecker,
+  lightsStateChangeChecker,
+  relaxationStateChangeChecker,
+  soundsStateChangeChecker,
+} from './helper';
 
 interface Props
   extends RouteComponentProps<{
@@ -70,10 +76,6 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   const saveChanges = async (change: RestNodeStateType) => {
     try {
       await RestnodeService.updateValues(change);
-      await Storage.set({
-        key: storage.RED_NODE_STATES,
-        value: JSON.stringify(change),
-      });
     } catch (e) {
       present({
         cssClass: 'my-css',
@@ -92,115 +94,20 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   const stateCheck = async (): Promise<changeCheck> => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
-    if (!started && value) {
+    if (value) {
       const states: RestNodeStateType = JSON.parse(value);
       switch (location.pathname) {
         case BEDTIME: {
-          const change = {
-            bedtime: {
-              time: bedtimeState.state.bedtimeStart.format('HH:mm'),
-            },
-            waketime: {
-              time: bedtimeState.state.wakeUpTime.format('HH:mm'),
-            },
-          };
-          const bedtime = { ...states.bedtime, ...change.bedtime };
-          const waketime = { ...states.waketime, ...change.waketime };
-          const newState = { bedtime, waketime };
-          if (_.isEqual(newState, states)) {
-            return { status: false };
-          }
-          return { status: true, newState };
+          return bedtimeStateChangeChecker(bedtimeState.state, states);
         }
         case LIGHTS: {
-          const change = {
-            bedtime: {
-              light: {
-                ...states.bedtime.light,
-                onpayload: {
-                  ...states.bedtime.light.onpayload,
-                  light: 'NIGHT_LIGHT',
-                  max_brightness: lightsState.state.brightness.night,
-                },
-                offpayload: {
-                  ...states.bedtime.light.offpayload,
-                  light: 'NIGHT_LIGHT',
-                  max_brightness: lightsState.state.brightness.night,
-                },
-              },
-            },
-            waketime: {
-              light: {
-                ...states.waketime.light,
-                onpayload: {
-                  ...states.waketime.light.onpayload,
-                  light: 'WAKE_LIGHT',
-                  max_brightness: lightsState.state.brightness.wake,
-                },
-                offpayload: {
-                  ...states.waketime.light.offpayload,
-                  light: 'WAKE_LIGHT',
-                  max_brightness: lightsState.state.brightness.wake,
-                },
-              },
-            },
-          };
-          const bedtime = { ...states.bedtime, ...change.bedtime };
-          const waketime = { ...states.waketime, ...change.waketime };
-          const newState = { bedtime, waketime };
-          if (_.isEqual(newState, states)) {
-            return { status: false };
-          }
-          return { status: true, newState };
+          return lightsStateChangeChecker(lightsState.state, states);
         }
         case SOUNDS: {
-          const change = {
-            bedtime: {
-              sound: {
-                ...states.bedtime.sound,
-                onpayload: {
-                  ...states.bedtime.sound.onpayload,
-                  sound: 'NIGHT_SOUND',
-                  max_volume: soundsState.state.volume.night,
-                  audio_file: soundsState.state.audio.night,
-                },
-                offpayload: {
-                  ...states.bedtime.sound.offpayload,
-                  sound: 'NIGHT_SOUND',
-                  max_volume: soundsState.state.volume.night,
-                  audio_file: soundsState.state.audio.night,
-                },
-              },
-            },
-            waketime: {
-              sound: {
-                ...states.waketime.sound,
-                onpayload: {
-                  ...states.waketime.sound.onpayload,
-                  sound: 'WAKE_SOUND',
-                  max_volume: soundsState.state.volume.wake,
-                  audio_file: soundsState.state.audio.wake,
-                },
-                offpayload: {
-                  ...states.waketime.sound.offpayload,
-                  sound: 'WAKE_SOUND',
-                  max_volume: soundsState.state.volume.wake,
-                  audio_file: soundsState.state.audio.wake,
-                },
-              },
-            },
-          };
-          const bedtime = { ...states.bedtime, ...change.bedtime };
-          const waketime = { ...states.waketime, ...change.waketime };
-          const newState = { bedtime, waketime };
-          if (_.isEqual(newState, states)) {
-            return { status: false };
-          }
-
-          return { status: true, newState };
+          return soundsStateChangeChecker(soundsState.state, states);
         }
         case RELAXATION:
-          return { status: false };
+          return relaxationStateChangeChecker();
       }
     }
     return { status: false };
@@ -208,7 +115,6 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   const hardwareBackHandlers = (ev: any) => {
     const path = window.location.pathname;
-
     ev.detail.register(5, (processNextHandler: any) => {
       if (path.includes('settings')) {
         goBack();
@@ -218,13 +124,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     });
   };
 
-  useEffect(() => {
-    document.addEventListener('ionBackButton', hardwareBackHandlers);
-    return () =>
-      document.removeEventListener('ionBackButton', hardwareBackHandlers);
-  }, [started]);
-
-  const handleSave = async () => {
+  const handleSaveClick = async () => {
     const change: changeCheck = await stateCheck();
     if (change.status) {
       present({
@@ -244,12 +144,49 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     } else {
       present({
         cssClass: 'my-css',
-        header: 'No new changes detected',
+        header: 'There are no new changes',
         message: '',
         buttons: ['Ok'],
       });
     }
   };
+
+  // android hardware back button listener
+  useEffect(() => {
+    document.addEventListener('ionBackButton', hardwareBackHandlers);
+    return () =>
+      document.removeEventListener('ionBackButton', hardwareBackHandlers);
+  }, []);
+
+  // instant start/stop sender
+  useEffect(() => {
+    stateCheck().then((change) => {
+      if (
+        location.pathname === BEDTIME &&
+        started &&
+        change.status &&
+        change.newState
+      ) {
+        saveChanges(change.newState);
+      }
+    });
+  }, [started]);
+
+  // websocket sender
+  useEffect(() => {
+    if (started) {
+      stateCheck().then((check) => {
+        if (check.status && check.newState) {
+          RestnodeService.sendSocketEvent(check.newState);
+        }
+      });
+    }
+  }, [
+    bedtimeState.state,
+    lightsState.state,
+    soundsState.state,
+    relaxationState.state,
+  ]);
 
   return (
     <IonHeader>
@@ -261,7 +198,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
         </IonButtons>
         <IonTitle>{title}</IonTitle>
         {!started && (
-          <IonButton fill="clear" slot="end" onClick={handleSave}>
+          <IonButton fill="clear" slot="end" onClick={handleSaveClick}>
             <IonIcon icon={save} slot="end" />
             <IonLabel>Save</IonLabel>
           </IonButton>
