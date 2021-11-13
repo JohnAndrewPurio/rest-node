@@ -1,5 +1,4 @@
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonHeader,
@@ -21,11 +20,11 @@ import {
   BEDTIME,
   RELAXATION,
 } from '../../pages/Settings/paths.json';
-import { storage } from '../../services/constants';
+import { BASE_URL, storage } from '../../services/constants';
 import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
 import LightsContext from '../../contextStore/LightsContext/lightsContext';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
-import { RestnodeService } from '../../services/restnodeServices';
+
 import { RestNodeStateType } from '../../types';
 import {
   bedtimeStateChangeChecker,
@@ -33,6 +32,9 @@ import {
   relaxationStateChangeChecker,
   soundsStateChangeChecker,
 } from './helper';
+import { sendSocketEvent, updateValues } from '../../services/restnodeServices';
+import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
+import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
 
 interface Props
   extends RouteComponentProps<{
@@ -42,10 +44,14 @@ interface Props
 }
 
 const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
+  const socket = useContext(SocketContext)
+
   const bedtimeState = useContext(BedTimeContext);
   const soundsState = useContext(SoundsContext);
   const lightsState = useContext(LightsContext);
   const relaxationState = useContext(RelaxationContext);
+  const [ targetAddress ] = useContext(TargetAddressContext)
+  
   const { started } = bedtimeState.state;
 
   const [present] = useIonAlert();
@@ -75,7 +81,10 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   const saveChanges = async (change: RestNodeStateType) => {
     try {
-      await RestnodeService.updateValues(change);
+      const url = targetAddress || BASE_URL
+      const protocol = url ? 'http': 'https'
+
+      await updateValues(url, protocol, change);
     } catch (e) {
       present({
         cssClass: 'my-css',
@@ -113,14 +122,19 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     return { status: false };
   };
 
-  const hardwareBackHandlers = (ev: any) => {
+  const hardwareBackHandlers = (event: any) => {
     const path = window.location.pathname;
-    ev.detail.register(5, (processNextHandler: any) => {
-      if (path.includes('settings')) {
+
+    event.detail.register(5, (processNextHandler: any) => {
+      const settingsIncluded = path.includes('settings')
+
+      if (settingsIncluded) {
         goBack();
-      } else {
-        processNextHandler();
-      }
+
+        return
+      } 
+        
+      processNextHandler();
     });
   };
 
@@ -172,13 +186,14 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     });
   }, [started]);
 
-  // websocket sender
   useEffect(() => {
     if (started) {
-      stateCheck().then((check) => {
-        if (check.status && check.newState) {
-          RestnodeService.sendSocketEvent(check.newState);
-        }
+      stateCheck().then(({ status, newState }) => {
+        if (!status || !newState) 
+          return
+
+        if(socket)
+            sendSocketEvent(socket, newState);
       });
     }
   }, [

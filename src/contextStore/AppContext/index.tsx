@@ -15,17 +15,25 @@ import TargetAddressContext from '../NetworkContext/targetAddress';
 
 import toggleDarkMode from "../../utils/toggleDarkMode";
 
+import "../../api/Firebase/firebaseInit"
+
+interface paramsInterface {
+    url: string
+}
+
+type handleRedirectType = (params: paramsInterface) => void 
+
 const AppContext: FC = ({ children }) => {
     const loadingState = useState<boolean>(false);
     const darkModeState = useState<boolean>(false);
     const targetAddressState = useState<string>("");
 
     const [darkMode, setDarkMode] = darkModeState;
-    const [, setTargetAddress] = targetAddressState
+    const [targetAddress, setTargetAddress] = targetAddressState
 
     const { user, handleRedirectCallback } = useAuth0();
 
-    const handleRedirect: (params: { url: string }) => void = async ({ url }) => {
+    const handleRedirect: handleRedirectType = async ({ url }) => {
         const stateIncluded = url.includes('state');
         const codeIncluded = url.includes('code');
         const errorIncluded = url.includes('error');
@@ -53,6 +61,8 @@ const AppContext: FC = ({ children }) => {
     useEffect(() => {
         toggleDarkMode(document, darkMode);
     }, [darkMode]);
+
+    console.log('Target Address:', targetAddress)
 
     return (
         <DarkModeContext.Provider value={darkModeState}>
