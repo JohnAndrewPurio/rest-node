@@ -1,22 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
 import Circle from './Circle';
 import Clock from './Clock';
 import Numbers from './Numbers';
 import './styles.css';
 import { circleSpacing } from './constants.json';
+import { useContext, useEffect, useState } from 'react';
+import { ClockArcs } from '../../types';
+import { Storage } from '@capacitor/storage';
+import { storage } from '../../services/constants';
+import {
+  getBedtimeArcs,
+  getLightArcs,
+  getRelaxationArcs,
+  getSoundsArcs,
+} from './helper';
+import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
 
-const MainClock: React.FC = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const [biggest, setBiggest] = useState(0);
+interface Props {
+  biggest: number;
+}
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (ref.current?.offsetWidth) {
-        setBiggest(ref.current.offsetWidth * 0.75);
-      }
-    }, 1000);
-  }, []);
-
+const MainClock: React.FC<Props> = ({ biggest }) => {
   const circles = [
     {
       size: 0,
@@ -46,7 +49,7 @@ const MainClock: React.FC = () => {
       size: 0,
       color: '#eb445a',
       percentage: 35,
-      placement: 70,
+      placement: 90,
     },
   ];
 
@@ -54,27 +57,48 @@ const MainClock: React.FC = () => {
     circle.size = biggest - circleSpacing * index;
   });
 
+  const initialArcs = {
+    bedtime: [],
+    lights: [],
+    sounds: [],
+    relaxation: [],
+  };
+
+  const { state } = useContext(BedTimeContext);
+  const [arcs, setArcs] = useState<ClockArcs>(initialArcs);
+
+  useEffect(() => {
+    Storage.get({ key: storage.RED_NODE_STATES }).then((res) => {
+      if (res.value) {
+        const states = JSON.parse(res.value);
+        const clockArcs: ClockArcs = {
+          bedtime: getBedtimeArcs(states),
+          lights: getLightArcs(states),
+          sounds: getSoundsArcs(states),
+          relaxation: getRelaxationArcs(states),
+        };
+        setArcs(clockArcs);
+      }
+    });
+  }, [state]);
+
   return (
-    <div ref={ref} className="container">
-      {biggest !== 0 && (
-        <>
-          <Numbers />
-          {circles.map((circle, i) => (
-            <Circle
-              key={`circle${i}`}
-              size={circle.size}
-              color={circle.color}
-              percentage={circle.percentage}
-              placement={circle.placement}
-            />
-          ))}
-          <Clock
-            size={circles[circles.length - 1].size - circleSpacing}
-            circle={biggest / 2}
-          />
-        </>
-      )}
-    </div>
+    <>
+      <Numbers />
+      {circles.map((circle, i) => (
+        <Circle
+          key={`circle${i}`}
+          size={circle.size}
+          color={circle.color}
+          percentage={circle.percentage}
+          placement={circle.placement}
+        />
+      ))}
+      <Clock
+        size={circles[circles.length - 1].size - circleSpacing}
+        circle={biggest / 2}
+      />
+    </>
   );
 };
 
