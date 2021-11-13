@@ -3,7 +3,6 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import { App as CapApp } from '@capacitor/app';
 
-import { RouteComponentProps, withRouter } from 'react-router';
 import { useEffect } from 'react';
 import Home from '../../pages/Home';
 import Login from '../../pages/Login';
