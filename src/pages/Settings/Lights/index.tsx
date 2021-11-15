@@ -95,7 +95,7 @@ const Content: React.FC = () => {
         <TimeBar />
         <SunSyncToggle />
       </IonGrid>
-      <LightControl index={0} component="night" />
+      <LightControl component="night" index={0}  />
       <LightControl component="wake" index={1} />
     </IonContent>
   );
