@@ -50,14 +50,15 @@ export interface RestNodeStateType {
   waketime: Time;
 }
 
-interface TimeArc {
+export interface TimeArc {
   percentage: number;
   placement: number;
 }
 
 export interface ClockArcs {
-  bedtime: TimeArc[];
-  lights: TimeArc[];
-  sounds: TimeArc[];
-  relaxation: TimeArc[];
+  [key: string]: TimeArc[];
+}
+
+export interface StringKeyedObject {
+  [key: string]: string
 }
