@@ -12,14 +12,19 @@ import SettingsRouter from '../Settings';
 import { DASHBOARD } from '../Tabs/paths.json';
 
 import Tabs from '../Tabs';
-import { getLastValues, initializeWebsocketConnection } from '../../services/restnodeServices';
+import {
+  getLastValues,
+  initializeWebsocketConnection,
+} from '../../services/restnodeServices';
 import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
 import { BASE_URL } from '../../services/constants';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
 
 const RestNode: React.FC<RouteComponentProps> = (props) => {
-  const [targetAddress] = useContext(TargetAddressContext)
-  const [socket] = useState<WebSocket>(initializeWebsocketConnection(targetAddress, 'ws'))
+  const [targetAddress] = useContext(TargetAddressContext);
+  const [socket] = useState<WebSocket>(
+    initializeWebsocketConnection(targetAddress, 'ws')
+  );
 
   const [startLoading, stopLoading] = useIonLoading();
   const [loading, setLoading] = useState<null | boolean>(false);
@@ -27,8 +32,8 @@ const RestNode: React.FC<RouteComponentProps> = (props) => {
   const [present] = useIonAlert();
 
   const getInitialValues = async () => {
-    const url = targetAddress || BASE_URL
-    const protocol = targetAddress ? 'http' : 'https'
+    const url = targetAddress || BASE_URL;
+    const protocol = targetAddress ? 'http' : 'https';
 
     try {
       setLoading(true);

@@ -60,12 +60,12 @@ export interface ClockArcs {
 }
 
 export interface StringKeyedObject {
-  [key: string]: string
+  [key: string]: string;
 }
 
 export interface TimeBarType {
-  width: string,
-  position: string,
-  start: string,
-  end: string
+  width: string;
+  position: string;
+  start: string;
+  end: string;
 }

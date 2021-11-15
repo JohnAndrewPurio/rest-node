@@ -31,7 +31,7 @@ const Bedtime: React.FC = () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
       const defaultStates = JSON.parse(value);
-      let { start, end } = getStartEnd(defaultStates)
+      const { start, end } = getStartEnd(defaultStates);
       const newState = {
         started: moment().isSameOrAfter(start) && moment().isSameOrBefore(end),
         bedtimeStart: start,

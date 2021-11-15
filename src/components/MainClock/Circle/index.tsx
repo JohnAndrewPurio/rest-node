@@ -6,15 +6,15 @@ import { TimeArc } from '../../../types';
 interface Props {
   size: number;
   color: string;
-  arcs: TimeArc[]
+  arcs: TimeArc[];
 }
 
 const Circle: React.FC<Props> = ({ size, color, arcs }) => {
   const sqSize = size;
   const radius = (sqSize - strokeWidth) / 2;
   const viewBox = `0 0 ${sqSize} ${sqSize}`;
-  
-  console.log(size, color, arcs)
+
+  console.log(size, color, arcs);
 
   return (
     <svg width={sqSize} height={sqSize} viewBox={viewBox}>

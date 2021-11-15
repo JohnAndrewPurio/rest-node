@@ -21,7 +21,6 @@ interface Props {
 }
 
 const MainClock: React.FC<Props> = ({ biggest }) => {
-
   const initialArcs = {
     bedtime: [],
     lights: [],
@@ -45,27 +44,27 @@ const MainClock: React.FC<Props> = ({ biggest }) => {
         setArcs(clockArcs);
       }
     });
-  }
+  };
 
   useEffect(() => {
-    configureArcs()
+    configureArcs();
   }, []);
 
-  useIonViewDidEnter(() => configureArcs())
+  useIonViewDidEnter(() => configureArcs());
 
-  const keys = ['bedtime', 'sounds', 'lights', 'relaxation']
+  const keys = ['bedtime', 'sounds', 'lights', 'relaxation'];
   const colors: StringKeyedObject = {
     bedtime: '#2dd36f',
     sounds: '#71964b',
     relaxation: '#e0ac08',
-    lights: '#eb445a'
-  }
-  const sizes = new Array(keys.length).fill(0)
+    lights: '#eb445a',
+  };
+  const sizes = new Array(keys.length).fill(0);
   sizes.forEach((circle, i) => {
     sizes[i] = biggest - circleSpacing * i;
   });
 
-  console.log(arcs)
+  console.log(arcs);
 
   return (
     <>

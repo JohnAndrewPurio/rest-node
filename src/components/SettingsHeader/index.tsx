@@ -44,13 +44,13 @@ interface Props
 }
 
 const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
-  const socket = useContext(SocketContext)
+  const socket = useContext(SocketContext);
 
   const bedtimeState = useContext(BedTimeContext);
   const soundsState = useContext(SoundsContext);
   const lightsState = useContext(LightsContext);
   const relaxationState = useContext(RelaxationContext);
-  const [targetAddress] = useContext(TargetAddressContext)
+  const [targetAddress] = useContext(TargetAddressContext);
 
   const { started } = bedtimeState.state;
 
@@ -81,11 +81,11 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   const saveChanges = async (change: RestNodeStateType) => {
     try {
-      const url = targetAddress || BASE_URL
-      const protocol = targetAddress ? 'http' : 'https'
+      const url = targetAddress || BASE_URL;
+      const protocol = targetAddress ? 'http' : 'https';
       await updateValues(url, protocol, change);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       present({
         cssClass: 'my-css',
         header: 'Error',
@@ -126,12 +126,12 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     const path = window.location.pathname;
 
     event.detail.register(5, (processNextHandler: any) => {
-      const settingsIncluded = path.includes('settings')
+      const settingsIncluded = path.includes('settings');
 
       if (settingsIncluded) {
         goBack();
 
-        return
+        return;
       }
 
       processNextHandler();
@@ -189,11 +189,9 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   useEffect(() => {
     if (started) {
       stateCheck().then(({ status, newState }) => {
-        if (!status || !newState)
-          return
+        if (!status || !newState) return;
 
-        if (socket)
-          sendSocketEvent(socket, newState);
+        if (socket) sendSocketEvent(socket, newState);
       });
     }
   }, [

@@ -46,7 +46,7 @@ const Content: React.FC = () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
       const defaultStates = JSON.parse(value);
-      const { start, end } = getStartEnd(defaultStates)
+      const { start, end } = getStartEnd(defaultStates);
       const newState = {
         relaxationAudio: null,
         relaxationFilter: 'All',
