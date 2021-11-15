@@ -67,7 +67,6 @@ export const getRelaxationArcs = (states: RestNodeStateType) => {
 };
 
 const convertTimeToMoment = (states: RestNodeStateType) => {
-  console.log(states)
   let start = moment(states.bedtime.time, 'H:mm');
   let end = moment(states.waketime.time, 'H:mm');
   if (end.isSameOrBefore(start)) {
@@ -76,6 +75,9 @@ const convertTimeToMoment = (states: RestNodeStateType) => {
   if (start.isBefore(moment()) && end.isBefore(moment())) {
     start = moment(start).add(1, 'days');
     end = moment(end).add(1, 'days');
+  }
+  if (start.isAfter(end) && end.isAfter(moment())) {
+    start = moment(start).subtract(1, 'days')
   }
   return { start, end };
 };

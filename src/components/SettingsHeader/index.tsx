@@ -50,8 +50,8 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   const soundsState = useContext(SoundsContext);
   const lightsState = useContext(LightsContext);
   const relaxationState = useContext(RelaxationContext);
-  const [ targetAddress ] = useContext(TargetAddressContext)
-  
+  const [targetAddress] = useContext(TargetAddressContext)
+
   const { started } = bedtimeState.state;
 
   const [present] = useIonAlert();
@@ -82,10 +82,10 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   const saveChanges = async (change: RestNodeStateType) => {
     try {
       const url = targetAddress || BASE_URL
-      const protocol = url ? 'http': 'https'
-
+      const protocol = targetAddress ? 'http' : 'https'
       await updateValues(url, protocol, change);
     } catch (e) {
+      console.log(e)
       present({
         cssClass: 'my-css',
         header: 'Error',
@@ -132,8 +132,8 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
         goBack();
 
         return
-      } 
-        
+      }
+
       processNextHandler();
     });
   };
@@ -189,11 +189,11 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   useEffect(() => {
     if (started) {
       stateCheck().then(({ status, newState }) => {
-        if (!status || !newState) 
+        if (!status || !newState)
           return
 
-        if(socket)
-            sendSocketEvent(socket, newState);
+        if (socket)
+          sendSocketEvent(socket, newState);
       });
     }
   }, [

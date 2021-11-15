@@ -8,15 +8,15 @@ export type initializeWebsocketConnectionType = (url: string, protocol?: string)
 export const initializeWebsocketConnection: initializeWebsocketConnectionType = (url, protocol = "wss") => {
   const socket_endpoint = `${protocol}://${url}/restnode`;
   const socket = new WebSocket(socket_endpoint);
-  
+
   const socketOnOpen = (event: Event) => {
     console.log('Websocket Started:', event);
   }
-  
+
   const socketOnClose = (event: Event) => {
     console.log('Websocket Ended:', event)
   }
-  
+
   const socketOnError = (event: Event) => {
     console.log('Websocket Error:', event)
   }
@@ -47,6 +47,7 @@ export const getLastValues: getLastValuesType = async (url = BASE_URL, protocol 
 
   const bedtimeResponse = await axios.get(bedtimeURL);
   const waketimeResponse = await axios.get(waketimeURL);
+  console.log('service', bedtimeResponse.data)
   const bedtime = bedtimeResponse.data;
   const waketime = waketimeResponse.data;
 

@@ -16,6 +16,7 @@ import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext'
 import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
 import { storage } from '../../../services/constants';
 import { setState } from '../../../contextStore/RelaxationContext/relaxationActions';
+import { getStartEnd } from '../helper';
 
 const Relaxation: React.FC = () => {
   return (
@@ -45,6 +46,7 @@ const Content: React.FC = () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
       const defaultStates = JSON.parse(value);
+      const { start, end } = getStartEnd(defaultStates)
       const newState = {
         relaxationAudio: null,
         relaxationFilter: 'All',

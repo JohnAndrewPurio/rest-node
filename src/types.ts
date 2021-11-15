@@ -62,3 +62,10 @@ export interface ClockArcs {
 export interface StringKeyedObject {
   [key: string]: string
 }
+
+export interface TimeBarType {
+  width: string,
+  position: string,
+  start: string,
+  end: string
+}
