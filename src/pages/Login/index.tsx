@@ -7,10 +7,9 @@ import LoginButton from '../../components/LoginButton';
 import './styles.css';
 
 const Login: FC = () => {
-  const { user } = useAuth0()
- 
-  if (user) 
-    return <Redirect to="/profile" />;
+  const { user } = useAuth0();
+
+  if (user) return <Redirect to="/profile" />;
 
   return (
     <IonPage>

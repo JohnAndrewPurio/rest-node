@@ -54,6 +54,7 @@ export const getLastValues: getLastValuesType = async (url = BASE_URL, protocol 
 
   const bedtimeResponse = await axios.get(bedtimeURL);
   const waketimeResponse = await axios.get(waketimeURL);
+  console.log('service', bedtimeResponse.data);
   const bedtime = bedtimeResponse.data;
   const waketime = waketimeResponse.data;
 
@@ -63,9 +64,13 @@ export const getLastValues: getLastValuesType = async (url = BASE_URL, protocol 
   });
 
   return { bedtime, waketime };
-}
+};
 
-export type updateValuesType = (url: string, protocol: string, data: RestNodeStateType) => Promise<RestNodeStateType>
+export type updateValuesType = (
+  url: string,
+  protocol: string,
+  data: RestNodeStateType
+) => Promise<RestNodeStateType>;
 
 export const updateValues: updateValuesType = async (url, protocol, data) => {
   console.log('update', data);
@@ -79,12 +84,15 @@ export const updateValues: updateValuesType = async (url, protocol, data) => {
   });
 
   return data;
-}
+};
 
-export type sendSocketEventType = (socket: WebSocket, data: RestNodeStateType) => Promise<RestNodeStateType>
+export type sendSocketEventType = (
+  socket: WebSocket,
+  data: RestNodeStateType
+) => Promise<RestNodeStateType>;
 
 export const sendSocketEvent: sendSocketEventType = async (socket, data) => {
-  const strData = JSON.stringify(data)
+  const strData = JSON.stringify(data);
 
   socket.send(strData);
 
@@ -94,4 +102,4 @@ export const sendSocketEvent: sendSocketEventType = async (socket, data) => {
   });
 
   return data;
-}
+};

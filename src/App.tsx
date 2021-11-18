@@ -5,6 +5,7 @@ import AppRouter from './components/AppRouter';
 import AppContext from './contextStore/AppContext';
 
 import './styles';
+import Menu from './components/Menu';
 
 const App: FC = () => {
   return (

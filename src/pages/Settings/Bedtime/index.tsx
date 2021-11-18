@@ -11,6 +11,7 @@ import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext'
 import WakeTimeCountdown from '../../../components/WakeTimeCountdown';
 import { bedtimeStarted, setState } from '../../../contextStore/BedTimeContext/bedtimeActions';
 import { storage } from '../../../services/constants';
+import { getStartEnd } from '../helper';
 
 import './styles.css';
 
@@ -28,15 +29,7 @@ const Bedtime: FC = () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
       const defaultStates = JSON.parse(value);
-      let start = moment(defaultStates.bedtime.time, 'H:mm');
-      let end = moment(defaultStates.waketime.time, 'H:mm');
-      if (end.isSameOrBefore(start)) {
-        end = end.add(1, 'days');
-      }
-      if (start.isBefore(moment()) && end.isBefore(moment())) {
-        start = start.add(1, 'days');
-        end = end.add(1, 'days');
-      }
+      const { start, end } = getStartEnd(defaultStates);
       const newState = {
         started: moment().isSameOrAfter(start) && moment().isSameOrBefore(end),
         bedtimeStart: start,

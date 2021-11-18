@@ -4,12 +4,13 @@ import {
   IonFooter,
   IonGrid,
   IonIcon,
+  IonRange,
   IonRow,
   IonToolbar,
 } from '@ionic/react';
-import { pause, play, playBack, playForward } from 'ionicons/icons';
+import { pause, play, playBack, playForward, volumeHigh, volumeLow } from 'ionicons/icons';
 import { useContext } from 'react';
-import { toggleRelaxation } from '../../contextStore/RelaxationContext/relaxationActions';
+import { adjustVolume, toggleRelaxation } from '../../contextStore/RelaxationContext/relaxationActions';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 
 const RelaxationFooter: React.FC = () => {
@@ -20,7 +21,7 @@ const RelaxationFooter: React.FC = () => {
     playBtn: {
       height: '6vh',
       width: '6vh',
-      margin: '1.5vh 0vh',
+      margin: '1.5vh .5vh 1.5vh 1.5vh',
       '--padding-start': '0px',
       '--padding-end': '0px',
       '--padding-top': '0px',
@@ -34,13 +35,23 @@ const RelaxationFooter: React.FC = () => {
       transform: 'scale(-1, 1) rotate(35deg)',
       transformOrigin: 'center',
     },
-    paddingZero: {
-      padding: 0,
+    title: {
+      paddingRight: ".5em",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      maxWidth: "30%"
     },
     footerGrid: {
       display: 'flex',
       alignItems: 'center',
     },
+    volume: {
+      flex: 1
+    },
+    range: {
+      width: "100%"
+    }
   };
 
   return (
@@ -48,7 +59,7 @@ const RelaxationFooter: React.FC = () => {
       <IonToolbar>
         <IonGrid style={_styles.footerGrid}>
           <IonCol size="auto">
-            <IonButton
+            {/* <IonButton
               fill="clear"
               shape="round"
               size="small"
@@ -60,14 +71,14 @@ const RelaxationFooter: React.FC = () => {
                 icon={playBack}
                 slot="icon-only"
               />
-            </IonButton>
+            </IonButton> */}
             <IonButton
               onClick={() => dispatch(toggleRelaxation())}
               shape="round"
               size="small"
               style={_styles.playBtn}
             >
-              {relaxationPlaying ? (
+              {relaxationPlaying.night ? (
                 <IonIcon
                   color="light"
                   style={_styles.icon}
@@ -83,7 +94,7 @@ const RelaxationFooter: React.FC = () => {
                 />
               )}
             </IonButton>
-            <IonButton
+            {/* <IonButton
               fill="clear"
               shape="round"
               size="small"
@@ -95,13 +106,30 @@ const RelaxationFooter: React.FC = () => {
                 icon={playForward}
                 slot="icon-only"
               />
-            </IonButton>
+            </IonButton> */}
           </IonCol>
-          <IonCol>
-            <IonGrid style={_styles.paddingZero}>
-              <IonRow style={{ fontWeight: 700 }}>Title title</IonRow>
+          <IonCol size="auto" style={_styles.title}>
+            <IonGrid >
+              <IonRow style={{ fontWeight: 700 }}>Title title title title title</IonRow>
               <IonRow style={{ fontSize: '.7rem' }}>Creator</IonRow>
             </IonGrid>
+          </IonCol>
+          <IonCol style={_styles.volume}>
+            <IonRange
+              style={_styles.range}
+              color="primary"
+              className="range-slider"
+              value={state.relaxationVolume.night}
+              onIonChange={(e: any) => {
+                const val = e.target.value
+                if (val) {
+                  dispatch(adjustVolume(e.target.value))
+                }
+              }}
+            >
+              <IonIcon size="small" color="primary" slot="start" icon={volumeLow} />
+              <IonIcon size="small" color="primary" slot="end" icon={volumeHigh} />
+            </IonRange>
           </IonCol>
         </IonGrid>
       </IonToolbar>
