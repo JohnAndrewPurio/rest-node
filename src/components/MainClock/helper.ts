@@ -87,7 +87,39 @@ export const getSoundsArcs = (states: RestNodeStateType) => {
 };
 
 export const getRelaxationArcs = (states: RestNodeStateType) => {
-  return [];
+  const { start, end } = convertTimeToMoment(states);
+  const nightRelaxationStart = moment(start).add(
+    states.bedtime.relax.onoffset,
+    'minutes'
+  );
+  const nightRelaxationEnd = moment(start).add(
+    states.bedtime.relax.offoffset,
+    'minutes'
+  );
+  const nightDiff = nightRelaxationEnd.diff(nightRelaxationStart, 'hours', true);
+  const wakeRelaxationStart = moment(end).add(
+    states.waketime.relax.onoffset,
+    'minutes'
+  );
+  const wakeRelaxationEnd = moment(end).add(
+    states.waketime.relax.offoffset,
+    'minutes'
+  );
+  const wakeDiff = wakeRelaxationEnd.diff(wakeRelaxationStart, 'hours', true);
+  const nightHour = nightRelaxationStart.hours();
+  const nightMin = nightRelaxationStart.minutes() / 60;
+  const wakeHour = wakeRelaxationStart.hours();
+  const wakeMin = wakeRelaxationStart.minutes() / 60;
+  return [
+    {
+      percentage: (nightDiff / 24) * 100,
+      placement: 360 * ((nightHour + nightMin) / 24) - 90,
+    },
+    {
+      percentage: (wakeDiff / 24) * 100,
+      placement: 360 * ((wakeHour + wakeMin) / 24) - 90,
+    },
+  ];
 };
 
 const convertTimeToMoment = (states: RestNodeStateType) => {

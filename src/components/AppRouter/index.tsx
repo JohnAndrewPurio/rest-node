@@ -19,6 +19,7 @@ import {
   PROFILE,
   REST_NODE,
 } from '../../pages/paths.json';
+import Menu from '../Menu';
 
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();
@@ -46,7 +47,8 @@ const AppRouter: React.FC = () => {
 
   return (
     <IonReactRouter>
-      <IonRouterOutlet>
+      <Menu />
+      <IonRouterOutlet id='main'>
         <Route exact path={LOGIN}>
           <Login />
         </Route>

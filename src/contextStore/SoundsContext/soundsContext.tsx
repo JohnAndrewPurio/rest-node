@@ -38,13 +38,13 @@ const SoundsContext = createContext<Context>(initialContext);
 const reducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
     case SoundsActionTypes.TOGGLE_SOUND: {
-      const audio = { night: false, wake: false };
+      const sound = { night: false, wake: false };
       if (action.payload) {
-        audio.night = !state.audio.night;
+        sound.night = !state.sound.night;
       } else {
-        audio.wake = !state.audio.wake;
+        sound.wake = !state.sound.wake;
       }
-      return { ...state, audio, sample: { audio: null, playing: false } };
+      return { ...state, sound, sample: { audio: null, playing: false } };
     }
     case SoundsActionTypes.ADJUST_VOLUME: {
       if (action.payload.isNight) {

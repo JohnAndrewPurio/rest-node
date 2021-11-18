@@ -85,9 +85,14 @@ const Content: React.FC = () => {
         bedtimeState.dispatch(bedtimeStarted());
       }
     }, 1000);
-    getState();
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (started) {
+      getState();
+    }
+  }, [started]);
 
   const _styles = {
     fullHeight: {

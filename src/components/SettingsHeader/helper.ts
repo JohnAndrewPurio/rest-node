@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { State as BedTimeState } from '../../contextStore/BedTimeContext/bedtimeContext';
 import { State as LightsState } from '../../contextStore/LightsContext/lightsContext';
 import { State as SoundsState } from '../../contextStore/SoundsContext/soundsContext';
+import { State as RelaxationState } from '../../contextStore/RelaxationContext/relaxationContext';
 import { RestNodeStateType } from '../../types';
 
 export const bedtimeStateChangeChecker = (
@@ -70,12 +71,14 @@ export const soundsStateChangeChecker = (
           ...states.bedtime.sound.onpayload,
           sound: 'NIGHT_SOUND',
           max_volume: soundsState.volume.night,
+          volume: soundsState.volume.night / 2,
           audio_file: soundsState.audio.night,
         },
         offpayload: {
           ...states.bedtime.sound.offpayload,
           sound: 'NIGHT_SOUND',
           max_volume: soundsState.volume.night,
+          volume: soundsState.volume.night / 2,
           audio_file: soundsState.audio.night,
         },
       },
@@ -87,12 +90,14 @@ export const soundsStateChangeChecker = (
           ...states.waketime.sound.onpayload,
           sound: 'WAKE_SOUND',
           max_volume: soundsState.volume.wake,
+          volume: soundsState.volume.wake / 2,
           audio_file: soundsState.audio.wake,
         },
         offpayload: {
           ...states.waketime.sound.offpayload,
           sound: 'WAKE_SOUND',
           max_volume: soundsState.volume.wake,
+          volume: soundsState.volume.wake / 2,
           audio_file: soundsState.audio.wake,
         },
       },
@@ -101,8 +106,51 @@ export const soundsStateChangeChecker = (
   return equalityChecker(change, states);
 };
 
-export const relaxationStateChangeChecker = () => {
-  return { status: false };
+export const relaxationStateChangeChecker = (
+  relaxationState: RelaxationState,
+  states: RestNodeStateType
+) => {
+  const change = {
+    bedtime: {
+      sound: {
+        ...states.bedtime.sound,
+        onpayload: {
+          ...states.bedtime.sound.onpayload,
+          sound: 'NIGHT_SOUND',
+          max_volume: relaxationState.relaxationVolume.night,
+          volume: relaxationState.relaxationVolume.night / 2,
+          audio_file: relaxationState.relaxationAudio.night,
+        },
+        offpayload: {
+          ...states.bedtime.sound.offpayload,
+          sound: 'NIGHT_SOUND',
+          max_volume: relaxationState.relaxationVolume.night,
+          volume: relaxationState.relaxationVolume.night / 2,
+          audio_file: relaxationState.relaxationAudio.night,
+        },
+      },
+    },
+    waketime: {
+      sound: {
+        ...states.waketime.sound,
+        onpayload: {
+          ...states.waketime.sound.onpayload,
+          sound: 'WAKE_SOUND',
+          max_volume: relaxationState.relaxationVolume.wake,
+          volume: relaxationState.relaxationVolume.wake / 2,
+          audio_file: relaxationState.relaxationAudio.wake,
+        },
+        offpayload: {
+          ...states.waketime.sound.offpayload,
+          sound: 'WAKE_SOUND',
+          max_volume: relaxationState.relaxationVolume.wake,
+          volume: relaxationState.relaxationVolume.wake / 2,
+          audio_file: relaxationState.relaxationAudio.wake,
+        },
+      },
+    },
+  };
+  return equalityChecker(change, states);
 };
 
 export const equalityChecker = (change: any, states: RestNodeStateType) => {

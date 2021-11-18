@@ -116,7 +116,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
           return soundsStateChangeChecker(soundsState.state, states);
         }
         case RELAXATION:
-          return relaxationStateChangeChecker();
+          return relaxationStateChangeChecker(relaxationState.state, states);
       }
     }
     return { status: false };

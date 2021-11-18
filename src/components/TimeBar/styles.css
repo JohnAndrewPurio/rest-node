@@ -2,6 +2,8 @@
 .sound-time {
     display: flex;
     justify-content: center;
+    margin: 0ch 2ch;
+    margin-bottom: .5em;
 }
 
 .time-bar {
@@ -21,14 +23,18 @@
 }
 
 .one-bar > .start {
-    left: -2.2ch;
+    left: -3ch;
+    color: var(--ion-color-tertiary);
 }
 
 .one-bar > .end {
-    right: -2.2ch;
+    margin-left: -1ch;
+    left: 100%;
+    color: var(--ion-color-primary);
 }
 
 .one-bar {
+    display: flex;
     position: absolute;
     height: 100%;
     border-radius: 10px;

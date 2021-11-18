@@ -24,7 +24,7 @@ const TimeBar: React.FC<RouteComponentProps> = ({ location }) => {
   useEffect(() => {
     const timeBars = updateTimeBar();
     setBars(timeBars);
-  }, [bedtimeState.state, lightsState.state, soundsState.state]);
+  }, [bedtimeState.state, lightsState.state, soundsState.state, relaxationState.state]);
 
   const updateTimeBar = () => {
     switch (location.pathname) {
@@ -37,7 +37,7 @@ const TimeBar: React.FC<RouteComponentProps> = ({ location }) => {
             width: '100%',
           },
         ];
-      case LIGHTS: {
+      case LIGHTS: { 
         const nightStart = lightsState.state.nightLightSchedule.start;
         const nightEnd = lightsState.state.nightLightSchedule.end;
         const wakeStart = lightsState.state.wakeLightSchedule.start;
@@ -77,7 +77,27 @@ const TimeBar: React.FC<RouteComponentProps> = ({ location }) => {
           },
         ];
       }
-      case RELAXATION:
+      case RELAXATION: {
+        console.log("RELAXATION TIME BAR", relaxationState.state.nightRelaxationSchedule.start, relaxationState.state)
+        const nightStart = relaxationState.state.nightRelaxationSchedule.start;
+        const nightEnd = relaxationState.state.nightRelaxationSchedule.end;
+        const wakeStart = relaxationState.state.wakeRelaxationSchedule.start;
+        const wakeEnd = relaxationState.state.wakeRelaxationSchedule.end;
+        return [
+          {
+            start: nightStart?.format('HH:mm') || '',
+            end: nightEnd?.format('HH:mm') || '',
+            position: computePosition(nightStart, wakeEnd, nightStart),
+            width: computeWidth(nightStart, wakeEnd, nightStart, nightEnd),
+          },
+          {
+            start: wakeStart?.format('HH:mm') || '',
+            end: wakeEnd?.format('HH:mm') || '',
+            position: computePosition(nightStart, wakeEnd, wakeStart),
+            width: computeWidth(nightStart, wakeEnd, wakeStart, wakeEnd),
+          },
+        ];
+      }
     }
     return [];
   };

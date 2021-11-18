@@ -1,14 +1,17 @@
+import { Storage } from '@capacitor/storage';
 import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
+import { storage } from '../../services/constants';
 import { Action, RelaxationActionTypes } from './relaxationActions';
 
 export interface State {
-  relaxationAudio: null | any;
+  relaxationAudio: { [key: string]: string | null };
   relaxationFilter: string;
-  relaxationPlaying: boolean;
-  relaxationStart: null | moment.Moment;
-  relaxationEnd: null | moment.Moment;
-  relaxationVolume: number;
+  relaxationPlaying: { [key: string]: boolean };
+  nightRelaxationSchedule: { [key: string]: moment.Moment | null },
+  wakeRelaxationSchedule: { [key: string]: moment.Moment | null },
+  relaxationVolume: { [key: string]: number };
+  sample: { playing: boolean, audio: null|string },
   favorites: string[];
 }
 
@@ -18,12 +21,13 @@ interface Context {
 }
 
 const initialState = {
-  relaxationAudio: null,
+  relaxationAudio: { night: null, wake: null },
   relaxationFilter: 'All',
-  relaxationPlaying: false,
-  relaxationStart: null,
-  relaxationEnd: null,
-  relaxationVolume: 50,
+  relaxationPlaying: { night: false, wake: false },
+  nightRelaxationSchedule: { start: null, end: null },
+  wakeRelaxationSchedule: { start: null, end: null },
+  relaxationVolume: { night: 50, wake: 50 },
+  sample: { playing: false, audio: null },
   favorites: [],
 };
 
@@ -37,29 +41,32 @@ const RelaxationContext = createContext<Context>(initialContext);
 const reducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
     case RelaxationActionTypes.TOGGLE_RELAXATION:
-      return { ...state, relaxationPlaying: !state.relaxationPlaying };
+      return { ...state, relaxationPlaying: { night: !state.relaxationPlaying.night, wake: !state.relaxationPlaying.wake } };
     case RelaxationActionTypes.TOGGLE_FAVORITE: {
-      console.log(state.favorites);
+      let favorites = []
       if (state.favorites.includes(action.payload)) {
-        const favorites = state.favorites.filter((el) => el !== action.payload);
-        return {
-          ...state,
-          favorites,
-        };
+        favorites = state.favorites.filter((el) => el !== action.payload);
       }
-      const favorites = state.favorites.slice();
-      favorites.push(action.payload);
+      else {
+        favorites = state.favorites.slice();
+        favorites.push(action.payload);
+      }
+      Storage.set({ key: storage.RELAXATION_FAVORITES, value: JSON.stringify(favorites) })
       return {
         ...state,
         favorites,
       };
     }
+    case RelaxationActionTypes.ADJUST_VOLUME: {
+      return { ...state, relaxationVolume: { night: action.payload, wake: action.payload } }
+    }
     case RelaxationActionTypes.SET_STATE:
+      console.log("REDUCERRELAX", action.payload)
       return action.payload;
     default:
       return state;
   }
-};
+}; 
 
 interface Props {
   children: React.ReactNode;

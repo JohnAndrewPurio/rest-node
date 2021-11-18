@@ -97,7 +97,7 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
       <IonRow style={_styles.rangeContainer}>
         <IonGrid>
           <IonRow style={_styles.rangeLabel}>
-            <IonText style={_styles.headerTxt}>Adjust Light</IonText>
+            <IonText style={_styles.headerTxt}>Set max brightness</IonText>
           </IonRow>
           <IonRow>
             <IonRange

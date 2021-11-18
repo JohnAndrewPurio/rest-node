@@ -44,24 +44,49 @@ const Content: React.FC = () => {
 
   const getState = async () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
-    if (value) {
+    let favorites = await Storage.get({ key: storage.RELAXATION_FAVORITES })
+    if (!favorites.value) {
+      favorites.value = JSON.stringify([])
+    }
+
+    if (value && favorites.value) {
       const defaultStates = JSON.parse(value);
       const { start, end } = getStartEnd(defaultStates);
+      const nightStart = moment(start).add(
+        defaultStates.bedtime.relax.onoffset,
+        'minutes'
+      );
+      const nightEnd = moment(start).add(
+        defaultStates.bedtime.relax.offoffset,
+        'minutes'
+      );
+      const wakeStart = moment(end).add(
+        defaultStates.waketime.relax.onoffset,
+        'minutes'
+      );
+      const wakeEnd = moment(end).add(
+        defaultStates.waketime.relax.offoffset,
+        'minutes'
+      );
+      const isNightRelaxationOn =
+        moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd);
+      const isWakeRelaxationOn =
+        moment().isSameOrAfter(wakeStart) && moment().isBefore(wakeEnd);
       const newState = {
-        relaxationAudio: null,
+        relaxationAudio: { night: defaultStates.bedtime.relax.onpayload.audio_file, wake: defaultStates.waketime.relax.onpayload.audio_file },
         relaxationFilter: 'All',
-        relaxationPlaying: false,
-        relaxationStart: null,
-        relaxationEnd: null,
-        relaxationVolume: 50,
-        favorites: [],
+        relaxationPlaying: { night: isNightRelaxationOn, wake: isWakeRelaxationOn },
+        nightRelaxationSchedule: { start: nightStart, end: nightEnd },
+        wakeRelaxationSchedule: { start: wakeStart, end: wakeEnd },
+        relaxationVolume: { night: defaultStates.bedtime.sound.onpayload.max_volume, wake: defaultStates.waketime.sound.onpayload.max_volume },
+        sample: { playing: false, audio: null },
+        favorites: JSON.parse(favorites.value),
       };
       relaxationState.dispatch(setState(newState));
     }
   };
 
-  const isBedtime = () =>
-    moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime);
+  const isBedtime = () => moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,9 +94,14 @@ const Content: React.FC = () => {
         bedtimeState.dispatch(bedtimeStarted());
       }
     }, 1000);
-    getState();
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (started) {
+      getState();
+    }
+  }, [started]);
 
   return (
     <>

@@ -43,6 +43,7 @@ interface Time {
   time: string;
   light: Light;
   sound: Sound;
+  relax: Sound;
 }
 
 export interface RestNodeStateType {

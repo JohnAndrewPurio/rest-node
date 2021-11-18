@@ -2,6 +2,7 @@ import { FC, useContext, useEffect } from 'react';
 import {
   IonAvatar,
   IonBackButton,
+  IonButtons,
   IonContent,
   IonGrid,
   IonHeader,
@@ -11,10 +12,12 @@ import {
   IonLabel,
   IonList,
   IonListHeader,
+  IonMenuButton,
   IonPage,
   IonRow,
   IonTitle,
   IonToggle,
+  IonToolbar,
   useIonLoading,
 } from '@ionic/react';
 import { Browser } from '@capacitor/browser';
@@ -39,6 +42,7 @@ import toggleDarkMode from '../../utils/toggleDarkMode';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json';
+import MenuContext from '../../contextStore/AppContext/menuContext';
 
 const Profile: FC = () => {
   const user = useContext(UserContext);
@@ -76,15 +80,26 @@ const Profile: FC = () => {
     }
   }, [isLoading]);
 
+  const [, setSwiper] = useContext(MenuContext)
+
+  useEffect(() => {
+    if (setSwiper) {
+      setSwiper(true)
+    }
+    return () => { if (setSwiper) setSwiper(false) }
+  }, [])
+
   if (!user) return <Redirect to="/login" />;
 
   return (
     <IonPage>
       <IonHeader>
-        <IonItem>
-          <IonBackButton defaultHref={REST_NODE} />
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton menu="main"></IonMenuButton>
+          </IonButtons>
           <IonTitle>Profile</IonTitle>
-        </IonItem>
+        </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" fullscreen>
         <IonGrid>

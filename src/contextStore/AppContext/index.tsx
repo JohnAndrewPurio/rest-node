@@ -16,6 +16,7 @@ import TargetAddressContext from '../NetworkContext/targetAddress';
 import toggleDarkMode from '../../utils/toggleDarkMode';
 
 import '../../api/Firebase/firebaseInit';
+import MenuContext from './menuContext';
 
 interface paramsInterface {
   url: string;
@@ -27,6 +28,7 @@ const AppContext: FC = ({ children }) => {
   const loadingState = useState<boolean>(false);
   const darkModeState = useState<boolean>(false);
   const targetAddressState = useState<string>('');
+  const menuSwiper = useState<boolean>(false)
 
   const [darkMode, setDarkMode] = darkModeState;
   const [targetAddress, setTargetAddress] = targetAddressState;
@@ -68,7 +70,9 @@ const AppContext: FC = ({ children }) => {
       <UserContext.Provider value={user}>
         <LoadingContext.Provider value={loadingState}>
           <TargetAddressContext.Provider value={targetAddressState}>
-            {children}
+            <MenuContext.Provider value={menuSwiper}>
+              {children}
+            </MenuContext.Provider>
           </TargetAddressContext.Provider>
         </LoadingContext.Provider>
       </UserContext.Provider>
