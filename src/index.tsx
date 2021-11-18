@@ -7,17 +7,17 @@ import reportWebVitals from './reportWebVitals';
 import { domain, redirectUri, clientId } from './auth0.config';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Auth0Provider
-      domain={domain}
-      clientId={clientId}
-      redirectUri={redirectUri}
-      useRefreshTokens
-      cacheLocation="localstorage"
-    >
-      <App />
-    </Auth0Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Auth0Provider
+    domain={domain}
+    clientId={clientId}
+    redirectUri={redirectUri}
+    useRefreshTokens
+    cacheLocation="localstorage"
+  >
+    <App />
+  </Auth0Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

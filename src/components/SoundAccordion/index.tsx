@@ -174,7 +174,7 @@ interface PlayBtnProps {
 
 const PlayBtn: React.FC<PlayBtnProps> = ({ component }) => {
   const { state, dispatch } = useContext(SoundsContext);
-  const { audio } = state;
+  const { sound } = state;
 
   const _styles = {
     icon: {
@@ -182,7 +182,7 @@ const PlayBtn: React.FC<PlayBtnProps> = ({ component }) => {
     },
   };
 
-  const playing = audio[component];
+  const playing = sound[component];
 
   return (
     <IonCol

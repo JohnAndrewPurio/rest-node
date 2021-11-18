@@ -43,7 +43,6 @@ const reducer = (state: State = initialState, action: Action) => {
         return {
           ...state,
           light,
-          brightness: { night: light.night ? 50 : 0, wake: 0 },
         };
       }
 
@@ -51,25 +50,19 @@ const reducer = (state: State = initialState, action: Action) => {
       return {
         ...state,
         light,
-        brightness: { night: 0, wake: light.wake ? 50 : 0 },
       };
     }
     case LightsActionTypes.ADJUST_BRIGHTNESS: {
-      const brightness = { night: 0, wake: 0 };
+      const brightness = state.brightness;
       if (action.payload.isNight) {
         brightness.night = action.payload.val;
-        return {
-          ...state,
-          brightness,
-          light: { night: action.payload.val > 0, wake: false },
-        };
       }
-
-      brightness.wake = action.payload.val;
+      else {
+        brightness.wake = action.payload.val;
+      }
       return {
         ...state,
         brightness,
-        light: { night: false, wake: action.payload.val > 0 },
       };
     }
     case LightsActionTypes.SET_STATE:

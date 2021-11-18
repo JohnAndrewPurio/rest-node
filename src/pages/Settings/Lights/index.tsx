@@ -14,6 +14,8 @@ import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActi
 import { Storage } from '@capacitor/storage';
 import { storage } from '../../../services/constants';
 import { setState } from '../../../contextStore/LightsContext/lightsActions';
+import { RestNodeStateType } from '../../../types';
+import { getStartEnd } from '../helper';
 
 const Lights: React.FC = () => {
   return (
@@ -36,20 +38,21 @@ const Content: React.FC = () => {
   const getState = async () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
-      const defaultStates = JSON.parse(value);
-      const nightStart = moment(defaultStates.bedtime.time, 'H:mm').add(
+      const defaultStates: RestNodeStateType = JSON.parse(value);
+      const { start, end } = getStartEnd(defaultStates);
+      const nightStart = moment(start).add(
         defaultStates.bedtime.light.onoffset,
         'minutes'
       );
-      const nightEnd = moment(defaultStates.bedtime.time, 'H:mm').add(
+      const nightEnd = moment(start).add(
         defaultStates.bedtime.light.offoffset,
         'minutes'
       );
-      const wakeStart = moment(defaultStates.waketime.time, 'H:mm').add(
+      const wakeStart = moment(end).add(
         defaultStates.waketime.light.onoffset,
         'minutes'
       );
-      const wakeEnd = moment(defaultStates.waketime.time, 'H:mm').add(
+      const wakeEnd = moment(end).add(
         defaultStates.waketime.light.offoffset,
         'minutes'
       );
@@ -95,7 +98,7 @@ const Content: React.FC = () => {
         <TimeBar />
         <SunSyncToggle />
       </IonGrid>
-      <LightControl component="night" index={0}  />
+      <LightControl component="night" index={0} />
       <LightControl component="wake" index={1} />
     </IonContent>
   );

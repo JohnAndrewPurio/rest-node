@@ -13,6 +13,7 @@ import moment from 'moment';
 import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
 import { storage } from '../../../services/constants';
 import { setState } from '../../../contextStore/SoundsContext/soundsActions';
+import { getStartEnd } from '../helper';
 
 const Sounds: React.FC = () => {
   return (
@@ -36,19 +37,20 @@ const Content: React.FC = () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
       const defaultStates = JSON.parse(value);
-      const nightStart = moment(defaultStates.bedtime.time, 'H:mm').add(
+      const { start, end } = getStartEnd(defaultStates);
+      const nightStart = moment(start).add(
         defaultStates.bedtime.sound.onoffset,
         'minutes'
       );
-      const nightEnd = moment(defaultStates.bedtime.time, 'H:mm').add(
+      const nightEnd = moment(start).add(
         defaultStates.bedtime.sound.offoffset,
         'minutes'
       );
-      const wakeStart = moment(defaultStates.waketime.time, 'H:mm').add(
+      const wakeStart = moment(end).add(
         defaultStates.waketime.sound.onoffset,
         'minutes'
       );
-      const wakeEnd = moment(defaultStates.waketime.time, 'H:mm').add(
+      const wakeEnd = moment(end).add(
         defaultStates.waketime.sound.offoffset,
         'minutes'
       );
@@ -83,9 +85,14 @@ const Content: React.FC = () => {
         bedtimeState.dispatch(bedtimeStarted());
       }
     }, 1000);
-    getState();
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (started) {
+      getState();
+    }
+  }, [started]);
 
   const _styles = {
     fullHeight: {
