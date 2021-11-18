@@ -70,3 +70,11 @@ export interface TimeBarType {
   start: string;
   end: string;
 }
+
+export interface songInterface {
+  title: string
+  artist?: string
+  id: string
+  fullPath: string
+  source: string
+}

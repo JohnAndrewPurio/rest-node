@@ -8,15 +8,13 @@ const isAndroid = isPlatform("android")
 const isIos = isPlatform("ios")
 const nativeCallback =
   'com.existtribe.restnode://eixst-tribe.us.auth0.com/capacitor/com.existtribe.restnode/callback';
+const desktopRedirect = 'http://localhost:8100/profile'
+
 
 // Comment out if testing for native device emulators
 export const redirectUri = isAndroid || isIos
-  ? // ? 'http://localhost:8100/restnode'
-  nativeCallback :
-  'http://localhost:8100/home'
+  ? nativeCallback : desktopRedirect
 
-export const logoutUri = isAndroid || isIos ? nativeCallback : 'http://localhost:8100';
-
-// Comment out if using browser for testing locally
+// **Comment out if using browser for testing locally**
 // export const redirectUri = nativeCallback;
-// export const logoutUri = nativeCallback;
+export const logoutUri = nativeCallback;

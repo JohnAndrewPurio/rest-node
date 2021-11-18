@@ -1,7 +1,6 @@
 import { FC, useContext, useEffect } from 'react';
 import {
   IonAvatar,
-  IonBackButton,
   IonButtons,
   IonContent,
   IonGrid,
@@ -37,8 +36,7 @@ import LoadingContext from '../../contextStore/AppContext/loadingContext';
 import logOut from '../../utils/logOut';
 import { logoutUri } from '../../auth0.config';
 import { getAddress } from '../../utils/userGeoIP';
-import { REST_NODE } from '../paths.json';
-import toggleDarkMode from '../../utils/toggleDarkMode';
+import { REST_NODE } from '../paths.json'
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json';
@@ -89,7 +87,19 @@ const Profile: FC = () => {
     return () => { if (setSwiper) setSwiper(false) }
   }, [])
 
-  if (!user) return <Redirect to="/login" />;
+  useEffect(() => {
+    if (loading) {
+      startLoading('Loading', undefined, 'circular');
+
+      return;
+    }
+
+    stopLoading()
+  }, [isLoading])
+
+  if (!user)
+    return <Redirect to="/login" />
+
 
   return (
     <IonPage>

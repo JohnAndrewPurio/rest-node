@@ -1,5 +1,5 @@
+import { FC, useContext } from 'react';
 import {
-  IonButton,
   IonCol,
   IonContent,
   IonHeader,
@@ -9,14 +9,18 @@ import {
   IonListHeader,
   IonRow,
 } from '@ionic/react';
-import { chevronUp, pause, play, close } from 'ionicons/icons';
+import { close } from 'ionicons/icons';
 import VolumeSlider from '../VolumeSlider';
 import AudioStrip from '../AudioStrip';
-import { songs } from '../../pages/Settings/Sounds/songs.json';
-import './styles.css';
-import { useContext } from 'react';
 import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
-import { toggleSound } from '../../contextStore/SoundsContext/soundsActions';
+import { _styles } from './styles';
+
+import PlayButton from './PlayButton';
+import Chevron from './Chevron';
+import AudioFilesContext from '../../contextStore/RestNodeContext/audioFiles';
+import { sendAudioBodyInterface } from '../../api/RestNode/POST/sendAudioFilesMetadata';
+
+import './styles.css';
 
 interface Props {
   component: string;
@@ -34,7 +38,7 @@ interface Props {
   chooseSong: (index: number) => void;
 }
 
-const SoundAccordion: React.FC<Props> = ({
+const SoundAccordion: FC<Props> = ({
   component,
   index,
   accordionOpen,
@@ -46,57 +50,45 @@ const SoundAccordion: React.FC<Props> = ({
   activeSong,
   chooseSong,
 }) => {
+  const songs = useContext(AudioFilesContext)
   const { state } = useContext(SoundsContext);
   const { audio } = state;
-
-  type titlesType = { [key: string]: string };
-  const titles: titlesType = { night: 'Night Sounds', wake: 'Wake Sounds' };
-
-  const _styles = {
-    titleHead: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      fontWeight: 700,
-      fontSize: '1.1rem',
-      alignItems: 'center',
-      width: '100%',
-      padding: '0em .5em',
-    },
-    accContent: {
-      display: 'flex',
-      flexDirection: 'column',
-      flex: 1,
-      width: '100%',
-    },
-    closeIcon: {
-      fontSize: '10vw',
-    },
-    listHeaderTitle: {
-      fontSize: '1.1rem',
-    },
-  };
 
   const playing = audio[component];
 
   const getClassName = () => {
+    if (accordionOpen)
+      return 'acc-open'
+
     const classNames = [];
-    if (accordionOpen) {
-      classNames.push('acc-open');
-    } else {
-      classNames.push('acc-close');
-      if (playing) {
-        classNames.push('playing');
-      }
-    }
+
+    classNames.push('acc-close');
+
+    if (playing)
+      classNames.push('playing');
 
     return classNames.join(' ');
   };
 
+  const songsHandler = (song: sendAudioBodyInterface, index: number) => (
+    <AudioStrip
+      key={index}
+      index={index}
+      onclick={chooseSong}
+      active={index === activeSong}
+      song={song}
+      component={component}
+    />
+  )
+
   return (
     <IonRow onClick={openAccordion} className={getClassName()}>
       <IonRow className="title-head" style={_styles.titleHead}>
-        <IonCol>{titles[component]}</IonCol>
-        {accordionOpen && <Chevron index={1} onclick={closeAccordion} />}
+        <IonCol>{component}</IonCol>
+        {
+          accordionOpen
+          && <Chevron index={1} onclick={closeAccordion} />
+        }
       </IonRow>
       {accordionOpen && (
         <IonRow style={_styles.accContent}>
@@ -107,94 +99,39 @@ const SoundAccordion: React.FC<Props> = ({
               open={sliderOpen}
               component={component}
             />
-            {sliderOpen ? (
-              <IonCol
-                size="auto"
-                className="slider-close-btn"
-                onClick={closeSlider}
-              >
-                <IonIcon color="light" style={_styles.closeIcon} icon={close} />
-              </IonCol>
-            ) : (
-              <PlayBtn component={component} />
-            )}
+            {
+              sliderOpen ? (
+                <IonCol
+                  size="auto"
+                  className="slider-close-btn"
+                  onClick={closeSlider}
+                >
+                  <IonIcon color="light" style={_styles.closeIcon} icon={close} />
+                </IonCol>
+              ) : (
+                <PlayButton component={component} />
+              )
+            }
           </IonRow>
           <IonRow className="song-list-container">
             <IonHeader>
               <IonListHeader lines="full">
                 <IonLabel style={_styles.listHeaderTitle}>
-                  Wake Sound Audio
+                  {component}
                 </IonLabel>
               </IonListHeader>
             </IonHeader>
             <IonContent className="song-list-content" scrollEvents>
               <IonList className="song-list">
-                {songs.map((song, index) => (
-                  <AudioStrip
-                    index={index}
-                    onclick={chooseSong}
-                    active={index === activeSong}
-                    song={song}
-                  />
-                ))}
+                {
+                  songs && Object.values(songs[component]).map(songsHandler)
+                }
               </IonList>
             </IonContent>
           </IonRow>
         </IonRow>
       )}
     </IonRow>
-  );
-};
-
-interface ChevronProps {
-  index: number;
-  onclick: (index: number) => void;
-}
-
-const Chevron: React.FC<ChevronProps> = ({ index, onclick }) => {
-  const _styles = {
-    chevron: {
-      textAlign: 'right',
-      padding: 0,
-    },
-  };
-
-  return (
-    <IonCol style={_styles.chevron}>
-      <IonButton color="light" fill="clear" onClick={() => onclick(index)}>
-        <IonIcon size="1.1rem" slot="icon-only" icon={chevronUp} />
-      </IonButton>
-    </IonCol>
-  );
-};
-
-interface PlayBtnProps {
-  component: string;
-}
-
-const PlayBtn: React.FC<PlayBtnProps> = ({ component }) => {
-  const { state, dispatch } = useContext(SoundsContext);
-  const { sound } = state;
-
-  const _styles = {
-    icon: {
-      fontSize: '7vh',
-    },
-  };
-
-  const playing = sound[component];
-
-  return (
-    <IonCol
-      className={playing ? 'playing play-btn' : 'play-btn'}
-      onClick={() => dispatch(toggleSound(component === 'night'))}
-    >
-      {playing ? (
-        <IonIcon style={_styles.icon} color="primary" icon={pause} />
-      ) : (
-        <IonIcon style={_styles.icon} color="primary" icon={play} />
-      )}
-    </IonCol>
   );
 };
 

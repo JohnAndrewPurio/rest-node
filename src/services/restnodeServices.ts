@@ -3,57 +3,52 @@ import axios from 'axios';
 import { BASE_URL, storage } from './constants';
 import { RestNodeStateType } from '../types';
 
+export interface websocketMessageResponse {
+  type: string,
+  topic: string,
+  [key: string]: string
+}
+
+export interface audioFinishedDownloadingResponseInterface {
+  type: string
+  message: string
+  name: string
+  fullPath: string
+  source: string
+}
+
+export type socketEventHandlerType = (event: Event) => void
+export type socketMessageHandlerType = (event: MessageEvent<any>) => void
+
 export type initializeWebsocketConnectionType = (
-  url: string,
-  protocol?: string
-) => WebSocket;
+  url: string, protocol: string,
+  socketOnOpen: socketEventHandlerType,
+  socketOnClose: socketEventHandlerType,
+  socketOnError: socketEventHandlerType,
+  socketOnMessage: socketMessageHandlerType
+) => WebSocket
 
-export const initializeWebsocketConnection: initializeWebsocketConnectionType =
-  (url, protocol = 'wss') => {
-    const socket_endpoint = `${protocol}://${url}/restnode`;
-    const socket = new WebSocket(socket_endpoint);
+export const initializeWebsocketConnection: initializeWebsocketConnectionType = (url, protocol, socketOnOpen, socketOnClose, socketOnError, socketOnMessage) => {
+  const socket_endpoint = `${protocol}://${url}/restnode`;
+  const socket = new WebSocket(socket_endpoint);
 
-    const socketOnOpen = (event: Event) => {
-      console.log('Websocket Started:', event);
-    };
+  socket.addEventListener('open', socketOnOpen);
+  socket.addEventListener('close', socketOnClose)
+  socket.addEventListener('error', socketOnError)
+  socket.addEventListener('message', socketOnMessage)
 
-    const socketOnClose = (event: Event) => {
-      console.log('Websocket Ended:', event);
-    };
+  return socket
+}
 
-    const socketOnError = (event: Event) => {
-      console.log('Websocket Error:', event);
-    };
+type closeWebsocketConnectionType = (socket: WebSocket) => void
 
-    const socketOnMessage = (event: Event) => {
-      console.log('Websocket Message:', event);
-    };
+export const closeWebsocketConnection: closeWebsocketConnectionType = (socket) => {
+  socket.close()
+}
 
-    socket.addEventListener('open', socketOnOpen);
-    socket.addEventListener('close', socketOnClose);
-    socket.addEventListener('error', socketOnError);
-    socket.addEventListener('message', socketOnMessage);
+export type getLastValuesType = (url: string, protocol?: string) => Promise<RestNodeStateType>
 
-    return socket;
-  };
-
-type closeWebsocketConnectionType = (socket: WebSocket) => void;
-
-export const closeWebsocketConnection: closeWebsocketConnectionType = (
-  socket
-) => {
-  socket.close();
-};
-
-export type getLastValuesType = (
-  url: string,
-  protocol?: string
-) => Promise<RestNodeStateType>;
-
-export const getLastValues: getLastValuesType = async (
-  url = BASE_URL,
-  protocol = 'https'
-) => {
+export const getLastValues: getLastValuesType = async (url = BASE_URL, protocol = "https") => {
   const bedtimeURL = `${protocol}://${url}/restnode/event/bedtime`;
   const waketimeURL = `${protocol}://${url}/restnode/event/waketime`;
 
