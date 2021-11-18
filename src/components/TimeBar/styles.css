@@ -23,7 +23,7 @@
 }
 
 .one-bar > .start {
-    left: -3ch;
+    left: -3.2ch;
     color: var(--ion-color-tertiary);
 }
 

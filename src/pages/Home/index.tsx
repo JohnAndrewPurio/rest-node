@@ -47,9 +47,8 @@ const Home: React.FC = () => {
       alignItems: "center",
       backgroundColor: "var(--ion-color-light-shade)",
       margin: ".5em .5em .5em 0em",
-      borderRadius: "10px",
-      padding: 0,
-      paddingRight: ".5em"
+      borderRadius: "50px",
+      padding: "0em .5em"
     }
   }
 

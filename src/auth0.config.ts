@@ -13,7 +13,7 @@ const nativeCallback =
 export const redirectUri = isAndroid || isIos
   ? // ? 'http://localhost:8100/restnode'
   nativeCallback :
-  'http://localhost:8100/profile'
+  'http://localhost:8100/home'
 
 export const logoutUri = isAndroid || isIos ? nativeCallback : 'http://localhost:8100';
 
