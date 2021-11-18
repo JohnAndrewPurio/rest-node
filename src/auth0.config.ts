@@ -7,10 +7,10 @@ const isDesktop = isPlatform('desktop');
 const nativeCallback =
   'com.existtribe.restnode://eixst-tribe.us.auth0.com/capacitor/com.existtribe.restnode/callback';
 
+const desktopRedirect = 'http://localhost:8100/profile'
+
 // Comment out if testing for native device emulators
-// export const redirectUri = isDesktop
-//   ? // ? 'http://localhost:8100/restnode'
-//     'http://localhost:8100/profile'
+// export const redirectUri = isDesktop ? desktopRedirect
 //   : nativeCallback;
 
 // export const logoutUri = isDesktop ? 'http://localhost:8100' : nativeCallback;

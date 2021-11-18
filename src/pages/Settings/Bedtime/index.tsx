@@ -1,22 +1,20 @@
 import { IonContent, IonGrid, IonPage } from '@ionic/react';
-import React, { useContext, useEffect } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import { Storage } from '@capacitor/storage';
 import SettingsHeader from '../../../components/SettingsHeader';
 import TimeBar from '../../../components/TimeBar';
-import './styles.css';
 import BedTimeStartBtn from '../../../components/BedTimeStartBtn';
 import BedTimeStartTime from '../../../components/BedTimeStartTime';
 import BedTimeControl from '../../../components/BedTimeControl';
 import moment from 'moment';
 import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
 import WakeTimeCountdown from '../../../components/WakeTimeCountdown';
-import {
-  bedtimeStarted,
-  setState,
-} from '../../../contextStore/BedTimeContext/bedtimeActions';
+import { bedtimeStarted, setState } from '../../../contextStore/BedTimeContext/bedtimeActions';
 import { storage } from '../../../services/constants';
 
-const Bedtime: React.FC = () => {
+import './styles.css';
+
+const Bedtime: FC = () => {
   const _styles = {
     page: {
       marginBottom: '5vh',

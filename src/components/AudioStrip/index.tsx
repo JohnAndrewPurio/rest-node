@@ -1,28 +1,54 @@
+import { FC, useContext, MouseEvent, Key } from 'react';
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
-import { play, stop } from 'ionicons/icons';
-import { useContext } from 'react';
+import { cloudDownloadOutline, download, play, stop } from 'ionicons/icons';
 import { playSample } from '../../contextStore/SoundsContext/soundsActions';
 import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
+
+import { sendAudioBodyInterface } from '../../api/RestNode/POST/sendAudioFilesMetadata';
+import AudioAssetsContext from '../../contextStore/RestNodeContext/audioAssets';
+
 import './styles.css';
+import { downloadAudioFile } from '../../api/RestNode/POST/downloadAudioFileFromStorage';
+import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
 
 interface Props {
-  song: {
-    title: string;
-    artist: string;
-    id: string;
-  };
-  active: boolean;
-  onclick: (index: number) => void;
-  index: number;
+  key: Key
+  song: sendAudioBodyInterface
+  active: boolean
+  onclick: (index: number) => void
+  index: number
+  component: string
 }
 
-const Audio: React.FC<Props> = ({ index, song, active, onclick }) => {
-  const { state, dispatch } = useContext(SoundsContext);
+type handleClickType = (event: MouseEvent<HTMLIonButtonElement, globalThis.MouseEvent>) => void
 
-  const handlePlayClick = (e: any, id: string) => {
-    e.stopPropagation();
-    dispatch(playSample(id));
+const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
+  const [targetAddress] = useContext(TargetAddressContext)
+  const audioAssets = useContext(AudioAssetsContext)
+  const { state, dispatch } = useContext(SoundsContext);
+  const audioDownloaded = audioAssets && audioAssets[component].includes(song.name) // Temporary hack for searching if audio is already downloaded
+  const audioPlaying = state.sample.playing && song.name === state.sample.audio
+  const playIcon = audioPlaying ? stop : play
+  const icon = !audioDownloaded ? cloudDownloadOutline: playIcon
+
+  const handlePlayClick: handleClickType = (event) => {
+    event.stopPropagation();
+    dispatch(
+      playSample(song.name)
+    );
   };
+
+  const handleDownloadClick: handleClickType = (event) => {
+    event.stopPropagation()
+
+    downloadAudioFile(targetAddress, 'http', {
+      fullPath: song.fullPath
+    })
+  }
+
+  const onClickHandler = !audioDownloaded ? handleDownloadClick: handlePlayClick
+
+  console.log("Audio Assets Rerender", audioAssets)
 
   return (
     <IonItem
@@ -33,28 +59,22 @@ const Audio: React.FC<Props> = ({ index, song, active, onclick }) => {
       lines="full"
       className="audio-container"
     >
-      <IonLabel>{song.title}</IonLabel>
+      <IonLabel>
+        {song.name}
+      </IonLabel>
       <IonButton
         fill="clear"
         slot="end"
-        onClick={(e) => handlePlayClick(e, song.id)}
+        onClick={onClickHandler}
       >
-        {state.sample.playing && song.id === state.sample.audio ? (
-          <IonIcon
-            color={active ? 'light' : 'primary'}
-            slot="icon-only"
-            icon={stop}
-          />
-        ) : (
-          <IonIcon
-            color={active ? 'light' : 'primary'}
-            slot="icon-only"
-            icon={play}
-          />
-        )}
+        <IonIcon
+          color={active ? 'light' : 'primary'}
+          slot="icon-only"
+          icon={icon}
+        />
       </IonButton>
     </IonItem>
   );
 };
 
-export default Audio;
+export default AudioStrip;

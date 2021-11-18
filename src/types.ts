@@ -61,3 +61,11 @@ export interface ClockArcs {
   sounds: TimeArc[];
   relaxation: TimeArc[];
 }
+
+export interface songInterface {
+  title: string
+  artist?: string
+  id: string
+  fullPath: string
+  source: string
+}

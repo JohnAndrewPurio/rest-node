@@ -34,7 +34,6 @@ import logOut from '../../utils/logOut';
 import { logoutUri } from '../../auth0.config';
 import { getAddress } from '../../utils/userGeoIP';
 import { REST_NODE } from '../paths.json'
-import toggleDarkMode from '../../utils/toggleDarkMode';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json'
@@ -75,11 +74,12 @@ const Profile: FC = () => {
 
     useEffect(() => {
         if (loading) {
-            startLoading('Loading', undefined, 'dots');
+            startLoading('Loading', undefined, 'circular');
 
             return;
         }
 
+        stopLoading()
     }, [isLoading])
 
     if (!user)
