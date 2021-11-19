@@ -9,7 +9,6 @@ import Login from '../../pages/Login';
 import Network from '../../pages/Network';
 import Profile from '../../pages/Profile';
 import RestNode from '../../pages/RestNode';
-import SettingsRouter from '../../pages/Settings';
 
 import {
   DEFAULT,
@@ -26,9 +25,12 @@ const AppRouter: React.FC = () => {
 
   const hardwareBackHandlers = (ev: any) => {
     const path = window.location.pathname;
+    const onRestnodeTabs = path.includes('tabs')
+    const isOnHome = path === "/home"
+    const isOnProfile = path === "/profile"
 
     ev.detail.register(1, () => {
-      if (path.includes('tabs')) {
+      if (onRestnodeTabs || isOnHome || isOnProfile) {
         present({
           cssClass: 'my-css',
           header: 'Exit app?',

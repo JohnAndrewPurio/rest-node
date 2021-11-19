@@ -10,6 +10,7 @@ import AudioAssetsContext from '../../contextStore/RestNodeContext/audioAssets';
 import './styles.css';
 import { downloadAudioFile } from '../../api/RestNode/POST/downloadAudioFileFromStorage';
 import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
+import _styles from './styles';
 
 interface Props {
   key: Key
@@ -29,7 +30,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   const audioDownloaded = audioAssets && audioAssets[component].includes(song.name) // Temporary hack for searching if audio is already downloaded
   const audioPlaying = state.sample.playing && song.name === state.sample.audio
   const playIcon = audioPlaying ? stop : play
-  const icon = !audioDownloaded ? cloudDownloadOutline: playIcon
+  const icon = !audioDownloaded ? cloudDownloadOutline : playIcon
 
   const handlePlayClick: handleClickType = (event) => {
     event.stopPropagation();
@@ -46,7 +47,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
     })
   }
 
-  const onClickHandler = !audioDownloaded ? handleDownloadClick: handlePlayClick
+  const onClickHandler = !audioDownloaded ? handleDownloadClick : handlePlayClick
 
   console.log("Audio Assets Rerender", audioAssets)
 
@@ -57,7 +58,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
       button
       detail={false}
       lines="full"
-      className="audio-container"
+      style={_styles.audioContainer}
     >
       <IonLabel>
         {song.name}

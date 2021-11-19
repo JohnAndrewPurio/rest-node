@@ -18,17 +18,9 @@ import {
   setWakeUpTime,
 } from '../../contextStore/BedTimeContext/bedtimeActions';
 import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
+import _styles from './styles';
 
 const BedTimeControl: React.FC = () => {
-  const _styles = {
-    headerText: {
-      fontSize: '1.1rem',
-      fontWeight: 700,
-    },
-    bullet: {
-      color: 'var(--ion-color-primary-shade)',
-    },
-  };
 
   return (
     <IonRow className="time-control-container">
@@ -75,57 +67,13 @@ const HoursSetter: React.FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
   const { bedtimeHours, started } = state;
 
-  const _styles = {
-    container: {
-      width: '100%',
-      height: '8vh',
-      margin: '5vw 10vw 3vw 10vw',
-      backgroundColor: 'var(--ion-color-primary-tint)',
-      borderRadius: '10px',
-      flexWrap: 'nowrap',
-      justifyContent: 'space-evenly',
-    },
-    button: {
-      height: '100%',
-      width: '100%',
-      '--padding-start': '0px',
-      '--padding-end': '0px',
-      '--padding-top': '0px',
-      '--padding-bottom': '0px',
-    },
-    col: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontWeight: 900,
-      fontSize: '8vw',
-      padding: 0,
-      color: started
-        ? 'var(--ion-color-secondary-shade)'
-        : 'var(--ion-color-dark)',
-    },
-    icon: {
-      fontSize: '10vw',
-    },
-    buttonColMinus: {
-      border: '3px solid var(--ion-color-primary-shade)',
-      borderTopLeftRadius: '10px',
-      borderBottomLeftRadius: '10px',
-    },
-    buttonColAdd: {
-      border: '3px solid var(--ion-color-primary-shade)',
-      borderTopRightRadius: '10px',
-      borderBottomRightRadius: '10px',
-    },
-  };
-
   return (
-    <IonRow style={_styles.container}>
-      <IonCol style={{ ..._styles.col, ..._styles.buttonColMinus }}>
+    <IonRow style={_styles.hourSetterContainer}>
+      <IonCol style={{ ..._styles.hourSetterColumn, ..._styles.buttonColMinus }}>
         <IonButton
           onClick={() => dispatch(setBedtimeHours(false))}
           size="small"
-          style={_styles.button}
+          style={_styles.hourSetterbutton}
           fill="clear"
           disabled={started}
         >
@@ -137,12 +85,17 @@ const HoursSetter: React.FC = () => {
           />
         </IonButton>
       </IonCol>
-      <IonCol style={_styles.col}>{bedtimeHours}</IonCol>
-      <IonCol style={{ ..._styles.col, ..._styles.buttonColAdd }}>
+      <IonCol style={_styles.hourSetterColumn}>{bedtimeHours}</IonCol>
+      <IonCol style={{
+        ..._styles.hourSetterNumber,
+        color: started
+          ? 'var(--ion-color-secondary-shade)'
+          : 'var(--ion-color-dark)'
+      }}>
         <IonButton
           onClick={() => dispatch(setBedtimeHours(true))}
           size="small"
-          style={_styles.button}
+          style={_styles.hourSetterbutton}
           fill="clear"
           disabled={started}
         >
@@ -162,27 +115,8 @@ const TimePicker: React.FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
   const { wakeUpTime, started } = state;
 
-  const _styles = {
-    picker: {
-      fontSize: '6vw',
-      fontWeight: 700,
-    },
-    container: {
-      borderRadius: '10px',
-      border: '3px solid var(--ion-color-primary-shade)',
-      margin: '5vw 10vw',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-    label: {
-      fontSize: '8vw',
-      marginBottom: '5px',
-      marginRight: '3vw',
-    },
-  };
-
   return (
-    <IonItem lines="none" style={_styles.container}>
+    <IonItem lines="none" style={_styles.timePickerContainer}>
       <IonDatetime
         slot="start"
         style={_styles.picker}
