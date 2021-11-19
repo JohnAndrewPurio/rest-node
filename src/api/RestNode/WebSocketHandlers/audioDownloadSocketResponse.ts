@@ -1,7 +1,6 @@
-import { Dispatch, SetStateAction } from "react"
 import { BASE_URL } from "../../../services/constants"
-import { websocketMessageResponse } from "../../../services/restnodeServices"
-import { availableAudioAssetsInterface, getAudioAssetsAvailable } from "../POST/sendAudioFilesMetadata"
+import { getAudioAssetsAvailable } from "../POST/sendAudioFilesMetadata"
+import { audioAssetsAvailableType, audioDownloadResponseHandlerType, audioFileDownloadedType, audioFileDownloadInProgressType, downloadProgressResponseInterface } from "./tsTypes"
 
 export const AUDIO_DOWNLOAD_RESPONSE = "AUDIO_DOWNLOAD_RESPONSE"
 
@@ -10,50 +9,61 @@ export const AUDIO_FILE_DOWNLOADED = "AUDIO_FILE_DOWNLOADED"
 export const AUDIO_FILE_DOWNLOAD_ERROR = "AUDIO_DOWNLOADED"
 export const AUDIO_FILE_DOWNLOAD_IN_PROGRESS = "AUDIO_FILE_DOWNLOAD_IN_PROGRESS"
 
-export type audioAssetsAvailableType = (
-    targetAddress: string,
-    setAudioAssets: Dispatch<SetStateAction<availableAudioAssetsInterface | undefined>>
-) => void
-
 export const audioAssetsAvailableResponse: audioAssetsAvailableType = async (
     targetAddress, setAudioAssets
 ) => {
     try {
-        const protocol = targetAddress ? 'http': 'https'
+        const protocol = targetAddress ? 'http' : 'https'
         const audioAssetsAvailable = await getAudioAssetsAvailable(targetAddress || BASE_URL, protocol)
-        
+
         setAudioAssets(audioAssetsAvailable)
-    } catch(error) {
+    } catch (error) {
         console.log(error)
     }
 }
 
-export type audioFileDownloadedType = (message: websocketMessageResponse) => void
-
-export const audioFileDownloadedResponse: audioFileDownloadedType = (message) => {
+export const audioFileDownloadedResponse: audioFileDownloadedType = (
+    message, downloadQueue, setDownloadQueue
+) => {
     console.log("Audio File Downloaded Response", message)
+    const { name }: downloadProgressResponseInterface = message
+    const downloads = {
+        ...downloadQueue,
+    }
+
+    delete downloads[name]
+
+    setDownloadQueue(downloads)
 }
 
-export type audioFileDownloadErrorType = (message: websocketMessageResponse) => void
-
-export const audioFileDownloadErrorResponse: audioFileDownloadedType = (message) => {
+export const audioFileDownloadErrorResponse: audioFileDownloadedType = (
+    message, downloadQueue, setDownloadQueue
+) => {
     console.log("Audio File Download Error Response", message)
+    const { name }: downloadProgressResponseInterface = message
+    const downloads = {
+        ...downloadQueue,
+    }
+
+    delete downloads[name]
+
+    setDownloadQueue(downloads)
 }
 
-export type audioFileDownloadInProgressType = (message: websocketMessageResponse) => void
+export const audioFileDownloadInProgressResponse: audioFileDownloadInProgressType = (
+    message, downloadQueue, setDownloadQueue
+) => {
+    const { name }: downloadProgressResponseInterface = message
+    const downloads = {
+        ...downloadQueue,
+        [name]: true
+    }
 
-export const audioFileDownloadInProgressResponse: audioFileDownloadInProgressType = (message) => {
-    console.log("Audio File Download In Progress Response")
+    setDownloadQueue(downloads)
 }
-
-export type audioDownloadResponseHandlerType = (
-    message: websocketMessageResponse,
-    targetAddress: string,
-    setAudioAssets: Dispatch<SetStateAction<availableAudioAssetsInterface | undefined>>
-) => void
 
 const audioDownloadResponseHandler: audioDownloadResponseHandlerType = (
-    message, targetAddress, setAudioAssets
+    message, targetAddress, downloadQueue, setAudioAssets, setDownloadQueue
 ) => {
     switch (message.topic) {
         case AUDIO_ASSETS_AVAILABLE:
@@ -61,15 +71,15 @@ const audioDownloadResponseHandler: audioDownloadResponseHandlerType = (
 
             break
         case AUDIO_FILE_DOWNLOADED:
-            audioFileDownloadedResponse(message)
+            audioFileDownloadedResponse(message, downloadQueue, setDownloadQueue)
 
             break
         case AUDIO_FILE_DOWNLOAD_ERROR:
-            audioFileDownloadErrorResponse(message)
+            audioFileDownloadErrorResponse(message, downloadQueue, setDownloadQueue)
 
             break
         case AUDIO_FILE_DOWNLOAD_IN_PROGRESS:
-            audioFileDownloadInProgressResponse(message)
+            audioFileDownloadInProgressResponse(message, downloadQueue, setDownloadQueue)
 
             break
         default:

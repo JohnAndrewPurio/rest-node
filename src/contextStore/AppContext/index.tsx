@@ -63,8 +63,6 @@ const AppContext: FC = ({ children }) => {
     toggleDarkMode(document, darkMode);
   }, [darkMode]);
 
-  console.log('Target Address:', targetAddress);
-
   return (
     <DarkModeContext.Provider value={darkModeState}>
       <UserContext.Provider value={user}>
