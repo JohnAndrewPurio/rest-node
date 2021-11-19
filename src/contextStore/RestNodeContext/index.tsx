@@ -10,15 +10,17 @@ import { listAudioFilesMetadata } from '../../utils/listAudioFilesMetadata'
 import { BedTimeContextProvider } from '../BedTimeContext/bedtimeContext'
 import TargetAddressContext from '../NetworkContext/targetAddress'
 import AudioAssetsContext from './audioAssets'
-import AudioFilesContext, { AudioFilesContextType } from './audioFiles'
+import AudioFilesContext, { AudioFilesContextType, sampleAudioFiles } from './audioFiles'
+import DownloadQueueContext, { DownloadQueueContextInterface } from './downloadQueueContext'
 import SocketContext from './socketConnection'
 
 const RestNodeContext: FC = ({ children }) => {
     const history = useHistory()
     const [targetAddress] = useContext(TargetAddressContext)
     const [socket, setSocket] = useState<WebSocket | null>(null)
-    const [audioFiles, setAudioFiles] = useState<AudioFilesContextType>(null)
+    const [audioFiles, setAudioFiles] = useState<AudioFilesContextType>(sampleAudioFiles)
     const [audioAssets, setAudioAssets] = useState<availableAudioAssetsInterface>()
+    const [downloadQueue, setDownloadQueue] = useState<DownloadQueueContextInterface>({})
     const [loading, setLoading] = useState<null | boolean>(false);
     const [loaded, setLoaded] = useState(false);
     const [present] = useIonAlert();
@@ -60,16 +62,19 @@ const RestNodeContext: FC = ({ children }) => {
         }
 
         const socketOnMessage = (event: MessageEvent<any>) => {
-            console.log('Websocket Message:', event)
             const { data } = event
             const message: websocketMessageResponse = JSON.parse(data)
 
-            switch(message.type) {
-                case AUDIO_DOWNLOAD_RESPONSE: 
-                    audioDownloadResponseHandler(message, targetAddress, setAudioAssets)
+            switch (message.type) {
+                case AUDIO_DOWNLOAD_RESPONSE:
+                    audioDownloadResponseHandler(
+                        message, targetAddress, downloadQueue,
+                         setAudioAssets, setDownloadQueue
+                    )
+
                     break
-    
-                default: 
+
+                default:
                     console.log(message)
             }
         }
@@ -79,7 +84,9 @@ const RestNodeContext: FC = ({ children }) => {
             socketOnOpen, socketOnClose, socketOnError, socketOnMessage
         )
 
-        listAudioFilesMetadata(targetAddress, setAudioAssets, setAudioFiles, setLoading)
+
+        console.log("Listing Files...")
+        listAudioFilesMetadata(targetAddress, audioFiles, setAudioAssets, setAudioFiles, setLoading)
 
         getInitialValues();
         setSocket(webSocket)
@@ -109,7 +116,9 @@ const RestNodeContext: FC = ({ children }) => {
             <BedTimeContextProvider>
                 <AudioFilesContext.Provider value={audioFiles}>
                     <AudioAssetsContext.Provider value={audioAssets}>
-                        {loaded && !loading && children}
+                        <DownloadQueueContext.Provider value={downloadQueue}>
+                            {loaded && !loading && children}
+                        </DownloadQueueContext.Provider>
                     </AudioAssetsContext.Provider>
                 </AudioFilesContext.Provider>
             </BedTimeContextProvider>
