@@ -15,59 +15,53 @@ import {
   toggleLight,
 } from '../../contextStore/LightsContext/lightsActions';
 import LightsContext from '../../contextStore/LightsContext/lightsContext';
+import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
+import { _styles } from './styles';
 
 interface controlProps {
   component: string;
   index: number;
 }
 
+type iconsType = { [key: string]: any };
+type titlesType = { [key: string]: string };
+
 const LightControl: React.FC<controlProps> = ({ component }) => {
+  const socket = useContext(SocketContext)
   const { state, dispatch } = useContext(LightsContext);
   const { light, brightness } = state;
 
-  const _styles = {
-    header: {
-      width: '100%',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '1em .5em .5em .5em',
-      '--background': 'transparent',
-    },
-    headerTxt: {
-      fontWeight: 700,
-      fontSize: '1.1rem',
-    },
-    titleCol: {
-      display: 'flex',
-    },
-    icon: {
-      display: 'flex',
-      marginRight: '.5em',
-      fontSize: '36px',
-    },
-    rangeLabel: {
-      margin: '0em 1em 0em 1em',
-    },
-    rangeContainer: {
-      marginTop: '1em',
-    },
+  const icons: iconsType = {
+    night: moon,
+    wake: sunny
   };
 
-  type iconsType = { [key: string]: any };
-  type titlesType = { [key: string]: string };
-
-  const icons: iconsType = { night: moon, wake: sunny };
-  const title: titlesType = { night: 'Night Light', wake: 'Wake Light' };
+  const title: titlesType = {
+    night: 'Night Light',
+    wake: 'Wake Light'
+  };
 
   const handleToggleClicked = () => {
     dispatch(toggleLight(component === 'night'));
   };
 
-  const handleRangeChange = (e: any) => {
-    const val = e.target.value;
-    if (val > 0 || light[component]) {
-      dispatch(adjustBrightness(component === 'night', val));
+  const handleRangeChange = (event: any) => {
+    const { value } = event.target;
+    const lightType = `${component.toUpperCase()}_LIGHT` // Temporary Hack
+    const data = {
+      state: "ADJUST_BRIGHTNESS",
+      light: lightType,
+      max_brightness: value,
+      type: 'light'
     }
+
+    if (value > 0 || light[component]) {
+      dispatch(adjustBrightness(
+        component === 'night', value)
+      );
+    }
+
+    socket?.send(JSON.stringify(data))
   };
 
   return (
@@ -85,7 +79,9 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
           style={_styles.icon}
           icon={icons[component]}
         />
-        <IonLabel style={_styles.headerTxt}>{title[component]}</IonLabel>
+        <IonLabel style={_styles.headerTxt}>
+          {title[component]}
+        </IonLabel>
         <IonToggle
           color="tertiary"
           checked={light[component]}

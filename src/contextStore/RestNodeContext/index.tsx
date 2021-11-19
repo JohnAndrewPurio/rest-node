@@ -36,14 +36,14 @@ const RestNodeContext: FC = ({ children }) => {
             await getLastValues(url, protocol);
             setLoaded(true);
             setLoading(false);
-        } catch (e) {
+        } catch (error) {
             setLoading(false);
             present({
                 cssClass: 'my-css',
                 header: 'Error',
                 message: 'Cannot connect to REST Node',
                 buttons: ['Ok'],
-                onDidDismiss: (e) => history.replace('/profile'),
+                onDidDismiss: () => history.replace('/profile'),
             });
         }
     };
@@ -84,9 +84,10 @@ const RestNodeContext: FC = ({ children }) => {
             socketOnOpen, socketOnClose, socketOnError, socketOnMessage
         )
 
-
         console.log("Listing Files...")
-        listAudioFilesMetadata(targetAddress, audioFiles, setAudioAssets, setAudioFiles, setLoading)
+        listAudioFilesMetadata(
+            targetAddress, audioFiles, setAudioAssets, setAudioFiles, setLoading
+        )
 
         getInitialValues();
         setSocket(webSocket)
@@ -106,10 +107,6 @@ const RestNodeContext: FC = ({ children }) => {
 
         stopLoading();
     }, [loading]);
-
-    useEffect(() => {
-        console.log("Audio Assets", audioAssets)
-    }, [audioAssets])
 
     return (
         <SocketContext.Provider value={socket}>

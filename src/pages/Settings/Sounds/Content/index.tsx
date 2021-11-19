@@ -14,8 +14,6 @@ import { storage, BASE_URL } from "../../../../services/constants";
 import { _styles } from "../styles";
 import AudioFilesContext from "../../../../contextStore/RestNodeContext/audioFiles";
 
-const components: ("night" | "wake")[] = ["night", "wake"]
-
 const Content: FC = () => {
     const audioTypes = useContext(AudioFilesContext)
     const bedtimeState = useContext(BedTimeContext);
@@ -140,14 +138,16 @@ const Content: FC = () => {
     useEffect(() => {
         const bedtimeCheckHandler = () => {
             const bedtime = isBedtime()
+            const bedtimeHasStarted = bedtimeStarted()
 
             if (!started && bedtime)
-                bedtimeState.dispatch(bedtimeStarted());
+                bedtimeState.dispatch(bedtimeHasStarted);
         }
 
         const interval = setInterval(bedtimeCheckHandler, 1000);
 
         getState();
+
         return () => {
             clearInterval(interval);
         }
@@ -177,7 +177,7 @@ const Content: FC = () => {
 
                 <IonGrid style={_styles.accordions}>
                     {
-                        audioTypes 
+                        audioTypes
                         && Object.keys(audioTypes).map(componentsHandler)
                     }
                 </IonGrid>

@@ -1,105 +1,21 @@
-import { IonContent, IonGrid, IonPage } from '@ionic/react';
-import SettingsHeader from '../../../components/SettingsHeader';
-import TimeBar from '../../../components/TimeBar';
-import SunSyncToggle from '../../../components/SunSyncToggle';
-import './styles.css';
-import LightControl from '../../../components/LightControl';
-import LightsContext, {
-  LightsContextProvider,
-} from '../../../contextStore/LightsContext/lightsContext';
-import { useContext, useEffect } from 'react';
-import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
-import moment from 'moment';
-import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
-import { Storage } from '@capacitor/storage';
-import { storage } from '../../../services/constants';
-import { setState } from '../../../contextStore/LightsContext/lightsActions';
-import { RestNodeStateType } from '../../../types';
-import { getStartEnd } from '../helper';
+import { FC } from 'react';
+import { IonPage } from '@ionic/react';
+import { LightsContextProvider } from '../../../contextStore/LightsContext/lightsContext';
 
-const Lights: React.FC = () => {
+import SettingsHeader from '../../../components/SettingsHeader';
+import Content from './Content';
+
+import './styles.css';
+
+const Lights: FC = () => {
   return (
-    <LightsContextProvider>
-      <IonPage>
+    <IonPage>
+      <LightsContextProvider>
         <SettingsHeader title="Lights Settings" />
         <Content />
-      </IonPage>
-    </LightsContextProvider>
+      </LightsContextProvider>
+    </IonPage>
   );
 };
 
 export default Lights;
-
-const Content: React.FC = () => {
-  const bedtimeState = useContext(BedTimeContext);
-  const lightsState = useContext(LightsContext);
-  const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
-
-  const getState = async () => {
-    const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
-    if (value) {
-      const defaultStates: RestNodeStateType = JSON.parse(value);
-      const { start, end } = getStartEnd(defaultStates);
-      const nightStart = moment(start).add(
-        defaultStates.bedtime.light.onoffset,
-        'minutes'
-      );
-      const nightEnd = moment(start).add(
-        defaultStates.bedtime.light.offoffset,
-        'minutes'
-      );
-      const wakeStart = moment(end).add(
-        defaultStates.waketime.light.onoffset,
-        'minutes'
-      );
-      const wakeEnd = moment(end).add(
-        defaultStates.waketime.light.offoffset,
-        'minutes'
-      );
-      const isNightLightOn =
-        moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd);
-      const isWakeLightOn =
-        moment().isSameOrAfter(wakeStart) && moment().isBefore(wakeEnd);
-      const newState = {
-        light: { night: isNightLightOn, wake: isWakeLightOn },
-        brightness: {
-          night: defaultStates.bedtime.light.onpayload.max_brightness,
-          wake: defaultStates.bedtime.light.onpayload.max_brightness,
-        },
-        nightLightSchedule: { start: nightStart, end: nightEnd },
-        wakeLightSchedule: { start: wakeStart, end: wakeEnd },
-      };
-      lightsState.dispatch(setState(newState));
-    }
-  };
-
-  const isBedtime = () =>
-    moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!started && isBedtime()) {
-        bedtimeState.dispatch(bedtimeStarted());
-      }
-    }, 1000);
-    getState();
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (started) {
-      getState();
-    }
-  }, [started]);
-
-  return (
-    <IonContent>
-      <IonGrid>
-        <TimeBar />
-        <SunSyncToggle />
-      </IonGrid>
-      <LightControl component="night" index={0} />
-      <LightControl component="wake" index={1} />
-    </IonContent>
-  );
-};
