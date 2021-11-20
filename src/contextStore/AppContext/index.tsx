@@ -28,7 +28,7 @@ const AppContext: FC = ({ children }) => {
   const loadingState = useState<boolean>(false);
   const darkModeState = useState<boolean>(false);
   const targetAddressState = useState<string>('');
-  const menuSwiper = useState<boolean>(false)
+  const menuSwiper = useState<boolean>(false);
 
   const [darkMode, setDarkMode] = darkModeState;
   const [, setTargetAddress] = targetAddressState;
@@ -51,8 +51,7 @@ const AppContext: FC = ({ children }) => {
   }, [handleRedirectCallback]);
 
   useEffect(() => {
-    if (isPlatform('android'))
-      serviceListener(Zeroconf, setTargetAddress);
+    if (isPlatform('android')) serviceListener(Zeroconf, setTargetAddress);
 
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 

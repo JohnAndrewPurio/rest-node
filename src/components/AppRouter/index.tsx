@@ -25,9 +25,9 @@ const AppRouter: React.FC = () => {
 
   const hardwareBackHandlers = (ev: any) => {
     const path = window.location.pathname;
-    const onRestnodeTabs = path.includes('tabs')
-    const isOnHome = path === "/home"
-    const isOnProfile = path === "/profile"
+    const onRestnodeTabs = path.includes('tabs');
+    const isOnHome = path === '/home';
+    const isOnProfile = path === '/profile';
 
     ev.detail.register(1, () => {
       if (onRestnodeTabs || isOnHome || isOnProfile) {
@@ -50,7 +50,7 @@ const AppRouter: React.FC = () => {
   return (
     <IonReactRouter>
       <Menu />
-      <IonRouterOutlet id='main'>
+      <IonRouterOutlet id="main">
         <Route exact path={LOGIN}>
           <Login />
         </Route>

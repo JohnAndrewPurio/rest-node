@@ -21,7 +21,6 @@ import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
 import _styles from './styles';
 
 const BedTimeControl: React.FC = () => {
-
   return (
     <IonRow className="time-control-container">
       <IonList className="song-list">
@@ -69,7 +68,9 @@ const HoursSetter: React.FC = () => {
 
   return (
     <IonRow style={_styles.hourSetterContainer}>
-      <IonCol style={{ ..._styles.hourSetterColumn, ..._styles.buttonColMinus }}>
+      <IonCol
+        style={{ ..._styles.hourSetterColumn, ..._styles.buttonColMinus }}
+      >
         <IonButton
           onClick={() => dispatch(setBedtimeHours(false))}
           size="small"
@@ -86,12 +87,14 @@ const HoursSetter: React.FC = () => {
         </IonButton>
       </IonCol>
       <IonCol style={_styles.hourSetterColumn}>{bedtimeHours}</IonCol>
-      <IonCol style={{
-        ..._styles.hourSetterNumber,
-        color: started
-          ? 'var(--ion-color-secondary-shade)'
-          : 'var(--ion-color-dark)'
-      }}>
+      <IonCol
+        style={{
+          ..._styles.hourSetterNumber,
+          color: started
+            ? 'var(--ion-color-secondary-shade)'
+            : 'var(--ion-color-dark)',
+        }}
+      >
         <IonButton
           onClick={() => dispatch(setBedtimeHours(true))}
           size="small"

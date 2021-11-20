@@ -8,10 +8,10 @@ export interface State {
   relaxationAudio: { [key: string]: string | null };
   relaxationFilter: string;
   relaxationPlaying: { [key: string]: boolean };
-  nightRelaxationSchedule: { [key: string]: moment.Moment | null },
-  wakeRelaxationSchedule: { [key: string]: moment.Moment | null },
+  nightRelaxationSchedule: { [key: string]: moment.Moment | null };
+  wakeRelaxationSchedule: { [key: string]: moment.Moment | null };
   relaxationVolume: { [key: string]: number };
-  sample: { playing: boolean, audio: null|string },
+  sample: { playing: boolean; audio: null | string };
   favorites: string[];
 }
 
@@ -41,32 +41,43 @@ const RelaxationContext = createContext<Context>(initialContext);
 const reducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
     case RelaxationActionTypes.TOGGLE_RELAXATION:
-      return { ...state, relaxationPlaying: { night: !state.relaxationPlaying.night, wake: !state.relaxationPlaying.wake } };
+      return {
+        ...state,
+        relaxationPlaying: {
+          night: !state.relaxationPlaying.night,
+          wake: !state.relaxationPlaying.wake,
+        },
+      };
     case RelaxationActionTypes.TOGGLE_FAVORITE: {
-      let favorites = []
+      let favorites = [];
       if (state.favorites.includes(action.payload)) {
         favorites = state.favorites.filter((el) => el !== action.payload);
-      }
-      else {
+      } else {
         favorites = state.favorites.slice();
         favorites.push(action.payload);
       }
-      Storage.set({ key: storage.RELAXATION_FAVORITES, value: JSON.stringify(favorites) })
+      Storage.set({
+        key: storage.RELAXATION_FAVORITES,
+        value: JSON.stringify(favorites),
+      });
       return {
         ...state,
         favorites,
       };
     }
     case RelaxationActionTypes.ADJUST_VOLUME: {
-      return { ...state, relaxationVolume: { night: action.payload, wake: action.payload } }
+      return {
+        ...state,
+        relaxationVolume: { night: action.payload, wake: action.payload },
+      };
     }
     case RelaxationActionTypes.SET_STATE:
-      console.log("REDUCERRELAX", action.payload)
+      console.log('REDUCERRELAX', action.payload);
       return action.payload;
     default:
       return state;
   }
-}; 
+};
 
 interface Props {
   children: React.ReactNode;

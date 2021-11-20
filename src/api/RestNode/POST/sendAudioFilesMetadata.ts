@@ -1,63 +1,79 @@
-import { httpProtocol } from "./tsTypes"
+import { httpProtocol } from './tsTypes';
 
 export interface sendAudioBodyInterface {
-    name: string,
-    source: string | undefined,
-    fullPath: string,
-    artist?: string
+  name: string;
+  source: string | undefined;
+  fullPath: string;
+  artist?: string;
 }
 
 export interface fileMetadataType {
-    [file_name: string]: sendAudioBodyInterface
+  [file_name: string]: sendAudioBodyInterface;
 }
 
 export interface filesListInterface {
-    [dir: string]: fileMetadataType
+  [dir: string]: fileMetadataType;
 }
 
-export type sendAudioFilesMetadataType = (address: string, body: filesListInterface, protocol: httpProtocol) => Promise<void>
+export type sendAudioFilesMetadataType = (
+  address: string,
+  body: filesListInterface,
+  protocol: httpProtocol
+) => Promise<void>;
 
-export const sendAudioFilesMetadata: sendAudioFilesMetadataType = async (address, body, protocol) => {
-    try {
-        const url = `${protocol}://${address}/restnode/audio/files`
+export const sendAudioFilesMetadata: sendAudioFilesMetadataType = async (
+  address,
+  body,
+  protocol
+) => {
+  try {
+    const url = `${protocol}://${address}/restnode/audio/files`;
 
-        const method = "POST"
-        const mode = "cors"
+    const method = 'POST';
+    const mode = 'cors';
 
-        const config: RequestInit = {
-            method, mode,
-            body: JSON.stringify(body)
-        }
+    const config: RequestInit = {
+      method,
+      mode,
+      body: JSON.stringify(body),
+    };
 
-        const data = await fetch(url, config)
+    const data = await fetch(url, config);
 
-        console.log("Send Audio Data:", data)
-    } catch (error) {
-        console.log(error)
-    }
-}
+    console.log('Send Audio Data:', data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export interface availableAudioAssetsInterface {
-    [dir: string]: string[]
+  [dir: string]: string[];
 }
 
-export type getAudioAssetsAvailableType = (address: string, protocol: httpProtocol) => Promise<availableAudioAssetsInterface | undefined>
+export type getAudioAssetsAvailableType = (
+  address: string,
+  protocol: httpProtocol
+) => Promise<availableAudioAssetsInterface | undefined>;
 
-export const getAudioAssetsAvailable: getAudioAssetsAvailableType = async (address, protocol) => {
-    try {
-        const url = `${protocol}://${address}/restnode/audio/assets`
-        const mode = "cors"
-        const method = "GET"
+export const getAudioAssetsAvailable: getAudioAssetsAvailableType = async (
+  address,
+  protocol
+) => {
+  try {
+    const url = `${protocol}://${address}/restnode/audio/assets`;
+    const mode = 'cors';
+    const method = 'GET';
 
-        const config: RequestInit = {
-            method, mode
-        }
+    const config: RequestInit = {
+      method,
+      mode,
+    };
 
-        const data = await fetch(url, config)
-        const jsonData: availableAudioAssetsInterface = await data.json()
+    const data = await fetch(url, config);
+    const jsonData: availableAudioAssetsInterface = await data.json();
 
-        return jsonData
-    } catch(error) {
-        console.log(error)
-    }
-}
+    return jsonData;
+  } catch (error) {
+    console.log(error);
+  }
+};

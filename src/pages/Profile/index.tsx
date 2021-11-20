@@ -36,7 +36,7 @@ import LoadingContext from '../../contextStore/AppContext/loadingContext';
 import logOut from '../../utils/logOut';
 import { logoutUri } from '../../auth0.config';
 import { getAddress } from '../../utils/userGeoIP';
-import { REST_NODE } from '../paths.json'
+import { REST_NODE } from '../paths.json';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json';
@@ -78,14 +78,16 @@ const Profile: FC = () => {
     }
   }, [isLoading]);
 
-  const [, setSwiper] = useContext(MenuContext)
+  const [, setSwiper] = useContext(MenuContext);
 
   useEffect(() => {
     if (setSwiper) {
-      setSwiper(true)
+      setSwiper(true);
     }
-    return () => { if (setSwiper) setSwiper(false) }
-  }, [])
+    return () => {
+      if (setSwiper) setSwiper(false);
+    };
+  }, []);
 
   useEffect(() => {
     if (loading) {
@@ -94,19 +96,17 @@ const Profile: FC = () => {
       return;
     }
 
-    stopLoading()
-  }, [isLoading])
+    stopLoading();
+  }, [isLoading]);
 
-  if (!user)
-    return <Redirect to="/login" />
-
+  if (!user) return <Redirect to="/login" />;
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonMenuButton menu="main"></IonMenuButton>
+            <IonMenuButton menu="main" />
           </IonButtons>
           <IonTitle>Profile</IonTitle>
         </IonToolbar>

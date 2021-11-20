@@ -1,8 +1,9 @@
 import moment from 'moment';
+import { getStartEnd } from '../../pages/Settings/helper';
 import { RestNodeStateType } from '../../types';
 
 export const getBedtimeArcs = (states: RestNodeStateType) => {
-  const { start, end } = convertStartEndToMoment(states);
+  const { start, end } = getStartEnd(states);
   const diff = end.diff(start, 'hours', true);
   const placement = 360 * (start.hours() / 24) - 90;
   console.log('diff', diff);
@@ -15,8 +16,8 @@ export const getBedtimeArcs = (states: RestNodeStateType) => {
 };
 
 export const getLightArcs = (states: RestNodeStateType) => {
-  const { start, end } = convertStartEndToMoment(states);
-  const arcs = []
+  const { start, end } = getStartEnd(states);
+  const arcs = [];
   if (states.bedtime.light) {
     const nightLightStart = moment(start).add(
       states.bedtime.light.onoffset,
@@ -32,7 +33,7 @@ export const getLightArcs = (states: RestNodeStateType) => {
     arcs.push({
       percentage: (nightDiff / 24) * 100,
       placement: 360 * ((nightHour + nightMin) / 24) - 90,
-    })
+    });
   }
   if (states.waketime.light) {
     const wakeLightStart = moment(end).add(
@@ -50,14 +51,14 @@ export const getLightArcs = (states: RestNodeStateType) => {
     arcs.push({
       percentage: (wakeDiff / 24) * 100,
       placement: 360 * ((wakeHour + wakeMin) / 24) - 90,
-    })
+    });
   }
-  return arcs
+  return arcs;
 };
 
 export const getSoundsArcs = (states: RestNodeStateType) => {
-  const { start, end } = convertStartEndToMoment(states);
-  const arcs = []
+  const { start, end } = getStartEnd(states);
+  const arcs = [];
   if (states.bedtime.sound) {
     const nightSoundStart = moment(start).add(
       states.bedtime.sound.onoffset,
@@ -73,7 +74,7 @@ export const getSoundsArcs = (states: RestNodeStateType) => {
     arcs.push({
       percentage: (nightDiff / 24) * 100,
       placement: 360 * ((nightHour + nightMin) / 24) - 90,
-    })
+    });
   }
   if (states.waketime.sound) {
     const wakesoundStart = moment(end).add(
@@ -90,14 +91,14 @@ export const getSoundsArcs = (states: RestNodeStateType) => {
     arcs.push({
       percentage: (wakeDiff / 24) * 100,
       placement: 360 * ((wakeHour + wakeMin) / 24) - 90,
-    })
+    });
   }
-  return arcs
+  return arcs;
 };
 
 export const getRelaxationArcs = (states: RestNodeStateType) => {
-  const { start, end } = convertStartEndToMoment(states);
-  const arcs = []
+  const { start, end } = getStartEnd(states);
+  const arcs = [];
   if (states.bedtime.relax) {
     const nightRelaxationStart = moment(start).add(
       states.bedtime.relax.onoffset,
@@ -107,13 +108,17 @@ export const getRelaxationArcs = (states: RestNodeStateType) => {
       states.bedtime.relax.offoffset,
       'minutes'
     );
-    const nightDiff = nightRelaxationEnd.diff(nightRelaxationStart, 'hours', true);
+    const nightDiff = nightRelaxationEnd.diff(
+      nightRelaxationStart,
+      'hours',
+      true
+    );
     const nightHour = nightRelaxationStart.hours();
     const nightMin = nightRelaxationStart.minutes() / 60;
     arcs.push({
       percentage: (nightDiff / 24) * 100,
       placement: 360 * ((nightHour + nightMin) / 24) - 90,
-    })
+    });
   }
   if (states.waketime.relax) {
     const wakeRelaxationStart = moment(end).add(
@@ -130,23 +135,7 @@ export const getRelaxationArcs = (states: RestNodeStateType) => {
     arcs.push({
       percentage: (wakeDiff / 24) * 100,
       placement: 360 * ((wakeHour + wakeMin) / 24) - 90,
-    })
+    });
   }
-  return arcs
-};
-
-const convertStartEndToMoment = (states: RestNodeStateType) => {
-  let start = moment(states.bedtime.time, 'H:mm');
-  let end = moment(states.waketime.time, 'H:mm');
-  if (start.isAfter(end) && moment().isBefore(moment())) {
-    start = moment(start).subtract(1, 'days');
-  }
-  else if (end.isSameOrBefore(start)) {
-    end = moment(end).add(1, 'days');
-  }
-  else if (start.isBefore(moment()) && end.isBefore(moment())) {
-    start = moment(start).add(1, 'days');
-    end = moment(end).add(1, 'days');
-  }
-  return { start, end };
+  return arcs;
 };
