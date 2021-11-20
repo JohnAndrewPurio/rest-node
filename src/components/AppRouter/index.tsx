@@ -19,6 +19,7 @@ import {
   REST_NODE,
 } from '../../pages/paths.json';
 import Menu from '../Menu';
+import { isPlatform } from '@ionic/core';
 
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();
@@ -42,9 +43,14 @@ const AppRouter: React.FC = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('ionBackButton', hardwareBackHandlers);
-    return () =>
-      document.removeEventListener('ionBackButton', hardwareBackHandlers);
+    if (isPlatform("android")) {
+      document.addEventListener('ionBackButton', hardwareBackHandlers);
+    }
+    return () => {
+      if (isPlatform("android")) {
+        document.removeEventListener('ionBackButton', hardwareBackHandlers);
+      }
+    }
   }, []);
 
   return (
