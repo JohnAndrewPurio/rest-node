@@ -1,4 +1,10 @@
 const _styles = {
+  timeControlContainer: {
+    flex: 1
+  },
+  settingItem: {
+    "--backgroud": "transparent"
+  },
   headerText: {
     fontSize: '1.1rem',
     fontWeight: 700,

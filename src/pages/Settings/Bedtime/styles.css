@@ -38,14 +38,6 @@ p {
     margin: 0;
 }
 
-.time-control-container {
-    flex: 1;
-}
-
-.transparent-bg-ion-item {
-    --backgroud: "transparent";
-}
-
 .p-block {
     display: block;
     color: var(--ion-color-light);
