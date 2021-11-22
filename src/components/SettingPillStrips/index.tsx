@@ -1,8 +1,9 @@
 import { FC, useContext } from 'react';
 import { IonButton, IonIcon, IonItem, IonLabel, IonSpinner } from '@ionic/react';
 import { alarm, arrowForward, bed, bulb, musicalNotes } from 'ionicons/icons';
+
 import { colors, itemStyle, titleStyle } from './styles';
-import './styles.css';
+
 import AudioLoadingContext from '../../contextStore/RestNodeContext/audioLoading';
 
 interface Props {

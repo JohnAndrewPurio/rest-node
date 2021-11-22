@@ -1,4 +1,4 @@
-import './styles.css';
+import _styles from '../styles';
 
 interface Props {
   size: number;
@@ -21,7 +21,6 @@ const Progress: React.FC<Props> = ({
 
   return (
     <circle
-      className="circle-progress"
       stroke={color}
       cx={size / 2}
       cy={size / 2}
@@ -29,6 +28,7 @@ const Progress: React.FC<Props> = ({
       strokeWidth={`${strokeWidth}px`}
       transform={`rotate(${placement} ${size / 2} ${size / 2})`}
       style={{
+        ..._styles.circleProgress,
         strokeDasharray: dashArray,
         strokeDashoffset: dashOffset,
       }}

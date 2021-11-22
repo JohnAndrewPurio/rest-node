@@ -3,6 +3,7 @@ export const titleStyle = {
 };
 
 export const itemStyle = {
+    '--padding-top': '0em',
     margin: '.5em',
 }
 

@@ -5,11 +5,11 @@ import { Storage } from '@capacitor/storage';
 import SettingsHeader from '../../../components/SettingsHeader';
 import TimeBar from '../../../components/TimeBar';
 import RelaxationList from '../../../components/RelaxationList';
-import './styles.css';
 import RelaxationFilter from '../../../components/RelaxationFilter';
 import RelaxationFavorites from '../../../components/RelaxationFavorites';
 import RelaxationContext, {
-  RelaxationContextProvider, State,
+  RelaxationContextProvider,
+  State,
 } from '../../../contextStore/RelaxationContext/relaxationContext';
 import RelaxationFooter from '../../../components/RelaxationPlayer';
 import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
@@ -52,7 +52,7 @@ const Content: React.FC = () => {
     if (value && favorites.value) {
       const defaultStates = JSON.parse(value);
       const { start, end } = getStartEnd(defaultStates);
-      let newState: State = {
+      const newState: State = {
         relaxationAudio: { night: null, wake: null },
         relaxationFilter: 'All',
         relaxationPlaying: { night: false, wake: false },
@@ -61,39 +61,40 @@ const Content: React.FC = () => {
         relaxationVolume: { night: 50, wake: 50 },
         sample: { playing: false, audio: null },
         favorites: JSON.parse(favorites.value),
-      }
+      };
       if (defaultStates.bedtime.relax) {
-        const nightStart = start.clone().add(
-          defaultStates.bedtime.relax.onoffset,
-          'minutes'
-        );
-        const nightEnd = start.clone().add(
-          defaultStates.bedtime.relax.offoffset,
-          'minutes'
-        );
+        const nightStart = start
+          .clone()
+          .add(defaultStates.bedtime.relax.onoffset, 'minutes');
+        const nightEnd = start
+          .clone()
+          .add(defaultStates.bedtime.relax.offoffset, 'minutes');
         const isNightRelaxationOn =
-          moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd)
-        newState.relaxationAudio.night = defaultStates.bedtime.relax.onpayload.audio_file
-        newState.relaxationPlaying.night = isNightRelaxationOn
-        newState.nightRelaxationSchedule = { start: nightStart, end: nightEnd }
-        newState.relaxationVolume.night = defaultStates.bedtime.relax.onpayload.max_volume
+          moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd);
+        newState.relaxationAudio.night =
+          defaultStates.bedtime.relax.onpayload.audio_file;
+        newState.relaxationPlaying.night = isNightRelaxationOn;
+        newState.nightRelaxationSchedule = { start: nightStart, end: nightEnd };
+        newState.relaxationVolume.night =
+          defaultStates.bedtime.relax.onpayload.max_volume;
       }
       if (defaultStates.waketime.relax) {
-        const wakeStart = end.clone().add(
-          defaultStates.waketime.relax.onoffset,
-          'minutes'
-        );
-        const wakeEnd = end.clone().add(
-          defaultStates.waketime.relax.offoffset,
-          'minutes'
-        );
+        const wakeStart = end
+          .clone()
+          .add(defaultStates.waketime.relax.onoffset, 'minutes');
+        const wakeEnd = end
+          .clone()
+          .add(defaultStates.waketime.relax.offoffset, 'minutes');
+
         const isWakeRelaxationOn =
           moment().isSameOrAfter(wakeStart) && moment().isBefore(wakeEnd);
 
-        newState.relaxationAudio.wake = defaultStates.waketime.relax.onpayload.audio_file
-        newState.relaxationPlaying.wake = isWakeRelaxationOn
-        newState.wakeRelaxationSchedule = { start: wakeStart, end: wakeEnd }
-        newState.relaxationVolume.wake = defaultStates.waketime.relax.onpayload.max_volume
+        newState.relaxationAudio.wake =
+          defaultStates.waketime.relax.onpayload.audio_file;
+        newState.relaxationPlaying.wake = isWakeRelaxationOn;
+        newState.wakeRelaxationSchedule = { start: wakeStart, end: wakeEnd };
+        newState.relaxationVolume.wake =
+          defaultStates.waketime.relax.onpayload.max_volume;
       }
       relaxationState.dispatch(setState(newState));
     }

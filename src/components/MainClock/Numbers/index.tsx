@@ -1,12 +1,15 @@
 import Triangles from '../Triangles';
-import './styles.css';
 import { positions, time } from './constants.json';
+import _styles from '../styles';
 
 const Numbers: React.FC = () => {
   return (
-    <div className="number-container">
+    <div style={_styles.numbersContainer}>
       {time.map((number, i) => (
-        <div key={`number${number}`} className="number" style={positions[i]}>
+        <div
+          key={`number${number}`}
+          style={{ ...positions[i], ..._styles.number }}
+        >
           {number}
         </div>
       ))}

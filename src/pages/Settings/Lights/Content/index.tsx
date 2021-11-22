@@ -29,22 +29,21 @@ const Content: FC = () => {
     const _start = start;
     const _end = end;
 
-    const nightStart = _start.clone().add(
-      defaultStates.bedtime.light.onoffset,
-      'minutes'
-    );
+    const nightStart = _start
+      .clone()
+      .add(defaultStates.bedtime.light.onoffset, 'minutes');
 
-    const nightEnd = _start.clone().add(
-      defaultStates.bedtime.light.offoffset,
-      'minutes'
-    );
+    const nightEnd = _start
+      .clone()
+      .add(defaultStates.bedtime.light.offoffset, 'minutes');
 
-    const wakeStart = _end.clone().add(
-      defaultStates.waketime.light.onoffset,
-      'minutes'
-    );
+    const wakeStart = _end
+      .clone()
+      .add(defaultStates.waketime.light.onoffset, 'minutes');
 
-    const wakeEnd = _end.clone().add(defaultStates.waketime.light.offoffset, 'minutes');
+    const wakeEnd = _end
+      .clone()
+      .add(defaultStates.waketime.light.offoffset, 'minutes');
 
     const isNightLightOn =
       _moment.isSameOrAfter(nightStart) && _moment.isBefore(nightEnd);
