@@ -14,7 +14,7 @@ export const storageSet: storageSetType = async (data, key) => {
             key, value
         }
     
-        set(options)
+        await set(options)
     } catch(error) {
         console.log(error)
         throw error
