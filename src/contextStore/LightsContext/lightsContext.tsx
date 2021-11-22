@@ -1,17 +1,17 @@
-import moment from 'moment';
-import React, { createContext, useReducer } from 'react';
+import { createContext, FC, useReducer } from 'react';
+import { Moment } from 'moment';
 import { Action, LightsActionTypes } from './lightsActions';
 
 export interface State {
   light: { [key: string]: boolean };
   brightness: { [key: string]: number };
   nightLightSchedule: {
-    start: null | moment.Moment;
-    end: null | moment.Moment;
+    start: null | Moment;
+    end: null | Moment;
   };
   wakeLightSchedule: {
-    start: null | moment.Moment;
-    end: null | moment.Moment;
+    start: null | Moment;
+    end: null | Moment;
   };
 }
 
@@ -29,7 +29,7 @@ const initialState = {
 
 const initialContext = {
   state: initialState,
-  dispatch: () => undefined,
+  dispatch: () => { }
 };
 
 const LightsContext = createContext<Context>(initialContext);
@@ -37,7 +37,11 @@ const LightsContext = createContext<Context>(initialContext);
 const reducer = (state: State = initialState, action: Action) => {
   switch (action.type) {
     case LightsActionTypes.TOGGLE_LIGHT: {
-      const light = { night: false, wake: false };
+      const light = {
+        night: false,
+        wake: false
+      };
+
       if (action.payload) {
         light.night = !state.light.night;
         return {
@@ -72,16 +76,12 @@ const reducer = (state: State = initialState, action: Action) => {
   }
 };
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export const LightsContextProvider = (props: Props) => {
+export const LightsContextProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <LightsContext.Provider value={{ state, dispatch }}>
-      {props.children}
+      {children}
     </LightsContext.Provider>
   );
 };
