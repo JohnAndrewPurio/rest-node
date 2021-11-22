@@ -1,9 +1,8 @@
 import Circle from './Circle';
 import Clock from './Clock';
 import Numbers from './Numbers';
-import './styles.css';
 import { circleSpacing } from './constants.json';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ClockArcs, StringKeyedObject } from '../../types';
 import { Storage } from '@capacitor/storage';
 import { storage } from '../../services/constants';
@@ -13,8 +12,8 @@ import {
   getRelaxationArcs,
   getSoundsArcs,
 } from './helper';
-import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
-import { useIonViewDidEnter, useIonViewWillEnter } from '@ionic/react';
+
+import './styles.css';
 
 interface Props {
   biggest: number;
@@ -28,29 +27,28 @@ const MainClock: React.FC<Props> = ({ biggest }) => {
     relaxation: [],
   };
 
-  const { state } = useContext(BedTimeContext);
   const [arcs, setArcs] = useState<ClockArcs>(initialArcs);
 
   const configureArcs = () => {
     Storage.get({ key: storage.RED_NODE_STATES }).then((res) => {
-      if (res.value) {
-        const states = JSON.parse(res.value);
-        const clockArcs: ClockArcs = {
-          bedtime: getBedtimeArcs(states),
-          lights: getLightArcs(states),
-          sounds: getSoundsArcs(states),
-          relaxation: getRelaxationArcs(states),
-        };
-        setArcs(clockArcs);
-      }
+      if (!res.value)
+        return
+
+      const states = JSON.parse(res.value);
+      const clockArcs: ClockArcs = {
+        bedtime: getBedtimeArcs(states),
+        lights: getLightArcs(states),
+        sounds: getSoundsArcs(states),
+        relaxation: getRelaxationArcs(states),
+      };
+
+      setArcs(clockArcs);
     });
   };
 
   useEffect(() => {
     configureArcs();
   }, []);
-
-  useIonViewDidEnter(() => configureArcs());
 
   const keys = ['bedtime', 'sounds', 'lights', 'relaxation'];
   const colors: StringKeyedObject = {
@@ -59,12 +57,12 @@ const MainClock: React.FC<Props> = ({ biggest }) => {
     relaxation: '#e0ac08',
     lights: '#eb445a',
   };
-  const sizes = new Array(keys.length).fill(0);
-  sizes.forEach((circle, i) => {
-    sizes[i] = biggest - circleSpacing * i;
-  });
 
-  console.log(arcs);
+  const sizes = new Array(keys.length).fill(0);
+
+  for (let index = 0; index < sizes.length; index++) {
+    sizes[index] = biggest - circleSpacing * index;
+  }
 
   return (
     <>

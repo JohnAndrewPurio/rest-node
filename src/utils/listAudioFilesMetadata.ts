@@ -10,7 +10,7 @@ export type listAudioFilesType = (
     audioFiles: filesListInterface,
     setAudioAssets: Dispatch<SetStateAction<availableAudioAssetsInterface | undefined>>,
     setAudioFiles: Dispatch<SetStateAction<AudioFilesContextType>>,
-    setLoading: Dispatch<SetStateAction<boolean | null>>,
+    setLoading: Dispatch<SetStateAction<boolean>>,
 ) => void
 
 export const listAudioFilesMetadata: listAudioFilesType = async (

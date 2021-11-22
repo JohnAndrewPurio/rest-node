@@ -100,12 +100,13 @@ const Content: FC = () => {
     const [activeSong, setActiveSong] = useState(0);
 
     const toggleAccordion = (index: number) => {
-        if (!accordions[index]) {
-            const newArr = new Array(accordions.length).fill(false);
-            newArr[index] = !accordions[index];
-            setAccordions(newArr);
-            setSliderOpen(new Array(sliderOpen.length).fill(false));
-        }
+        if (accordions[index])
+            return
+
+        const newArr = new Array(accordions.length).fill(false);
+        newArr[index] = !accordions[index];
+        setAccordions(newArr);
+        setSliderOpen(new Array(sliderOpen.length).fill(false));
     };
 
     const closeAccordion = (index: number) => {

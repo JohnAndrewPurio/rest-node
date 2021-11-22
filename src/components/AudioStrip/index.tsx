@@ -84,10 +84,8 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   )
 
   const downloading = (
-    <IonSpinner color="primary" />
+    <IonSpinner color="secondary" />
   )
-
-  console.log("Download Queue:", downloadQueue)
 
   return (
     <IonItem

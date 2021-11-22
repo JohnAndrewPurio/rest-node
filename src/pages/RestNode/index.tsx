@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { IonContent, IonPage, IonRouterOutlet } from '@ionic/react';
 import { Redirect, Route, RouteComponentProps } from 'react-router';
 import SettingsRouter from '../Settings';
@@ -6,7 +7,7 @@ import { DASHBOARD } from '../Tabs/paths.json';
 import Tabs from '../Tabs';
 import RestNodeContext from '../../contextStore/RestNodeContext';
 
-const RestNode: React.FC<RouteComponentProps> = (props) => {
+const RestNode: FC<RouteComponentProps> = (props) => {
   return (
     <IonPage>
       <RestNodeContext {...props}>

@@ -8,9 +8,11 @@ import { BASE_URL } from '../../services/constants'
 import { getLastValues, initializeWebsocketConnection, websocketMessageResponse } from '../../services/restnodeServices'
 import { listAudioFilesMetadata } from '../../utils/listAudioFilesMetadata'
 import { BedTimeContextProvider } from '../BedTimeContext/bedtimeContext'
+
 import TargetAddressContext from '../NetworkContext/targetAddress'
 import AudioAssetsContext from './audioAssets'
 import AudioFilesContext, { AudioFilesContextType, sampleAudioFiles } from './audioFiles'
+import AudioLoadingContext from './audioLoading'
 import DownloadQueueContext, { DownloadQueueContextInterface } from './downloadQueueContext'
 import SocketContext from './socketConnection'
 
@@ -25,6 +27,7 @@ const RestNodeContext: FC = ({ children }) => {
     const [loaded, setLoaded] = useState(false);
     const [present] = useIonAlert();
     const [startLoading, stopLoading] = useIonLoading();
+    const [soundLoading, setSoundLoading] = useState<boolean>(false)
     const socketProtocol = targetAddress ? 'ws' : 'wss'
 
     const getInitialValues = async () => {
@@ -48,45 +51,45 @@ const RestNodeContext: FC = ({ children }) => {
         }
     };
 
+    // Websocket Event Handlers
+    const socketOnOpen = (event: Event) => {
+        console.log('Websocket Started:', event, socket);
+    }
+
+    const socketOnClose = (event: Event) => {
+        console.log('Websocket Ended:', event, socket)
+    }
+
+    const socketOnError = (event: Event) => {
+        console.log('Websocket Error:', event, socket)
+    }
+
+    const socketOnMessage = (event: MessageEvent<any>) => {
+        const { data } = event
+        const message: websocketMessageResponse = JSON.parse(data)
+
+        switch (message.type) {
+            case AUDIO_DOWNLOAD_RESPONSE:
+                audioDownloadResponseHandler(
+                    message, targetAddress, downloadQueue,
+                    setAudioAssets, setDownloadQueue
+                )
+
+                break
+
+            default:
+                console.log(message)
+        }
+    }
+
     useEffect(() => {
-        const socketOnOpen = (event: Event) => {
-            console.log('Websocket Started:', event, socket);
-        }
-
-        const socketOnClose = (event: Event) => {
-            console.log('Websocket Ended:', event, socket)
-        }
-
-        const socketOnError = (event: Event) => {
-            console.log('Websocket Error:', event, socket)
-        }
-
-        const socketOnMessage = (event: MessageEvent<any>) => {
-            const { data } = event
-            const message: websocketMessageResponse = JSON.parse(data)
-
-            switch (message.type) {
-                case AUDIO_DOWNLOAD_RESPONSE:
-                    audioDownloadResponseHandler(
-                        message, targetAddress, downloadQueue,
-                         setAudioAssets, setDownloadQueue
-                    )
-
-                    break
-
-                default:
-                    console.log(message)
-            }
-        }
-
         const webSocket = initializeWebsocketConnection(
             targetAddress || BASE_URL, socketProtocol,
             socketOnOpen, socketOnClose, socketOnError, socketOnMessage
         )
 
-        console.log("Listing Files...")
         listAudioFilesMetadata(
-            targetAddress, audioFiles, setAudioAssets, setAudioFiles, setLoading
+            targetAddress, audioFiles, setAudioAssets, setAudioFiles, setSoundLoading
         )
 
         getInitialValues();
@@ -111,13 +114,15 @@ const RestNodeContext: FC = ({ children }) => {
     return (
         <SocketContext.Provider value={socket}>
             <BedTimeContextProvider>
-                <AudioFilesContext.Provider value={audioFiles}>
-                    <AudioAssetsContext.Provider value={audioAssets}>
-                        <DownloadQueueContext.Provider value={downloadQueue}>
-                            {loaded && !loading && children}
-                        </DownloadQueueContext.Provider>
-                    </AudioAssetsContext.Provider>
-                </AudioFilesContext.Provider>
+                <AudioLoadingContext.Provider value={soundLoading}>
+                    <AudioFilesContext.Provider value={audioFiles}>
+                        <AudioAssetsContext.Provider value={audioAssets}>
+                            <DownloadQueueContext.Provider value={downloadQueue}>
+                                {loaded && !loading && children}
+                            </DownloadQueueContext.Provider>
+                        </AudioAssetsContext.Provider>
+                    </AudioFilesContext.Provider>
+                </AudioLoadingContext.Provider>
             </BedTimeContextProvider>
         </SocketContext.Provider>
     )

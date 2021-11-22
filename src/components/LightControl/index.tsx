@@ -42,7 +42,9 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
   };
 
   const handleToggleClicked = () => {
-    dispatch(toggleLight(component === 'night'));
+    dispatch(
+      toggleLight(component === 'night')
+    );
   };
 
   const handleRangeChange = (event: any) => {
@@ -56,8 +58,8 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
     }
 
     if (value > 0 || light[component]) {
-      dispatch(adjustBrightness(
-        component === 'night', value)
+      dispatch(
+        adjustBrightness(component === 'night', value)
       );
     }
 
