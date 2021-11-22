@@ -36,7 +36,6 @@ import LoadingContext from '../../contextStore/AppContext/loadingContext';
 import logOut from '../../utils/logOut';
 import { logoutUri } from '../../auth0.config';
 import { getAddress } from '../../utils/userGeoIP';
-import { REST_NODE } from '../paths.json';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json';

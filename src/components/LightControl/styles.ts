@@ -1,4 +1,16 @@
 export const _styles = {
+  container: {
+    height: '30vh',
+    maxHeight: '220px',
+    minHeight: '200px',
+    border: '3px solid var(--ion-color-primary)',
+    margin: '1em',
+    borderRadius: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  toggle: {},
+  slider: {},
   header: {
     width: '100%',
     justifyContent: 'space-between',

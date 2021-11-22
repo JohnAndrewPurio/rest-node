@@ -61,7 +61,7 @@ export interface ClockArcs {
 }
 
 export interface StringKeyedObject {
-  [key: string]: string;
+  [key: string]: any;
 }
 
 export interface TimeBarType {

@@ -1,3 +1,5 @@
+// put all of the settings stuff here because it is the common child component of settings pages
+
 import {
   IonButton,
   IonButtons,
@@ -13,7 +15,6 @@ import { arrowBack, save } from 'ionicons/icons';
 import { useContext, useEffect } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Storage } from '@capacitor/storage';
-import _ from 'lodash';
 import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
 import {
   LIGHTS,
@@ -54,54 +55,14 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   const [targetAddress] = useContext(TargetAddressContext);
 
   const { started } = bedtimeState.state;
-
   const [present] = useIonAlert();
-
-  const goBack = async () => {
-    const change: changeCheck = await stateCheck();
-    if (!started && change.status) {
-      present({
-        cssClass: 'my-css',
-        header: 'Save changes?',
-        message: '',
-        buttons: [
-          { text: 'No', handler: () => history.goBack() },
-          {
-            text: 'Yes',
-            handler: async () => {
-              if (change.newState) await saveChanges(change.newState);
-              history.goBack();
-            },
-          },
-        ],
-      });
-    } else {
-      history.goBack();
-    }
-  };
-
-  const saveChanges = async (change: RestNodeStateType) => {
-    try {
-      const url = targetAddress || BASE_URL;
-      const protocol = targetAddress ? 'http' : 'https';
-      await updateValues(url, protocol, change);
-    } catch (e) {
-      console.log(e);
-      present({
-        cssClass: 'my-css',
-        header: 'Error',
-        message: 'Cannot connect to REST Node',
-        buttons: ['Ok'],
-        onDidDismiss: (e) => history.replace('/profile'),
-      });
-    }
-  };
 
   interface changeCheck {
     status: boolean;
     newState?: RestNodeStateType;
   }
 
+  // checks if current context state is same with last stored local storage value
   const stateCheck = async (): Promise<changeCheck> => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
@@ -123,18 +84,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     return { status: false };
   };
 
-  const hardwareBackHandlers = (event: any) => {
-    const path = window.location.pathname;
-    event.detail.register(5, (processNextHandler: any) => {
-      const settingsIncluded = path.includes('settings');
-      if (settingsIncluded) {
-        goBack();
-        return;
-      }
-      processNextHandler();
-    });
-  };
-
+  // save button clicked
   const handleSaveClick = async () => {
     const change: changeCheck = await stateCheck();
     if (change.status) {
@@ -162,17 +112,71 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     }
   };
 
+  // will go back or ask to save
+  const goBack = async () => {
+    const change: changeCheck = await stateCheck();
+    if (!started && change.status) {
+      present({
+        cssClass: 'my-css',
+        header: 'Save changes?',
+        message: '',
+        buttons: [
+          { text: 'No', handler: () => history.goBack() },
+          {
+            text: 'Yes',
+            handler: async () => {
+              if (change.newState) await saveChanges(change.newState);
+              history.goBack();
+            },
+          },
+        ],
+      });
+    } else {
+      history.goBack();
+    }
+  };
+
+  // save changes prompt
+  const saveChanges = async (change: RestNodeStateType) => {
+    try {
+      const url = targetAddress || BASE_URL;
+      const protocol = targetAddress ? 'http' : 'https';
+      await updateValues(url, protocol, change);
+    } catch (e) {
+      console.log(e);
+      present({
+        cssClass: 'my-css',
+        header: 'Error',
+        message: 'Cannot connect to REST Node',
+        buttons: ['Ok'],
+        onDidDismiss: () => history.replace('/profile'),
+      });
+    }
+  };
+
   // android hardware back button listener
   useEffect(() => {
-    if (isPlatform("android")) {
+    if (isPlatform('android')) {
       document.addEventListener('ionBackButton', hardwareBackHandlers);
     }
     return () => {
-      if (isPlatform("android")) {
+      if (isPlatform('android')) {
         document.removeEventListener('ionBackButton', hardwareBackHandlers);
       }
-    }
+    };
   }, []);
+
+  const hardwareBackHandlers = (event: any) => {
+    const path = window.location.pathname;
+    event.detail.register(5, (processNextHandler: any) => {
+      const settingsIncluded = path.includes('settings');
+      if (settingsIncluded) {
+        goBack();
+        return;
+      }
+      processNextHandler();
+    });
+  };
 
   // instant start/stop sender
   useEffect(() => {
@@ -188,6 +192,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
     });
   }, [started]);
 
+  // socket sender when state changes
   useEffect(() => {
     if (started) {
       stateCheck().then(({ status, newState }) => {

@@ -11,7 +11,7 @@ import SoundsContext from '../../../../contextStore/SoundsContext/soundsContext'
 import { bedtimeStarted } from '../../../../contextStore/BedTimeContext/bedtimeActions';
 import { setState } from '../../../../contextStore/SoundsContext/soundsActions';
 import { storage, BASE_URL } from '../../../../services/constants';
-import { _styles } from '../styles';
+import _styles from '../styles';
 import AudioFilesContext from '../../../../contextStore/RestNodeContext/audioFiles';
 import { getStartEnd } from '../../helper';
 

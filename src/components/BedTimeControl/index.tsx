@@ -13,7 +13,7 @@ import WakeUpTimePicker from './WakeUpTimePicker';
 const BedTimeControl: React.FC = () => {
   return (
     <IonRow style={_styles.timeControlContainer}>
-      <IonList className="song-list">
+      <IonList style={_styles.settingsList}>
         <IonListHeader lines="full">
           <IonLabel style={_styles.headerText}>
             Configure bed time schedule
@@ -42,7 +42,7 @@ const BedTimeControl: React.FC = () => {
                 wake up?
               </IonLabel>
             </IonRow>
-            <IonRow>
+            <IonRow style={{ width: '100%' }}>
               <WakeUpTimePicker />
             </IonRow>
           </IonGrid>

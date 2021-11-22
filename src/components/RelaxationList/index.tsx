@@ -12,49 +12,10 @@ import { useContext } from 'react';
 import { toggleFavorite } from '../../contextStore/RelaxationContext/relaxationActions';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 import { techniques } from '../../pages/Settings/RelaxationTechniques/techniques.json';
+import _styles from './styles';
 
 const RelaxationList: React.FC = () => {
   const { state, dispatch } = useContext(RelaxationContext);
-
-  const _styles = {
-    container: {
-      margin: '1em .5em',
-    },
-    label: {
-      fontSize: '1.1rem',
-      fontWeight: 700,
-    },
-    card: {
-      height: '22vh',
-      width: '120px',
-      minWidth: '120px',
-      borderRadius: '10px',
-      padding: '.3em',
-    },
-    detailsGrid: {
-      fontSize: '.8rem',
-      display: 'flex',
-    },
-    paddingZero: {
-      padding: 0,
-    },
-    favBtn: {
-      '--padding-start': '0px',
-      '--padding-end': '0px',
-      '--padding-top': '0px',
-      '--padding-bottom': '0px',
-    },
-    grid: {
-      width: '100%',
-      height: 'auto',
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    gridContainer: {
-      width: '100%',
-      marginTop: '.5em',
-    },
-  };
 
   return (
     <IonRow style={_styles.container}>
@@ -66,12 +27,12 @@ const RelaxationList: React.FC = () => {
           <IonGrid style={_styles.grid}>
             {techniques.map((el) => (
               <IonCol key={el.id} style={_styles.card}>
-                <IonRow className="grid-picture">
+                <IonRow style={_styles.gridPicture}>
                   <IonImg
-                    className="grid-ion-image"
+                    style={_styles.gridIonPicture}
                     src="https://picsum.photos/200"
                   />
-                  <div className="length-indicator">05:14</div>
+                  <div style={_styles.lengthIndicator}>05:14</div>
                 </IonRow>
                 <IonGrid style={_styles.detailsGrid}>
                   <IonCol style={_styles.paddingZero}>

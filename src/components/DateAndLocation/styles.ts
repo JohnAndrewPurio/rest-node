@@ -5,5 +5,6 @@ export const place = {
 
 export const header = {
   fontSize: '1rem',
-  paddingLeft: 0,
+  paddingLeft: '0',
+  paddingRight: '2em',
 };

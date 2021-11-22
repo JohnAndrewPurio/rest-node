@@ -5,10 +5,8 @@ import {
   IonHeader,
   IonIcon,
   IonItem,
-  IonLabel,
   IonList,
   IonMenu,
-  IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import {
@@ -20,21 +18,10 @@ import {
 import { useContext, useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import MenuContext from '../../contextStore/AppContext/menuContext';
+import _styles from './styles';
 
 const Menu: React.FC<RouteComponentProps> = ({ location }) => {
   const [swiper] = useContext(MenuContext);
-
-  const _styles = {
-    header: {
-      margin: '.5em 0em',
-      fontWeight: 700,
-      fontSize: '1.1rem',
-    },
-    add: {
-      fontSize: '.9rem',
-      color: 'var(--ion-color-primary)',
-    },
-  };
 
   const close = () => {
     menuController.close();
@@ -60,6 +47,7 @@ const Menu: React.FC<RouteComponentProps> = ({ location }) => {
 
   const [active, setActive] = useState<string | null>(null);
 
+  // set highlighted active path
   useEffect(() => {
     if (location.pathname.includes('home')) setActive('/home');
     else if (location.pathname.includes('restnode')) setActive('/restnode');

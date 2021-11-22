@@ -1,9 +1,13 @@
 const _styles = {
   timeControlContainer: {
-    flex: 1
+    flex: 1,
+  },
+  settingsList: {
+    width: '100%',
+    background: 'transparent',
   },
   settingItem: {
-    "--backgroud": "transparent"
+    '--backgroud': 'transparent',
   },
   headerText: {
     fontSize: '1.1rem',
@@ -71,6 +75,7 @@ const _styles = {
     margin: '5vw 10vw',
     display: 'flex',
     justifyContent: 'center',
+    width: '100%',
   },
   label: {
     fontSize: '8vw',

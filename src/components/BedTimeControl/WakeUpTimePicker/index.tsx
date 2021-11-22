@@ -1,10 +1,10 @@
-import { IonDatetime, IonIcon, IonItem, IonLabel } from "@ionic/react";
-import { alarm } from "ionicons/icons";
-import moment from "moment";
-import { useContext } from "react";
-import { setWakeUpTime } from "../../../contextStore/BedTimeContext/bedtimeActions";
-import BedTimeContext from "../../../contextStore/BedTimeContext/bedtimeContext";
-import _styles from "../styles";
+import { IonDatetime, IonIcon, IonItem, IonLabel } from '@ionic/react';
+import { alarm } from 'ionicons/icons';
+import moment from 'moment';
+import { useContext } from 'react';
+import { setWakeUpTime } from '../../../contextStore/BedTimeContext/bedtimeActions';
+import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
+import _styles from '../styles';
 
 const WakeUpTimePicker: React.FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
@@ -28,5 +28,4 @@ const WakeUpTimePicker: React.FC = () => {
   );
 };
 
-
-export default WakeUpTimePicker
+export default WakeUpTimePicker;

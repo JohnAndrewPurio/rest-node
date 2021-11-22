@@ -6,9 +6,6 @@ import Content from './Content';
 
 import { SoundsContextProvider } from '../../../contextStore/SoundsContext/soundsContext';
 
-import { _styles } from './styles';
-import './styles.css';
-
 const Sounds: FC = () => {
   return (
     <SoundsContextProvider>

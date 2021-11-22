@@ -6,17 +6,10 @@ import {
   stopBedTimeNow,
 } from '../../contextStore/BedTimeContext/bedtimeActions';
 import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
+import _styles from './styles';
 
 const BedTimeStartBtn: React.FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
-
-  const _styles = {
-    container: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-    },
-  };
 
   const started =
     moment().isSameOrAfter(state.bedtimeStart) &&
@@ -24,31 +17,31 @@ const BedTimeStartBtn: React.FC = () => {
 
   return (
     <IonRow style={_styles.container}>
-      <div className="outer-circle">
+      <div style={_styles.outerCircle}>
         {started ? (
           <IonButton
             fill="clear"
             shape="round"
-            className="inner-circle"
+            style={_styles.innerCircle}
             color="light"
             onClick={() => dispatch(stopBedTimeNow())}
           >
-            <p className="circle-text">
-              <span className="p-block">Stop and</span>
-              <span className="p-block">Restart</span>
+            <p style={_styles.circleText}>
+              <span style={_styles.textSpan}>Stop and</span>
+              <span style={_styles.textSpan}>Restart</span>
             </p>
           </IonButton>
         ) : (
           <IonButton
             fill="clear"
             shape="round"
-            className="inner-circle"
+            style={_styles.innerCircle}
             color="light"
             onClick={() => dispatch(startBedTimeNow())}
           >
-            <p className="circle-text">
-              <span className="p-block">Start</span>
-              <span className="p-block">Now</span>
+            <p style={_styles.circleText}>
+              <span style={_styles.textSpan}>Start</span>
+              <span style={_styles.textSpan}>Now</span>
             </p>
           </IonButton>
         )}
