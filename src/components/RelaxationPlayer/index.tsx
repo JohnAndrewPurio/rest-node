@@ -8,9 +8,19 @@ import {
   IonRow,
   IonToolbar,
 } from '@ionic/react';
-import { pause, play, playBack, playForward, volumeHigh, volumeLow } from 'ionicons/icons';
+import {
+  pause,
+  play,
+  playBack,
+  playForward,
+  volumeHigh,
+  volumeLow,
+} from 'ionicons/icons';
 import { useContext } from 'react';
-import { adjustVolume, toggleRelaxation } from '../../contextStore/RelaxationContext/relaxationActions';
+import {
+  adjustVolume,
+  toggleRelaxation,
+} from '../../contextStore/RelaxationContext/relaxationActions';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 
 const RelaxationFooter: React.FC = () => {
@@ -36,22 +46,22 @@ const RelaxationFooter: React.FC = () => {
       transformOrigin: 'center',
     },
     title: {
-      paddingRight: ".5em",
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      maxWidth: "30%"
+      paddingRight: '.5em',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      maxWidth: '30%',
     },
     footerGrid: {
       display: 'flex',
       alignItems: 'center',
     },
     volume: {
-      flex: 1
+      flex: 1,
     },
     range: {
-      width: "100%"
-    }
+      width: '100%',
+    },
   };
 
   return (
@@ -109,8 +119,10 @@ const RelaxationFooter: React.FC = () => {
             </IonButton> */}
           </IonCol>
           <IonCol size="auto" style={_styles.title}>
-            <IonGrid >
-              <IonRow style={{ fontWeight: 700 }}>Title title title title title</IonRow>
+            <IonGrid>
+              <IonRow style={{ fontWeight: 700 }}>
+                Title title title title title
+              </IonRow>
               <IonRow style={{ fontSize: '.7rem' }}>Creator</IonRow>
             </IonGrid>
           </IonCol>
@@ -121,14 +133,24 @@ const RelaxationFooter: React.FC = () => {
               className="range-slider"
               value={state.relaxationVolume.night}
               onIonChange={(e: any) => {
-                const val = e.target.value
+                const val = e.target.value;
                 if (val) {
-                  dispatch(adjustVolume(e.target.value))
+                  dispatch(adjustVolume(e.target.value));
                 }
               }}
             >
-              <IonIcon size="small" color="primary" slot="start" icon={volumeLow} />
-              <IonIcon size="small" color="primary" slot="end" icon={volumeHigh} />
+              <IonIcon
+                size="small"
+                color="primary"
+                slot="start"
+                icon={volumeLow}
+              />
+              <IonIcon
+                size="small"
+                color="primary"
+                slot="end"
+                icon={volumeHigh}
+              />
             </IonRange>
           </IonCol>
         </IonGrid>

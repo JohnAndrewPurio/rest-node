@@ -9,7 +9,6 @@ import Login from '../../pages/Login';
 import Network from '../../pages/Network';
 import Profile from '../../pages/Profile';
 import RestNode from '../../pages/RestNode';
-import SettingsRouter from '../../pages/Settings';
 
 import {
   DEFAULT,
@@ -20,15 +19,19 @@ import {
   REST_NODE,
 } from '../../pages/paths.json';
 import Menu from '../Menu';
+import { isPlatform } from '@ionic/core';
 
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();
 
   const hardwareBackHandlers = (ev: any) => {
     const path = window.location.pathname;
+    const onRestnodeTabs = path.includes('tabs');
+    const isOnHome = path === '/home';
+    const isOnProfile = path === '/profile';
 
     ev.detail.register(1, () => {
-      if (path.includes('tabs')) {
+      if (onRestnodeTabs || isOnHome || isOnProfile) {
         present({
           cssClass: 'my-css',
           header: 'Exit app?',
@@ -40,15 +43,20 @@ const AppRouter: React.FC = () => {
   };
 
   useEffect(() => {
-    document.addEventListener('ionBackButton', hardwareBackHandlers);
-    return () =>
-      document.removeEventListener('ionBackButton', hardwareBackHandlers);
+    if (isPlatform("android")) {
+      document.addEventListener('ionBackButton', hardwareBackHandlers);
+    }
+    return () => {
+      if (isPlatform("android")) {
+        document.removeEventListener('ionBackButton', hardwareBackHandlers);
+      }
+    }
   }, []);
 
   return (
     <IonReactRouter>
       <Menu />
-      <IonRouterOutlet id='main'>
+      <IonRouterOutlet id="main">
         <Route exact path={LOGIN}>
           <Login />
         </Route>

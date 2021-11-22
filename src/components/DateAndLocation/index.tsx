@@ -24,14 +24,16 @@ const DateAndLocation: React.FC = () => {
   const [location, setLocation] = useState<string>('');
   const date = moment();
 
-  const [, setSwiper] = useContext(MenuContext)
+  const [, setSwiper] = useContext(MenuContext);
 
   useEffect(() => {
     if (setSwiper) {
-      setSwiper(true)
+      setSwiper(true);
     }
-    return () => { if (setSwiper) setSwiper(false) }
-  }, [])
+    return () => {
+      if (setSwiper) setSwiper(false);
+    };
+  }, []);
 
   const geoLocation = user ? user[geoip] : '';
 
@@ -43,7 +45,7 @@ const DateAndLocation: React.FC = () => {
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonMenuButton menu="main"></IonMenuButton>
+          <IonMenuButton menu="main" />
         </IonButtons>
         <IonTitle style={header}>
           <IonRow>
@@ -53,7 +55,7 @@ const DateAndLocation: React.FC = () => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonCol className="ion-text-center" >
+            <IonCol className="ion-text-center">
               {date.format('DD MMMM YYYY')}
             </IonCol>
           </IonRow>

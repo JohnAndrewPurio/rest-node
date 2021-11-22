@@ -72,9 +72,9 @@ export interface TimeBarType {
 }
 
 export interface songInterface {
-  title: string
-  artist?: string
-  id: string
-  fullPath: string
-  source: string
+  title: string;
+  artist?: string;
+  id: string;
+  fullPath: string;
+  source: string;
 }

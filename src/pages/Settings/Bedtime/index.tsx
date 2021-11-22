@@ -1,15 +1,18 @@
 import { IonContent, IonGrid, IonPage } from '@ionic/react';
 import { FC, useContext, useEffect } from 'react';
 import { Storage } from '@capacitor/storage';
+import moment from 'moment';
 import SettingsHeader from '../../../components/SettingsHeader';
 import TimeBar from '../../../components/TimeBar';
 import BedTimeStartBtn from '../../../components/BedTimeStartBtn';
 import BedTimeStartTime from '../../../components/BedTimeStartTime';
 import BedTimeControl from '../../../components/BedTimeControl';
-import moment from 'moment';
 import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
 import WakeTimeCountdown from '../../../components/WakeTimeCountdown';
-import { bedtimeStarted, setState } from '../../../contextStore/BedTimeContext/bedtimeActions';
+import {
+  bedtimeStarted,
+  setState,
+} from '../../../contextStore/BedTimeContext/bedtimeActions';
 import { storage } from '../../../services/constants';
 import { getStartEnd } from '../helper';
 
@@ -36,7 +39,6 @@ const Bedtime: FC = () => {
         bedtimeHours: end.diff(start, 'hours'),
         wakeUpTime: end,
       };
-      console.log(newState, end.format(), start.format());
       dispatch(setState(newState));
     }
   };

@@ -21,6 +21,7 @@ import AudioFilesContext from '../../contextStore/RestNodeContext/audioFiles';
 import { sendAudioBodyInterface } from '../../api/RestNode/POST/sendAudioFilesMetadata';
 
 import './styles.css';
+import { StringKeyedObject } from '../../types';
 
 interface Props {
   component: string;
@@ -50,22 +51,27 @@ const SoundAccordion: FC<Props> = ({
   activeSong,
   chooseSong,
 }) => {
-  const songs = useContext(AudioFilesContext)
+  const songs = useContext(AudioFilesContext);
   const { state } = useContext(SoundsContext);
-  const { audio } = state;
+  const { isPlaying } = state;
 
-  const playing = audio[component];
+  const keyMap: StringKeyedObject = {
+    "Night Sounds": "night",
+    "Wake Sounds": "wake",
+    "Relaxation Sounds": "night"
+  }
+  const key = keyMap[component]
+
+  const playing = isPlaying[key];
 
   const getClassName = () => {
-    if (accordionOpen)
-      return 'acc-open'
+    if (accordionOpen) return 'acc-open';
 
     const classNames = [];
 
     classNames.push('acc-close');
 
-    if (playing)
-      classNames.push('playing');
+    if (playing) classNames.push('playing');
 
     return classNames.join(' ');
   };
@@ -77,18 +83,15 @@ const SoundAccordion: FC<Props> = ({
       onclick={chooseSong}
       active={index === activeSong}
       song={song}
-      component={component}
+      component={key}
     />
-  )
+  );
 
   return (
     <IonRow onClick={openAccordion} className={getClassName()}>
       <IonRow className="title-head" style={_styles.titleHead}>
         <IonCol>{component}</IonCol>
-        {
-          accordionOpen
-          && <Chevron index={1} onclick={closeAccordion} />
-        }
+        {accordionOpen && <Chevron index={1} onclick={closeAccordion} />}
       </IonRow>
       {accordionOpen && (
         <IonRow style={_styles.accContent}>
@@ -97,35 +100,29 @@ const SoundAccordion: FC<Props> = ({
               index={index}
               onclick={openSlider}
               open={sliderOpen}
-              component={component}
+              component={key}
             />
-            {
-              sliderOpen ? (
-                <IonCol
-                  size="auto"
-                  className="slider-close-btn"
-                  onClick={closeSlider}
-                >
-                  <IonIcon color="light" style={_styles.closeIcon} icon={close} />
-                </IonCol>
-              ) : (
-                <PlayButton component={component} />
-              )
-            }
+            {sliderOpen ? (
+              <IonCol
+                size="auto"
+                className="slider-close-btn"
+                onClick={closeSlider}
+              >
+                <IonIcon color="light" style={_styles.closeIcon} icon={close} />
+              </IonCol>
+            ) : (
+              <PlayButton component={key} />
+            )}
           </IonRow>
           <IonRow className="song-list-container">
             <IonHeader>
               <IonListHeader lines="full">
-                <IonLabel style={_styles.listHeaderTitle}>
-                  {component}
-                </IonLabel>
+                <IonLabel style={_styles.listHeaderTitle}>{component}</IonLabel>
               </IonListHeader>
             </IonHeader>
             <IonContent className="song-list-content" scrollEvents>
               <IonList className="song-list">
-                {
-                  songs && Object.values(songs[component]).map(songsHandler)
-                }
+                {songs && Object.values(songs[component]).map(songsHandler)}
               </IonList>
             </IonContent>
           </IonRow>

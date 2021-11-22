@@ -24,7 +24,7 @@ const RestNode: React.FC<RouteComponentProps> = (props) => {
           </IonRouterOutlet>
         </IonContent>
       </RestNodeContext>
-    </IonPage >
+    </IonPage>
   );
 };
 
