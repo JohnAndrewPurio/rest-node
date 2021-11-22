@@ -4,6 +4,7 @@ import { Redirect, Route } from 'react-router-dom';
 import { App as CapApp } from '@capacitor/app';
 
 import { useEffect } from 'react';
+import { isPlatform } from '@ionic/core';
 import Home from '../../pages/Home';
 import Login from '../../pages/Login';
 import Network from '../../pages/Network';
@@ -19,7 +20,6 @@ import {
   REST_NODE,
 } from '../../pages/paths.json';
 import Menu from '../Menu';
-import { isPlatform } from '@ionic/core';
 
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();
@@ -43,14 +43,14 @@ const AppRouter: React.FC = () => {
   };
 
   useEffect(() => {
-    if (isPlatform("android")) {
+    if (isPlatform('android')) {
       document.addEventListener('ionBackButton', hardwareBackHandlers);
     }
     return () => {
-      if (isPlatform("android")) {
+      if (isPlatform('android')) {
         document.removeEventListener('ionBackButton', hardwareBackHandlers);
       }
-    }
+    };
   }, []);
 
   return (

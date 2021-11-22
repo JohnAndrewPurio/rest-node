@@ -4,12 +4,12 @@ import { RestNodeStateType } from '../../types';
 
 export const getBedtimeArcs = (states: RestNodeStateType) => {
   const { start, end } = getStartEnd(states);
-  const diff = end.diff(start, 'hours', true);
-  const placement = 360 * (start.hours() / 24) - 90;
-  console.log('diff', diff);
+  const diff = end.diff(start, 'hours', true); // length of sleep in hours
+  const placement = 360 * (start.hours() / 24) - 90; // position of the start of the arc in the circle
+  const percentage = (diff / 24) * 100; // length of arc
   return [
     {
-      percentage: (diff / 24) * 100,
+      percentage,
       placement,
     },
   ];

@@ -1,3 +1,9 @@
 {
-    "circleSpacing": 32
+    "circleSpacing": 32,
+    "initialArcs": {
+        "bedtime": [],
+        "lights": [],
+        "sounds": [],
+        "relaxation": []
+    }
 }

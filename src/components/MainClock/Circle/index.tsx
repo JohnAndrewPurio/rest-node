@@ -1,7 +1,7 @@
 import Progress from '../Progress';
-import './styles.css';
 import { strokeWidth } from './constants.json';
 import { TimeArc } from '../../../types';
+import _styles from '../styles';
 
 interface Props {
   size: number;
@@ -10,16 +10,21 @@ interface Props {
 }
 
 const Circle: React.FC<Props> = ({ size, color, arcs }) => {
+  // method source: https://codepen.io/juhaelee/pen/GxymWP
+
   const sqSize = size;
   const radius = (sqSize - strokeWidth) / 2;
   const viewBox = `0 0 ${sqSize} ${sqSize}`;
 
-  console.log(size, color, arcs);
-
   return (
-    <svg width={sqSize} height={sqSize} viewBox={viewBox}>
+    <svg
+      width={sqSize}
+      height={sqSize}
+      viewBox={viewBox}
+      style={_styles.circleSVG}
+    >
       <circle
-        className="circle-background"
+        style={_styles.circleBackground}
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}

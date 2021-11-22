@@ -64,11 +64,12 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
 
   return (
     <IonRow
-      className={
-        light[component]
-          ? 'light-control-container open'
-          : 'light-control-container'
-      }
+      style={{
+        ..._styles.container,
+        backgroundColor: light[component]
+          ? 'var(--ion-color-primary-tint)'
+          : 'var(--ion-color-step-150)',
+      }}
     >
       <IonItem lines="none" style={_styles.header}>
         <IonIcon
@@ -96,7 +97,6 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
               onIonChange={handleRangeChange}
               value={brightness[component]}
               color="primary"
-              className="range-slider"
             >
               <IonIcon slot="start" size="small" icon={icons[component]} />
               <IonIcon slot="end" color="primary" icon={icons[component]} />

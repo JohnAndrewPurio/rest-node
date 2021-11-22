@@ -1,6 +1,6 @@
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import { alarm, arrowForward, bed, bulb, musicalNotes } from 'ionicons/icons';
-import './styles.css';
+import _styles from './styles';
 
 interface Props {
   title: string;
@@ -11,20 +11,8 @@ const SettingPillStrips: React.FC<Props> = ({ title, icon }) => {
   const icons = [alarm, bulb, musicalNotes, bed];
   const colors = ['#2dd36f', '#eb445a', '#71964b', '#e0ac08'];
 
-  const _styles = {
-    title: {
-      textTransform: 'capitalize',
-    },
-  };
-
   return (
-    <IonItem
-      style={{
-        margin: '.5em',
-      }}
-      button
-      detail={false}
-    >
+    <IonItem style={_styles.item} button detail={false}>
       <IonIcon
         icon={icons[icon]}
         style={{ color: colors[icon] }}

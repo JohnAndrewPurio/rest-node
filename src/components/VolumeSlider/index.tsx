@@ -3,7 +3,7 @@ import { volumeHigh, volumeLow } from 'ionicons/icons';
 import { useContext } from 'react';
 import { adjustVolume } from '../../contextStore/SoundsContext/soundsActions';
 import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
-import './styles.css';
+import _styles from './styles';
 
 interface Props {
   open: boolean;
@@ -15,12 +15,6 @@ interface Props {
 const Slider: React.FC<Props> = ({ index, open, onclick, component }) => {
   const { state, dispatch } = useContext(SoundsContext);
 
-  const _styles = {
-    icon: {
-      fontSize: '7vh',
-    },
-  };
-
   const handleRangeChange = (e: any) => {
     const val = e.target.value;
     if (val) {
@@ -30,13 +24,13 @@ const Slider: React.FC<Props> = ({ index, open, onclick, component }) => {
 
   return (
     <IonCol
-      className={open ? 'open-slider slider-container' : 'slider-container'}
+      style={{ ..._styles.sliderContainer, maxWidth: open ? '500px' : '200px' }}
       onClick={() => onclick(index)}
     >
       {open ? (
         <IonRange
           color="primary"
-          className="range-slider"
+          style={_styles.rangeSlider}
           value={state.volume[component]}
           onIonChange={handleRangeChange}
         >

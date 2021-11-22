@@ -1,14 +1,9 @@
 import { IonList } from '@ionic/react';
 import SettingPillStrips from '../SettingPillStrips';
+import _styles from './styles';
 import './styles.css';
 
 const SettingsList: React.FC = () => {
-  const _styles = {
-    list: {
-      margin: '0em .5em .5em .5em',
-    },
-  };
-
   const list = ['bedtime', 'lights', 'sounds', 'relaxation'];
 
   return (

@@ -11,7 +11,7 @@ import SoundsContext from '../../../../contextStore/SoundsContext/soundsContext'
 import { bedtimeStarted } from '../../../../contextStore/BedTimeContext/bedtimeActions';
 import { setState } from '../../../../contextStore/SoundsContext/soundsActions';
 import { storage, BASE_URL } from '../../../../services/constants';
-import { _styles } from '../styles';
+import _styles from '../styles';
 import AudioFilesContext from '../../../../contextStore/RestNodeContext/audioFiles';
 import { getStartEnd } from '../../helper';
 
@@ -32,12 +32,20 @@ const Content: FC = () => {
     const _moment = moment();
     const { start, end } = getStartEnd({ bedtime, waketime });
     const bedtimeMoment = start;
-    const waketimeMoment = end
+    const waketimeMoment = end;
 
-    const nightStart = bedtimeMoment.clone().add(bedtime.sound.onoffset, 'minutes');
-    const nightEnd = bedtimeMoment.clone().add(bedtime.sound.offoffset, 'minutes');
-    const wakeStart = waketimeMoment.clone().add(waketime.sound.onoffset, 'minutes');
-    const wakeEnd = waketimeMoment.clone().add(waketime.sound.offoffset, 'minutes');
+    const nightStart = bedtimeMoment
+      .clone()
+      .add(bedtime.sound.onoffset, 'minutes');
+    const nightEnd = bedtimeMoment
+      .clone()
+      .add(bedtime.sound.offoffset, 'minutes');
+    const wakeStart = waketimeMoment
+      .clone()
+      .add(waketime.sound.onoffset, 'minutes');
+    const wakeEnd = waketimeMoment
+      .clone()
+      .add(waketime.sound.offoffset, 'minutes');
 
     const isNightSoundOn =
       _moment.isSameOrAfter(nightStart) && _moment.isBefore(nightEnd);

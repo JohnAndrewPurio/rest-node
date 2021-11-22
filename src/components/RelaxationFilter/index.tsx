@@ -1,4 +1,5 @@
 import { IonButton, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
+import _styles from './styles';
 
 interface Props {
   selected: string;
@@ -6,29 +7,6 @@ interface Props {
 }
 
 const RelaxationFilter: React.FC<Props> = ({ selected, onSelect }) => {
-  const _styles = {
-    container: {
-      margin: '1em .5em',
-    },
-    btn: {
-      height: '10vw',
-      width: '10vw',
-      margin: 0,
-      '--padding-start': '0px',
-      '--padding-end': '0px',
-      '--padding-top': '0px',
-      '--padding-bottom': '0px',
-    },
-    filtersGrid: {
-      marginTop: '2vh',
-      padding: 0,
-    },
-    label: {
-      fontSize: '1.1rem',
-      fontWeight: 700,
-    },
-  };
-
   const filters = ['All', '5', '10', '15', '20', '30', '30+'];
 
   return (

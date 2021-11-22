@@ -16,18 +16,13 @@ import {
 import { storage } from '../../../services/constants';
 import { getStartEnd } from '../helper';
 
-import './styles.css';
+import _styles from './styles';
 
 const Bedtime: FC = () => {
-  const _styles = {
-    page: {
-      marginBottom: '5vh',
-    },
-  };
-
   const { state, dispatch } = useContext(BedTimeContext);
   const { started, bedtimeStart, wakeUpTime } = state;
 
+  // sync the value of the context states to the stored value
   const getState = async () => {
     const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
     if (value) {
@@ -46,6 +41,7 @@ const Bedtime: FC = () => {
   const isBedtime = () =>
     moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime);
 
+  // check if bedtime started or stopped every second
   useEffect(() => {
     const interval = setInterval(() => {
       if (!started && isBedtime()) {
