@@ -37,11 +37,12 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   const socket = useContext(SocketContext);
   const [targetAddress] = useContext(TargetAddressContext);
   const audioAssets = useContext(AudioAssetsContext);
+  const asset = `${component.replace( component[0], component[0].toUpperCase() )} Sounds`
   const downloadQueue = useContext(DownloadQueueContext);
   const { state, dispatch } = useContext(SoundsContext);
   const audioDownloading = downloadQueue[song.name];
   const audioDownloaded =
-    audioAssets && audioAssets[component].includes(song.name); // Temporary hack for searching if audio is already downloaded
+    audioAssets && audioAssets[asset].includes(song.name); // Temporary hack for searching if audio is already downloaded
   const audioPlaying = state.sample.playing && song.name === state.sample.audio;
   const playIcon = audioPlaying ? stop : play;
   const icon = !audioDownloaded ? cloudDownloadOutline : playIcon;

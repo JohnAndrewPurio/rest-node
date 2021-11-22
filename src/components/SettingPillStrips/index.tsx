@@ -13,6 +13,16 @@ interface Props {
 const SettingPillStrips: FC<Props> = ({ title, icon }) => {
   const soundLoading = useContext(AudioLoadingContext)
   const icons = [alarm, bulb, musicalNotes, bed];
+  let itemLoading = false
+
+  switch(title) {
+    case "Sounds": 
+      itemLoading = soundLoading
+      
+      break
+    default:
+      itemLoading = false
+  }
 
   const loading = (
     <IonSpinner color="secondary" />
@@ -43,7 +53,7 @@ const SettingPillStrips: FC<Props> = ({ title, icon }) => {
         {title}
       </IonLabel>
       {
-        soundLoading ? loading : actionButton
+        itemLoading ? loading : actionButton
       }
     </IonItem>
   );

@@ -36,7 +36,6 @@ import LoadingContext from '../../contextStore/AppContext/loadingContext';
 import logOut from '../../utils/logOut';
 import { logoutUri } from '../../auth0.config';
 import { getAddress } from '../../utils/userGeoIP';
-import { REST_NODE } from '../paths.json';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json';
@@ -44,8 +43,10 @@ import MenuContext from '../../contextStore/AppContext/menuContext';
 
 const Profile: FC = () => {
   const user = useContext(UserContext);
-  const [, setDarkMode] = useContext(DarkModeContext) || [null, null];
+  const [darkMode, setDarkMode] = useContext(DarkModeContext) || [, null];
   const [loading, setIsLoading] = useContext(LoadingContext) || [null, null];
+  const [, setSwiper] = useContext(MenuContext);
+
   const { buildLogoutUrl, isLoading, logout } = useAuth0();
   const [startLoading, stopLoading] = useIonLoading();
   const address = getAddress(user);
@@ -59,57 +60,51 @@ const Profile: FC = () => {
   }: CustomEvent<ToggleChangeEventDetail>) => {
     const darkMode = detail.checked;
 
-    console.log('Dark:', darkMode);
-
-    if (setDarkMode) setDarkMode(darkMode);
+    if (setDarkMode)
+      setDarkMode(darkMode)
   };
 
   useEffect(() => {
-    if (setIsLoading) setIsLoading(isLoading);
-  }, [isLoading]);
+    if (setIsLoading)
+      setIsLoading(isLoading);
 
-  useEffect(() => {
-    if (setIsLoading) setIsLoading(isLoading);
-  }, [isLoading]);
-
-  useEffect(() => {
     if (loading) {
       startLoading('Loading', undefined, 'dots');
-    }
-  }, [isLoading]);
 
-  const [, setSwiper] = useContext(MenuContext);
-
-  useEffect(() => {
-    if (setSwiper) {
-      setSwiper(true);
-    }
-    return () => {
-      if (setSwiper) setSwiper(false);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (loading) {
-      startLoading('Loading', undefined, 'circular');
-
-      return;
+      return
     }
 
     stopLoading();
   }, [isLoading]);
 
-  if (!user) return <Redirect to="/login" />;
+  useEffect(() => {
+    if (setSwiper)
+      setSwiper(true)
+
+    const cleanup = () => {
+      if (setSwiper)
+        setSwiper(false)
+    }
+
+    return cleanup
+  }, []);
+
+  if (!user) 
+    return <Redirect to="/login" />;
+
+  const toolbar = (
+    <IonToolbar>
+      <IonButtons slot="start">
+        <IonMenuButton menu="main" />
+      </IonButtons>
+      <IonTitle>Profile</IonTitle>
+    </IonToolbar>
+  )
 
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton menu="main" />
-          </IonButtons>
-          <IonTitle>Profile</IonTitle>
-        </IonToolbar>
+        {toolbar}
       </IonHeader>
       <IonContent className="ion-padding" fullscreen>
         <IonGrid>
@@ -132,7 +127,7 @@ const Profile: FC = () => {
               <IonItem>
                 <IonIcon icon={moon} slot="start" />
                 <IonLabel>Dark Mode</IonLabel>
-                <IonToggle onIonChange={darkModeHandler} />
+                <IonToggle checked={darkMode} onIonChange={darkModeHandler} />
               </IonItem>
             </IonList>
           </IonRow>

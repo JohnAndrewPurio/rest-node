@@ -17,6 +17,8 @@ import toggleDarkMode from '../../utils/toggleDarkMode';
 
 import '../../api/Firebase/firebaseInit';
 import MenuContext from './menuContext';
+import { storageGet, storageSet } from '../../api/CapacitorStorage';
+import { PROFILE_KEY } from '../../api/CapacitorStorage/keys';
 
 interface paramsInterface {
   url: string;
@@ -46,21 +48,46 @@ const AppContext: FC = ({ children }) => {
     await Browser.close();
   };
 
+  const getProfileData = async () => {
+    try {
+      const { darkMode } = await storageGet(PROFILE_KEY)
+
+      setDarkMode(darkMode);
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  const persistDarkMode = async () => {
+    try {
+      const key = PROFILE_KEY
+      const previousData = await storageGet(key)
+      const data = {
+        ...previousData,
+        darkMode
+      }
+
+      storageSet(data, key)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     CapApp.addListener('appUrlOpen', handleRedirect);
   }, [handleRedirectCallback]);
 
   useEffect(() => {
-    if (isPlatform('android')) serviceListener(Zeroconf, setTargetAddress);
+    getProfileData()
 
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    if ( isPlatform('android') ) 
+      serviceListener(Zeroconf, setTargetAddress);
 
-    toggleDarkMode(document, prefersDark.matches);
-    setDarkMode(prefersDark.matches);
   }, []);
 
   useEffect(() => {
     toggleDarkMode(document, darkMode);
+    persistDarkMode()
   }, [darkMode]);
 
   return (

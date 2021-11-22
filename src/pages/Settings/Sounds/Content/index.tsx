@@ -7,12 +7,12 @@ import SoundAccordion from '../../../../components/SoundAccordion';
 import TimeBar from '../../../../components/TimeBar';
 import BedTimeContext from '../../../../contextStore/BedTimeContext/bedtimeContext';
 import SoundsContext from '../../../../contextStore/SoundsContext/soundsContext';
+import AudioFilesContext from '../../../../contextStore/RestNodeContext/audioFiles';
 
 import { bedtimeStarted } from '../../../../contextStore/BedTimeContext/bedtimeActions';
 import { setState } from '../../../../contextStore/SoundsContext/soundsActions';
-import { storage, BASE_URL } from '../../../../services/constants';
+import { storage } from '../../../../services/constants';
 import { _styles } from '../styles';
-import AudioFilesContext from '../../../../contextStore/RestNodeContext/audioFiles';
 import { getStartEnd } from '../../helper';
 
 const Content: FC = () => {
@@ -161,8 +161,6 @@ const Content: FC = () => {
             chooseSong={chooseSong}
         />
     );
-
-    console.log('Content Audio Type:', audioTypes);
 
     return (
         <IonContent style={_styles.fullHeight}>

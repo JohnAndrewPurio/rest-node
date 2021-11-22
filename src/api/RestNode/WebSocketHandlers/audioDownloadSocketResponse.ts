@@ -21,7 +21,7 @@ export const audioAssetsAvailableResponse: audioAssetsAvailableType = async (
   setAudioAssets
 ) => {
   try {
-    const protocol = targetAddress ? 'http' : 'https';
+    const protocol = targetAddress !== BASE_URL ? 'http' : 'https';
     const audioAssetsAvailable = await getAudioAssetsAvailable(
       targetAddress || BASE_URL,
       protocol
