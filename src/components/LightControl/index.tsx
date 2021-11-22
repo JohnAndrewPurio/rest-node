@@ -27,18 +27,18 @@ type iconsType = { [key: string]: any };
 type titlesType = { [key: string]: string };
 
 const LightControl: React.FC<controlProps> = ({ component }) => {
-  const socket = useContext(SocketContext)
+  const socket = useContext(SocketContext);
   const { state, dispatch } = useContext(LightsContext);
   const { light, brightness } = state;
 
   const icons: iconsType = {
     night: moon,
-    wake: sunny
+    wake: sunny,
   };
 
   const title: titlesType = {
     night: 'Night Light',
-    wake: 'Wake Light'
+    wake: 'Wake Light',
   };
 
   const handleToggleClicked = () => {
@@ -49,13 +49,13 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
 
   const handleRangeChange = (event: any) => {
     const { value } = event.target;
-    const lightType = `${component.toUpperCase()}_LIGHT` // Temporary Hack
+    const lightType = `${component.toUpperCase()}_LIGHT`; // Temporary Hack
     const data = {
-      state: "ADJUST_BRIGHTNESS",
+      state: 'ADJUST_BRIGHTNESS',
       light: lightType,
       max_brightness: value,
-      type: 'light'
-    }
+      type: 'light',
+    };
 
     if (value > 0 || light[component]) {
       dispatch(
@@ -63,7 +63,7 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
       );
     }
 
-    socket?.send(JSON.stringify(data))
+    socket?.send(JSON.stringify(data));
   };
 
   return (
@@ -81,9 +81,7 @@ const LightControl: React.FC<controlProps> = ({ component }) => {
           style={_styles.icon}
           icon={icons[component]}
         />
-        <IonLabel style={_styles.headerTxt}>
-          {title[component]}
-        </IonLabel>
+        <IonLabel style={_styles.headerTxt}>{title[component]}</IonLabel>
         <IonToggle
           color="tertiary"
           checked={light[component]}

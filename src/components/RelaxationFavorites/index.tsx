@@ -61,7 +61,8 @@ const RelaxationFavorites: React.FC = () => {
                 showPlay={showPlay}
                 playingIndex={playingIndex}
                 playSong={playSong}
-                playing={playing} />
+                playing={playing}
+              />
               {favorites.map((el, i) => (
                 <IonSlide key={el.id} style={_styles.slide}>
                   <IonCol style={_styles.card}>
@@ -139,14 +140,16 @@ interface DefaultProps {
   playing: boolean;
 }
 
-const DefaultSlide: React.FC<DefaultProps> = ({ showPlay, playingIndex, playSong, playing }) => {
+const DefaultSlide: React.FC<DefaultProps> = ({
+  showPlay,
+  playingIndex,
+  playSong,
+  playing,
+}) => {
   return (
-    <IonSlide key='default-slide' style={_styles.slide}>
+    <IonSlide key="default-slide" style={_styles.slide}>
       <IonCol style={_styles.card}>
-        <IonRow
-          className="slider-picture"
-          onClick={() => showPlay(-1)}
-        >
+        <IonRow className="slider-picture" onClick={() => showPlay(-1)}>
           <IonImg
             className="slider-ion-image"
             src="https://picsum.photos/200"
@@ -179,9 +182,7 @@ const DefaultSlide: React.FC<DefaultProps> = ({ showPlay, playingIndex, playSong
         <IonGrid style={_styles.detailsGrid}>
           <IonCol style={_styles.paddingZero}>
             <IonGrid style={_styles.paddingZero}>
-              <IonRow style={{ fontWeight: 700 }}>
-                Title title
-              </IonRow>
+              <IonRow style={{ fontWeight: 700 }}>Title title</IonRow>
               <IonRow style={{ fontSize: '.7rem' }}>Creator</IonRow>
             </IonGrid>
           </IonCol>
@@ -191,5 +192,5 @@ const DefaultSlide: React.FC<DefaultProps> = ({ showPlay, playingIndex, playSong
         </IonGrid>
       </IonCol>
     </IonSlide>
-  )
-}
+  );
+};

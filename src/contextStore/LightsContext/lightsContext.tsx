@@ -57,11 +57,10 @@ const reducer = (state: State = initialState, action: Action) => {
       };
     }
     case LightsActionTypes.ADJUST_BRIGHTNESS: {
-      const brightness = state.brightness;
+      const { brightness } = state;
       if (action.payload.isNight) {
         brightness.night = action.payload.val;
-      }
-      else {
+      } else {
         brightness.wake = action.payload.val;
       }
       return {

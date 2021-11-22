@@ -1,6 +1,6 @@
 export const _styles = {
-    chevron: {
-        textAlign: 'right',
-        padding: 0,
-    },
+  chevron: {
+    textAlign: 'right',
+    padding: 0,
+  },
 };

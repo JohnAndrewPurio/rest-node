@@ -6,6 +6,7 @@ import {
   IonLabel,
   IonTitle,
   IonToolbar,
+  isPlatform,
   useIonAlert,
 } from '@ionic/react';
 import { arrowBack, save } from 'ionicons/icons';
@@ -124,16 +125,12 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   const hardwareBackHandlers = (event: any) => {
     const path = window.location.pathname;
-
     event.detail.register(5, (processNextHandler: any) => {
       const settingsIncluded = path.includes('settings');
-
       if (settingsIncluded) {
         goBack();
-
         return;
       }
-
       processNextHandler();
     });
   };
@@ -167,9 +164,14 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   // android hardware back button listener
   useEffect(() => {
-    document.addEventListener('ionBackButton', hardwareBackHandlers);
-    return () =>
-      document.removeEventListener('ionBackButton', hardwareBackHandlers);
+    if (isPlatform("android")) {
+      document.addEventListener('ionBackButton', hardwareBackHandlers);
+    }
+    return () => {
+      if (isPlatform("android")) {
+        document.removeEventListener('ionBackButton', hardwareBackHandlers);
+      }
+    }
   }, []);
 
   // instant start/stop sender

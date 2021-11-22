@@ -1,21 +1,22 @@
-import { IonContent, IonGrid } from "@ionic/react";
-import { FC, useContext, useEffect, useState } from "react"
-import { Storage } from "@capacitor/storage";
+import { IonContent, IonGrid } from '@ionic/react';
+import { FC, useContext, useEffect, useState } from 'react';
+import { Storage } from '@capacitor/storage';
 
-import moment from "moment";
-import SoundAccordion from "../../../../components/SoundAccordion";
-import TimeBar from "../../../../components/TimeBar";
-import BedTimeContext from "../../../../contextStore/BedTimeContext/bedtimeContext";
-import SoundsContext from "../../../../contextStore/SoundsContext/soundsContext";
+import moment from 'moment';
+import SoundAccordion from '../../../../components/SoundAccordion';
+import TimeBar from '../../../../components/TimeBar';
+import BedTimeContext from '../../../../contextStore/BedTimeContext/bedtimeContext';
+import SoundsContext from '../../../../contextStore/SoundsContext/soundsContext';
 
-import { bedtimeStarted } from "../../../../contextStore/BedTimeContext/bedtimeActions";
-import { setState } from "../../../../contextStore/SoundsContext/soundsActions"
-import { storage, BASE_URL } from "../../../../services/constants";
-import { _styles } from "../styles";
-import AudioFilesContext from "../../../../contextStore/RestNodeContext/audioFiles";
+import { bedtimeStarted } from '../../../../contextStore/BedTimeContext/bedtimeActions';
+import { setState } from '../../../../contextStore/SoundsContext/soundsActions';
+import { storage, BASE_URL } from '../../../../services/constants';
+import { _styles } from '../styles';
+import AudioFilesContext from '../../../../contextStore/RestNodeContext/audioFiles';
+import { getStartEnd } from '../../helper';
 
 const Content: FC = () => {
-    const audioTypes = useContext(AudioFilesContext)
+    const audioTypes = useContext(AudioFilesContext);
     const bedtimeState = useContext(BedTimeContext);
     const soundsState = useContext(SoundsContext);
 
@@ -24,69 +25,62 @@ const Content: FC = () => {
     const getState = async () => {
         const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
 
-        if (!value)
-            return
+        if (!value) return;
 
         const { bedtime, waketime } = JSON.parse(value);
 
-        const _moment = moment()
-        const bedtimeMoment = moment(bedtime.time, 'H:mm')
-        const waketimeMoment = moment(waketime.time, 'H:mm')
+        const _moment = moment();
+        const { start, end } = getStartEnd({ bedtime, waketime });
+        const bedtimeMoment = start;
+        const waketimeMoment = end
 
-        const nightStart = bedtimeMoment.add(
-            bedtime.sound.onoffset,
-            'minutes'
-        );
-        const nightEnd = bedtimeMoment.add(
-            bedtime.sound.offoffset,
-            'minutes'
-        );
-        const wakeStart = waketimeMoment.add(
-            waketime.sound.onoffset,
-            'minutes'
-        );
-        const wakeEnd = waketimeMoment.add(
-            waketime.sound.offoffset,
-            'minutes'
-        );
+        const nightStart = bedtimeMoment.clone().add(bedtime.sound.onoffset, 'minutes');
+        const nightEnd = bedtimeMoment.clone().add(bedtime.sound.offoffset, 'minutes');
+        const wakeStart = waketimeMoment.clone().add(waketime.sound.onoffset, 'minutes');
+        const wakeEnd = waketimeMoment.clone().add(waketime.sound.offoffset, 'minutes');
 
         const isNightSoundOn =
             _moment.isSameOrAfter(nightStart) && _moment.isBefore(nightEnd);
         const isWakeSoundOn =
             _moment.isSameOrAfter(wakeStart) && _moment.isBefore(wakeEnd);
 
-        const sound = {
+        const isPlaying = {
             night: isNightSoundOn,
-            wake: isWakeSoundOn
-        }
+            wake: isWakeSoundOn,
+        };
 
         const volume = {
             night: bedtime.sound.onpayload.max_volume,
             wake: bedtime.sound.onpayload.max_volume,
-        }
+        };
 
-        const audio = {
+        const audio_file = {
             night: bedtime.sound.onpayload.audio_file,
             wake: bedtime.sound.onpayload.audio_file,
-        }
+        };
 
         const nightSoundSchedule = {
             start: nightStart,
-            end: nightEnd
-        }
+            end: nightEnd,
+        };
 
         const wakeSoundSchedule = {
             start: wakeStart,
-            end: wakeEnd
-        }
+            end: wakeEnd,
+        };
 
         const sample = {
             playing: false,
-            audio: null
-        }
+            audio: null,
+        };
 
         const newState = {
-            sound, volume, audio, nightSoundSchedule, wakeSoundSchedule, sample
+            isPlaying,
+            volume,
+            audio_file,
+            nightSoundSchedule,
+            wakeSoundSchedule,
+            sample,
         };
 
         soundsState.dispatch(setState(newState));
@@ -138,12 +132,11 @@ const Content: FC = () => {
 
     useEffect(() => {
         const bedtimeCheckHandler = () => {
-            const bedtime = isBedtime()
-            const bedtimeHasStarted = bedtimeStarted()
+            const bedtime = isBedtime();
+            const bedtimeHasStarted = bedtimeStarted();
 
-            if (!started && bedtime)
-                bedtimeState.dispatch(bedtimeHasStarted);
-        }
+            if (!started && bedtime) bedtimeState.dispatch(bedtimeHasStarted);
+        };
 
         const interval = setInterval(bedtimeCheckHandler, 1000);
 
@@ -151,7 +144,7 @@ const Content: FC = () => {
 
         return () => {
             clearInterval(interval);
-        }
+        };
     }, []);
 
     const componentsHandler = (component: string, index: number) => (
@@ -167,9 +160,9 @@ const Content: FC = () => {
             activeSong={activeSong}
             chooseSong={chooseSong}
         />
-    )
+    );
 
-    console.log("Content Audio Type:", audioTypes)
+    console.log('Content Audio Type:', audioTypes);
 
     return (
         <IonContent style={_styles.fullHeight}>
@@ -177,14 +170,11 @@ const Content: FC = () => {
                 <TimeBar />
 
                 <IonGrid style={_styles.accordions}>
-                    {
-                        audioTypes
-                        && Object.keys(audioTypes).map(componentsHandler)
-                    }
+                    {audioTypes && Object.keys(audioTypes).map(componentsHandler)}
                 </IonGrid>
             </IonGrid>
         </IonContent>
-    )
-}
+    );
+};
 
-export default Content
+export default Content;

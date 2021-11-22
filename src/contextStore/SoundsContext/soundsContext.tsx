@@ -3,9 +3,9 @@ import React, { createContext, useReducer } from 'react';
 import { Action, SoundsActionTypes } from './soundsActions';
 
 export interface State {
-  sound: { [key: string]: boolean };
+  isPlaying: { [key: string]: boolean };
   volume: { [key: string]: number };
-  audio: { [key: string]: any };
+  audio_file: { [key: string]: any };
   nightSoundSchedule: {
     start: null | moment.Moment;
     end: null | moment.Moment;
@@ -20,9 +20,9 @@ interface Context {
 }
 
 const initialState = {
-  sound: { night: false, wake: false },
+  isPlaying: { night: false, wake: false },
   volume: { night: 50, wake: 50 },
-  audio: { night: null, wake: null },
+  audio_file: { night: null, wake: null },
   nightSoundSchedule: { start: null, end: null },
   wakeSoundSchedule: { start: null, end: null },
   sample: { playing: false, audio: null },
@@ -40,9 +40,9 @@ const reducer = (state: State = initialState, action: Action) => {
     case SoundsActionTypes.TOGGLE_SOUND: {
       const sound = { night: false, wake: false };
       if (action.payload) {
-        sound.night = !state.sound.night;
+        sound.night = !state.isPlaying.night;
       } else {
-        sound.wake = !state.sound.wake;
+        sound.wake = !state.isPlaying.wake;
       }
       return { ...state, sound, sample: { audio: null, playing: false } };
     }
