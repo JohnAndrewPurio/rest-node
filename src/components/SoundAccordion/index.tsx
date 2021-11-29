@@ -38,6 +38,12 @@ interface Props {
   chooseSong: (index: number) => void;
 }
 
+const keyMap: StringKeyedObject = {
+  'Night Sounds': 'night',
+  'Wake Sounds': 'wake',
+  'Relaxation Sounds': 'night',
+};
+
 const SoundAccordion: FC<Props> = ({
   component,
   index,
@@ -54,11 +60,6 @@ const SoundAccordion: FC<Props> = ({
   const { state } = useContext(SoundsContext);
   const { isPlaying } = state;
 
-  const keyMap: StringKeyedObject = {
-    'Night Sounds': 'night',
-    'Wake Sounds': 'wake',
-    'Relaxation Sounds': 'night',
-  };
   const key = keyMap[component];
 
   const playing = isPlaying[key];
@@ -106,17 +107,19 @@ const SoundAccordion: FC<Props> = ({
               open={sliderOpen}
               component={key}
             />
-            {sliderOpen ? (
-              <IonCol
-                size="auto"
-                style={_styles.sliderCloseBtn}
-                onClick={closeSlider}
-              >
-                <IonIcon color="light" style={_styles.closeIcon} icon={close} />
-              </IonCol>
-            ) : (
-              <PlayButton component={key} />
-            )}
+            {
+              sliderOpen ? (
+                <IonCol
+                  size="auto"
+                  style={_styles.sliderCloseBtn}
+                  onClick={closeSlider}
+                >
+                  <IonIcon color="light" style={_styles.closeIcon} icon={close} />
+                </IonCol>
+              ) : (
+                <PlayButton component={key} />
+              )
+            }
           </IonRow>
           <IonRow style={_styles.songListContainer}>
             <IonHeader>

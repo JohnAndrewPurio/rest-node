@@ -2,8 +2,10 @@ import { useIonAlert, LoadingOptions, useIonLoading } from '@ionic/react'
 import { HookOverlayOptions } from '@ionic/react/dist/types/hooks/HookOverlayOptions'
 import { FC, useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import { storageGet, storageSet } from '../../api/CapacitorStorage'
+import { SOUND_KEY } from '../../api/CapacitorStorage/keys'
 import { availableAudioAssetsInterface } from '../../api/RestNode/POST/sendAudioFilesMetadata'
-import audioDownloadResponseHandler, { AUDIO_DOWNLOAD_RESPONSE } from '../../api/RestNode/WebSocketHandlers/audioDownloadSocketResponse'
+import audioDownloadResponseHandler, { audioAssetsAvailableResponse, AUDIO_DOWNLOAD_RESPONSE } from '../../api/RestNode/WebSocketHandlers/audioDownloadSocketResponse'
 import { BASE_URL } from '../../services/constants'
 import { getLastValues, initializeWebsocketConnection, websocketMessageResponse } from '../../services/restnodeServices'
 import { listAudioFilesMetadata } from '../../utils/listAudioFilesMetadata'
@@ -11,16 +13,20 @@ import { BedTimeContextProvider } from '../BedTimeContext/bedtimeContext'
 
 import TargetAddressContext from '../NetworkContext/targetAddress'
 import AudioAssetsContext from './audioAssets'
-import AudioFilesContext, { AudioFilesContextType, sampleAudioFiles } from './audioFiles'
+import AudioFilesContext, { AudioFilesContextType } from './audioFiles'
 import AudioLoadingContext from './audioLoading'
 import DownloadQueueContext, { DownloadQueueContextInterface } from './downloadQueueContext'
 import SocketContext from './socketConnection'
+
+interface dataObject {
+    [key: string]: any
+}
 
 const RestNodeContext: FC = ({ children }) => {
     const history = useHistory()
     const [targetAddress] = useContext(TargetAddressContext)
     const [socket, setSocket] = useState<WebSocket | null>(null)
-    const [audioFiles, setAudioFiles] = useState<AudioFilesContextType>(sampleAudioFiles)
+    const [audioFiles, setAudioFiles] = useState<AudioFilesContextType>(null)
     const [audioAssets, setAudioAssets] = useState<availableAudioAssetsInterface>()
     const [downloadQueue, setDownloadQueue] = useState<DownloadQueueContextInterface>({})
     const [loading, setLoading] = useState<null | boolean>(false);
@@ -50,6 +56,43 @@ const RestNodeContext: FC = ({ children }) => {
             });
         }
     };
+
+    const storeSoundMetadata = async (data: dataObject) => {
+        try {
+            const key = SOUND_KEY
+
+            storageSet(data, key)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const retrieveSoundMetadata = async () => {
+        try {
+            const { audioFiles, audioAssets } = await storageGet(SOUND_KEY)
+
+            if (audioAssets && audioFiles) {
+                setAudioAssets(audioAssets)
+                setAudioFiles(audioFiles)
+
+                return
+            }
+            
+            // If Audio Assets and Files Metadata are not Stored
+            setSoundLoading(() => true);
+
+            await listAudioFilesMetadata(
+                targetAddress, audioFiles,
+                setAudioFiles, setSoundLoading
+            )
+
+            await audioAssetsAvailableResponse(targetAddress || BASE_URL, setAudioAssets);
+
+            setSoundLoading(() => false);
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     // Websocket Event Handlers
     const socketOnOpen = (event: Event) => {
@@ -88,11 +131,8 @@ const RestNodeContext: FC = ({ children }) => {
             socketOnOpen, socketOnClose, socketOnError, socketOnMessage
         )
 
-        listAudioFilesMetadata(
-            targetAddress, audioFiles, setAudioAssets, setAudioFiles, setSoundLoading
-        )
-
-        getInitialValues();
+        getInitialValues()
+        retrieveSoundMetadata()
         setSocket(webSocket)
     }, []);
 
@@ -110,6 +150,14 @@ const RestNodeContext: FC = ({ children }) => {
 
         stopLoading();
     }, [loading]);
+
+    useEffect(() => {
+        const data = {
+            audioFiles, audioAssets
+        }
+
+        storeSoundMetadata(data)
+    }, [audioFiles, audioAssets])
 
     return (
         <SocketContext.Provider value={socket}>

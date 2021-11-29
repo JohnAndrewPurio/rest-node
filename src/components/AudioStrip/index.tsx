@@ -37,7 +37,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   const socket = useContext(SocketContext);
   const [targetAddress] = useContext(TargetAddressContext);
   const audioAssets = useContext(AudioAssetsContext);
-  const asset = `${component.replace( component[0], component[0].toUpperCase() )} Sounds`
+  const asset = `${component.replace(component[0], component[0].toUpperCase())} Sounds`
   const downloadQueue = useContext(DownloadQueueContext);
   const { state, dispatch } = useContext(SoundsContext);
   const audioDownloading = downloadQueue[song.name];
@@ -52,17 +52,21 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     const { fullPath, name } = song;
 
-    dispatch(playSample(name));
+    dispatch(
+      playSample(name)
+    );
 
     const data = {
       fullPath,
-      volume: 70,
+      volume: state.volume[component],
       state: audioPlaying ? 'STOPPED' : 'PLAYING',
-      sound: 'WAKE_SOUND',
+      sound: `${component.toUpperCase()}_SOUND`,
       type: 'audio',
     };
 
-    socket?.send(JSON.stringify(data));
+    socket?.send(
+      JSON.stringify(data)
+    );
   };
 
   const handleDownloadClick: handleClickType = (event) => {
