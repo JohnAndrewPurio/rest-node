@@ -1,4 +1,7 @@
 const _styles = {
+  toolbar: {
+    display: "flex"
+  },
   content: {
     paddingTop: '3em',
     display: 'flex',
