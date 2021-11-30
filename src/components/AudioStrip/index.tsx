@@ -48,12 +48,19 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   const playIcon = audioPlaying ? stop : play;
   const icon = !audioDownloaded ? cloudDownloadOutline : playIcon;
 
+  const { sound } = useSound("DeepMeditation")
+
   const handlePlayClick: handleClickType = (event) => {
     event.stopPropagation();
 
     const { fullPath, name } = song;
 
     dispatch(playSample(name));
+
+    sound.play({ playAudioWhenScreenIsLocked: false, numberOfLoops: 1 })
+    setTimeout(() => {
+      sound.stop()
+    }, 10000)
 
     const data = {
       fullPath,
@@ -72,22 +79,14 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     downloadAudioFile(targetAddress || BASE_URL, protocol, {
       fullPath: song.fullPath,
-      
+
     });
   };
 
-  const { sound } = useSound("DeepMeditation")
-
-  const onClickHandler = () => {
-    sound.play({playAudioWhenScreenIsLocked: false, numberOfLoops: 1})
-    setTimeout(() => {
-      sound.stop()
-    }, 10000)
-  }
-
-  // !audioDownloaded
-  // ? handleDownloadClick
-  // : handlePlayClick;
+  const onClickHandler =
+    !audioDownloaded
+      ? handleDownloadClick
+      : handlePlayClick;
 
   const actionButton = (
     <IonButton fill="clear" slot="end" onClick={onClickHandler}>
