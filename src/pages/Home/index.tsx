@@ -36,9 +36,9 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
+        <IonToolbar style={_styles.toolbar}>
+          <IonButtons slot="start" style={{height: "100%"}}>
+            <IonMenuButton mode="md" />
           </IonButtons>
           <IonGrid style={_styles.grid}>
             <IonSearchbar
