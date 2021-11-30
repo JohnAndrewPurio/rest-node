@@ -4,6 +4,7 @@ import {
   NativeGeocoder,
   NativeGeocoderOptions,
 } from '@ionic-native/native-geocoder';
+import { alertController } from '@ionic/core';
 
 export const getCurrentPosition = async (
   setLocation: Dispatch<SetStateAction<string>>
@@ -26,3 +27,20 @@ export const getCurrentPosition = async (
     console.log(error);
   }
 };
+
+// modal alert to beg for location permission
+export const requestLocation = {
+  cssClass: 'my-css',
+  header: 'Enable Location',
+  message: 'The app is having a hard time connecting to the Rest Node. Consider enabling location.',
+  buttons: [
+    { text: 'Close', role: 'cancel' },
+    {
+      text: 'Enable location',
+      handler: async () => {
+        Geolocation.requestPermissions()
+        alertController.dismiss()
+      },
+    },
+  ],
+}

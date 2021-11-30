@@ -95,7 +95,7 @@ const Profile: FC = () => {
   const toolbar = (
     <IonToolbar>
       <IonButtons slot="start">
-        <IonMenuButton menu="main" />
+        <IonMenuButton menu="main" mode="md"/>
       </IonButtons>
       <IonTitle>Profile</IonTitle>
     </IonToolbar>

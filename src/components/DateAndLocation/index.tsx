@@ -9,6 +9,7 @@ import {
   IonTitle,
 } from '@ionic/react';
 import moment from 'moment';
+import "./styles.css"
 
 import UserContext, { geoip } from '../../contextStore/UserContext/userContext';
 import { getCurrentPosition } from '../../utils/getCurrentPosition';
@@ -39,11 +40,11 @@ const DateAndLocation: React.FC = () => {
 
   return (
     <IonHeader>
-      <IonToolbar>
+      <IonToolbar mode="ios" >
         <IonButtons slot="start">
-          <IonMenuButton menu="main" />
+          <IonMenuButton menu="main" mode="md" />
         </IonButtons>
-        <IonTitle style={header}>
+        <IonTitle style={header} className="DALTitle">
           <IonRow>
             <IonCol className="ion-text-center" style={place}>
               {location ||
@@ -51,7 +52,7 @@ const DateAndLocation: React.FC = () => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonCol className="ion-text-center">
+            <IonCol className="ion-text-center" style={{ paddingBottom: ".5em" }}>
               {date.format('DD MMMM YYYY')}
             </IonCol>
           </IonRow>
