@@ -40,6 +40,7 @@ const RestNodeContext: FC = ({ children }) => {
             setLoaded(true);
             setLoading(false);
         } catch (error) {
+            console.log("ERRRRORRR", error)
             setLoading(false);
             present({
                 cssClass: 'my-css',

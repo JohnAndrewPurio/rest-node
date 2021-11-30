@@ -19,6 +19,7 @@ import _styles from './styles';
 import { BASE_URL } from '../../services/constants';
 import DownloadQueueContext from '../../contextStore/RestNodeContext/downloadQueueContext';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
+import { useSound } from '../../utils/useSound';
 
 interface Props {
   key: Key;
@@ -37,7 +38,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   const socket = useContext(SocketContext);
   const [targetAddress] = useContext(TargetAddressContext);
   const audioAssets = useContext(AudioAssetsContext);
-  const asset = `${component.replace( component[0], component[0].toUpperCase() )} Sounds`
+  const asset = `${component.replace(component[0], component[0].toUpperCase())} Sounds`
   const downloadQueue = useContext(DownloadQueueContext);
   const { state, dispatch } = useContext(SoundsContext);
   const audioDownloading = downloadQueue[song.name];
@@ -71,12 +72,22 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     downloadAudioFile(targetAddress || BASE_URL, protocol, {
       fullPath: song.fullPath,
+      
     });
   };
 
-  const onClickHandler = !audioDownloaded
-    ? handleDownloadClick
-    : handlePlayClick;
+  const { sound } = useSound("DeepMeditation")
+
+  const onClickHandler = () => {
+    sound.play({playAudioWhenScreenIsLocked: false, numberOfLoops: 1})
+    setTimeout(() => {
+      sound.stop()
+    }, 10000)
+  }
+
+  // !audioDownloaded
+  // ? handleDownloadClick
+  // : handlePlayClick;
 
   const actionButton = (
     <IonButton fill="clear" slot="end" onClick={onClickHandler}>

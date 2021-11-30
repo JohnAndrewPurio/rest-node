@@ -69,8 +69,13 @@ export const getLastValues: getLastValuesType = async (
   const bedtimeURL = `${protocol}://${url}/restnode/event/bedtime`;
   const waketimeURL = `${protocol}://${url}/restnode/event/waketime`;
 
+  console.log(bedtimeURL, waketimeURL, "URRRL")
+
   const bedtimeResponse = await axios.get(bedtimeURL);
+
+  
   const waketimeResponse = await axios.get(waketimeURL);
+  console.log("BEDTIEMEE WAKTEOTPME", bedtimeResponse, waketimeResponse)
   const bedtime = bedtimeResponse.data;
   const waketime = waketimeResponse.data;
 
