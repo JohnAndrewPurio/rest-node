@@ -33,14 +33,12 @@ const RestNodeContext: FC = ({ children }) => {
     const getInitialValues = async () => {
         const url = targetAddress || BASE_URL
         const protocol = targetAddress ? 'http' : 'https'
-
         try {
             setLoading(true);
             await getLastValues(url, protocol);
             setLoaded(true);
             setLoading(false);
         } catch (error) {
-            console.log("ERRRRORRR", error)
             setLoading(false);
             present({
                 cssClass: 'my-css',
