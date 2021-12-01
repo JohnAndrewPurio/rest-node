@@ -25,7 +25,8 @@ const Content: FC = () => {
     const getState = async () => {
         const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
 
-        if (!value) return;
+        if (!value) 
+            return;
 
         const { bedtime, waketime } = JSON.parse(value);
 

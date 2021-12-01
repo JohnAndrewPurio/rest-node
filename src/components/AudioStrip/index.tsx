@@ -55,7 +55,9 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     const { fullPath, name } = song;
 
-    dispatch(playSample(name));
+    dispatch(
+      playSample(name)
+    );
 
     sound.play({ playAudioWhenScreenIsLocked: false, numberOfLoops: 1 })
     setTimeout(() => {
@@ -64,13 +66,15 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     const data = {
       fullPath,
-      volume: 70,
+      volume: state.volume[component],
       state: audioPlaying ? 'STOPPED' : 'PLAYING',
-      sound: 'WAKE_SOUND',
+      sound: `${component.toUpperCase()}_SOUND`,
       type: 'audio',
     };
 
-    socket?.send(JSON.stringify(data));
+    socket?.send(
+      JSON.stringify(data)
+    );
   };
 
   const handleDownloadClick: handleClickType = (event) => {
