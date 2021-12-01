@@ -1,6 +1,7 @@
 import { IonCol, IonIcon, IonRange } from '@ionic/react';
 import { volumeHigh, volumeLow } from 'ionicons/icons';
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
+import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
 import { adjustVolume } from '../../contextStore/SoundsContext/soundsActions';
 import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
 import _styles from './styles';
@@ -12,14 +13,26 @@ interface Props {
   component: string;
 }
 
-const Slider: React.FC<Props> = ({ index, open, onclick, component }) => {
+const VolumeSlider: FC<Props> = ({ index, open, onclick, component }) => {
+  const socket = useContext(SocketContext)
   const { state, dispatch } = useContext(SoundsContext);
 
-  const handleRangeChange = (e: any) => {
-    const val = e.target.value;
-    if (val) {
-      dispatch(adjustVolume(component === 'night', val));
+  const handleRangeChange = (event: any) => {
+    const value = event.target.value;
+
+    if (value !== 0 && !value)
+      return
+
+    dispatch(
+      adjustVolume(component === 'night', value)
+    );
+
+    const data = {
+      volume: value,
+      type: "volume"
     }
+
+    socket?.send(JSON.stringify(data))
   };
 
   return (
@@ -44,4 +57,4 @@ const Slider: React.FC<Props> = ({ index, open, onclick, component }) => {
   );
 };
 
-export default Slider;
+export default VolumeSlider;

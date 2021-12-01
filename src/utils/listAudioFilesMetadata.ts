@@ -6,14 +6,12 @@ import {
   sendAudioBodyInterface,
   sendAudioFilesMetadata,
 } from '../api/RestNode/POST/sendAudioFilesMetadata';
-import { audioAssetsAvailableResponse } from '../api/RestNode/WebSocketHandlers/audioDownloadSocketResponse';
 import { AudioFilesContextType } from '../contextStore/RestNodeContext/audioFiles';
 import { BASE_URL } from '../services/constants';
 
 export type listAudioFilesType = (
     targetAddress: string | null | undefined,
     audioFiles: filesListInterface,
-    setAudioAssets: Dispatch<SetStateAction<availableAudioAssetsInterface | undefined>>,
     setAudioFiles: Dispatch<SetStateAction<AudioFilesContextType>>,
     setLoading: Dispatch<SetStateAction<boolean>>,
 ) => void
@@ -21,11 +19,9 @@ export type listAudioFilesType = (
 export const listAudioFilesMetadata: listAudioFilesType = async (
   targetAddress,
   audioFiles,
-  setAudioAssets,
   setAudioFiles,
   setLoading
 ) => {
-  setLoading(() => true);
   const protocol = targetAddress ? 'http' : 'https';
   const dirs = ['Wake Sounds', 'Night Sounds', 'Relaxation Sounds'];
   const filesList: filesListInterface = { ...audioFiles };
@@ -58,6 +54,4 @@ export const listAudioFilesMetadata: listAudioFilesType = async (
   }
 
   sendAudioFilesMetadata(targetAddress || BASE_URL, filesList, protocol);
-  audioAssetsAvailableResponse(targetAddress || BASE_URL, setAudioAssets);
-  setLoading(() => false);
 };

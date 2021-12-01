@@ -1,4 +1,4 @@
-const _styles = {
+export const _styles = {
   fullHeight: {
     height: '100%',
   },
@@ -12,5 +12,3 @@ const _styles = {
     flexDirection: 'column',
   },
 };
-
-export default _styles

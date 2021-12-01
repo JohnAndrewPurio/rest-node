@@ -16,8 +16,8 @@ const SettingPillStrips: FC<Props> = ({ title, icon }) => {
   const icons = [alarm, bulb, musicalNotes, bed];
   let itemLoading = false
 
-  switch(title) {
-    case "Sounds": 
+  switch(title.toUpperCase()) {
+    case "SOUNDS": 
       itemLoading = soundLoading
       
       break
