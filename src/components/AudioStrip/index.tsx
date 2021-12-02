@@ -59,10 +59,10 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
       playSample(name)
     );
 
-    sound.play({ playAudioWhenScreenIsLocked: false, numberOfLoops: 1 })
-    setTimeout(() => {
-      sound.stop()
-    }, 10000)
+    // sound.play({ playAudioWhenScreenIsLocked: false, numberOfLoops: 1 })
+    // setTimeout(() => {
+    //   sound.stop()
+    // }, 10000)
 
     const data = {
       fullPath,
