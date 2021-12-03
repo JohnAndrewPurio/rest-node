@@ -12,7 +12,7 @@ import AudioFilesContext from '../../../../contextStore/RestNodeContext/audioFil
 import { bedtimeStarted } from '../../../../contextStore/BedTimeContext/bedtimeActions';
 import { setState } from '../../../../contextStore/SoundsContext/soundsActions';
 import { storage } from '../../../../services/constants';
-import _styles from '../styles';
+import { _styles } from '../styles';
 import { getStartEnd } from '../../helper';
 
 const Content: FC = () => {

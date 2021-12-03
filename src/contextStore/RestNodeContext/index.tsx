@@ -39,7 +39,6 @@ const RestNodeContext: FC = ({ children }) => {
     const getInitialValues = async () => {
         const url = targetAddress || BASE_URL
         const protocol = targetAddress ? 'http' : 'https'
-
         try {
             setLoading(true);
             await getLastValues(url, protocol);
