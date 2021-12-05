@@ -28,7 +28,7 @@ type handleRedirectType = (params: paramsInterface) => void;
 
 const AppContext: FC = ({ children }) => {
   const loadingState = useState<boolean>(false);
-  const darkModeState = useState<boolean>(false);
+  const darkModeState = useState<boolean>(true);
   const targetAddressState = useState<string>('');
   const menuSwiper = useState<boolean>(false);
 
@@ -86,6 +86,8 @@ const AppContext: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    console.log("Dark Mode:", darkMode)
+
     toggleDarkMode(document, darkMode);
     persistDarkMode()
   }, [darkMode]);

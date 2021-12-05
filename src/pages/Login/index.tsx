@@ -10,7 +10,7 @@ const Login: FC = () => {
   const { user } = useAuth0();
   // auth0 user store in storage
 
-  if (user) return <Redirect to="/home" />;
+  if (user) return <Redirect to="/network" />;
 
   return (
     <IonPage>

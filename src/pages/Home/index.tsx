@@ -63,11 +63,6 @@ const Home: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen>
         <IonGrid style={_styles.content}>
-          {/* <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader> */}
           <CompanyLogo />
         </IonGrid>
       </IonContent>

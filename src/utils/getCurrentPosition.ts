@@ -44,3 +44,19 @@ export const requestLocation = {
     },
   ],
 }
+
+export const checkLocationPermission = async () => {
+  try {
+    const PERMISSION_GRANTED: PermissionState = "granted"
+    const { location } = await Geolocation.checkPermissions()
+
+    if(location !== PERMISSION_GRANTED)
+      await Geolocation.requestPermissions()
+
+    const { location: permission } = await Geolocation.checkPermissions()
+
+    return permission === PERMISSION_GRANTED
+  } catch(error) {
+    console.log(error)
+  }
+}
