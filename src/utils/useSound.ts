@@ -27,4 +27,3 @@ export const useSound = (name: string) => {
 
   return { sound }
 }
-

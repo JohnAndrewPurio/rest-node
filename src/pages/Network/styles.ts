@@ -4,8 +4,3 @@ export const page = {
     alignItems: 'center',
     textAlign: 'center',
 }
-
-export const text = {
-    color: 'white',
-    overflowY: 'auto',
-}

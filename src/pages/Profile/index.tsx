@@ -39,12 +39,13 @@ import { getAddress } from '../../utils/userGeoIP';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json';
+import { LOGIN } from "../paths.json"
 import MenuContext from '../../contextStore/AppContext/menuContext';
 
 const Profile: FC = () => {
   const user = useContext(UserContext);
-  const [darkMode, setDarkMode] = useContext(DarkModeContext) || [, null];
-  const [loading, setIsLoading] = useContext(LoadingContext) || [null, null];
+  const [darkMode, setDarkMode] = useContext(DarkModeContext);
+  const [loading, setIsLoading] = useContext(LoadingContext);
   const [, setSwiper] = useContext(MenuContext);
 
   const { buildLogoutUrl, isLoading, logout } = useAuth0();
@@ -90,7 +91,7 @@ const Profile: FC = () => {
   }, []);
 
   if (!user) 
-    return <Redirect to="/login" />;
+    return <Redirect to={LOGIN} />;
 
   const toolbar = (
     <IonToolbar>

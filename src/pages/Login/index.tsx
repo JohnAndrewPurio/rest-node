@@ -4,13 +4,15 @@ import { IonContent, IonGrid, IonRow, IonPage } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
 import CompanyLogo from '../../components/CompanyLogo';
 import LoginButton from '../../components/LoginButton';
+
+import { HOME } from "../paths.json"
 import './styles.css';
 
 const Login: FC = () => {
   const { user } = useAuth0();
   // auth0 user store in storage
 
-  if (user) return <Redirect to="/network" />;
+  if (user) return <Redirect to={HOME} />;
 
   return (
     <IonPage>
