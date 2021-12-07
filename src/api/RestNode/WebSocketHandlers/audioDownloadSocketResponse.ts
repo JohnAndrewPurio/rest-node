@@ -1,4 +1,5 @@
-import { BASE_URL } from '../../../services/constants';
+
+import { BASE_URL } from '../../BASE_URL';
 import { getAudioAssetsAvailable } from '../POST/sendAudioFilesMetadata';
 import {
   audioAssetsAvailableType,

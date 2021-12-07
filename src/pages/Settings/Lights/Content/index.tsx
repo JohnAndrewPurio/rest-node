@@ -8,10 +8,11 @@ import TimeBar from '../../../../components/TimeBar';
 import { bedtimeStarted } from '../../../../contextStore/BedTimeContext/bedtimeActions';
 import BedTimeContext from '../../../../contextStore/BedTimeContext/bedtimeContext';
 import LightsContext from '../../../../contextStore/LightsContext/lightsContext';
-import { storage } from '../../../../services/constants';
 import { RestNodeStateType } from '../../../../types';
 import { getStartEnd } from '../../helper';
 import { setState } from '../../../../contextStore/LightsContext/lightsActions';
+import { storageGet } from '../../../../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY } from '../../../../api/CapacitorStorage/keys';
 
 const Content: FC = () => {
   const bedtimeState = useContext(BedTimeContext);
@@ -19,7 +20,7 @@ const Content: FC = () => {
   const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
 
   const getState = async () => {
-    const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
+    const { value } = await storageGet(REST_NODE_STATES_KEY);
 
     if (!value) 
       return;

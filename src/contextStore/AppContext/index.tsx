@@ -66,7 +66,6 @@ const AppContext: FC = ({ children }) => {
         ...previousData,
         darkMode
       }
-
       storageSet(data, key)
     } catch(error) {
       console.log(error)
@@ -87,7 +86,6 @@ const AppContext: FC = ({ children }) => {
 
   useEffect(() => {
     console.log("Dark Mode:", darkMode)
-
     toggleDarkMode(document, darkMode);
     persistDarkMode()
   }, [darkMode]);

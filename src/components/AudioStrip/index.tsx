@@ -16,10 +16,10 @@ import AudioAssetsContext from '../../contextStore/RestNodeContext/audioAssets';
 import { downloadAudioFile } from '../../api/RestNode/POST/downloadAudioFileFromStorage';
 import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
 import _styles from './styles';
-import { BASE_URL } from '../../services/constants';
 import DownloadQueueContext from '../../contextStore/RestNodeContext/downloadQueueContext';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
 import { useSound } from '../../utils/useSound';
+import { BASE_URL } from '../../api/BASE_URL';
 
 interface Props {
   key: Key;
@@ -83,7 +83,6 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     downloadAudioFile(targetAddress || BASE_URL, protocol, {
       fullPath: song.fullPath,
-
     });
   };
 

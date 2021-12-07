@@ -6,13 +6,14 @@ import Clock from './Clock';
 import Numbers from './Numbers';
 import { circleSpacing, initialArcs } from './constants.json';
 import { ClockArcs, StringKeyedObject } from '../../types';
-import { storage } from '../../services/constants';
 import {
   getBedtimeArcs,
   getLightArcs,
   getRelaxationArcs,
   getSoundsArcs,
 } from './helper';
+import { storageGet } from '../../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY } from '../../api/CapacitorStorage/keys';
 
 interface Props {
   biggest: number;
@@ -23,7 +24,7 @@ const MainClock: React.FC<Props> = ({ biggest }) => {
 
   // calculate arcs based on current states
   const configureArcs = () => {
-    Storage.get({ key: storage.RED_NODE_STATES }).then((res) => {
+    storageGet(REST_NODE_STATES_KEY).then((res) => {
       if (!res.value)
         return
 

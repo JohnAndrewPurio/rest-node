@@ -1,7 +1,7 @@
-import { Storage } from '@capacitor/storage';
-import axios from 'axios';
-import { BASE_URL, storage } from './constants';
+
 import { RestNodeStateType } from '../types';
+import { storageSet } from '../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY } from '../api/CapacitorStorage/keys';
 
 export interface websocketMessageResponse {
   type: string;
@@ -57,55 +57,6 @@ export const closeWebsocketConnection: closeWebsocketConnectionType = (
   socket.close();
 };
 
-export type getLastValuesType = (
-  url: string,
-  protocol?: string
-) => Promise<RestNodeStateType>;
-
-export const getLastValues: getLastValuesType = async (
-  url = BASE_URL,
-  protocol = 'https'
-) => {
-  const bedtimeURL = `${protocol}://${url}/restnode/event/bedtime`;
-  const waketimeURL = `${protocol}://${url}/restnode/event/waketime`;
-
-  console.log(bedtimeURL, waketimeURL, "URRRL")
-
-  const bedtimeResponse = await axios.get(bedtimeURL);
-
-  
-  const waketimeResponse = await axios.get(waketimeURL);
-  console.log("BEDTIEMEE WAKTEOTPME", bedtimeResponse, waketimeResponse)
-  const bedtime = bedtimeResponse.data;
-  const waketime = waketimeResponse.data;
-
-  await Storage.set({
-    key: storage.RED_NODE_STATES,
-    value: JSON.stringify({ bedtime, waketime }),
-  });
-
-  return { bedtime, waketime };
-};
-
-export type updateValuesType = (
-  url: string,
-  protocol: string,
-  data: RestNodeStateType
-) => Promise<RestNodeStateType>;
-
-export const updateValues: updateValuesType = async (url, protocol, data) => {
-  const URL = `${protocol}://${url}/restnode/event`;
-
-  await axios.post(URL, data.bedtime);
-  await axios.post(URL, data.waketime);
-  await Storage.set({
-    key: storage.RED_NODE_STATES,
-    value: JSON.stringify(data),
-  });
-
-  return data;
-};
-
 export type sendSocketEventType = (
   socket: WebSocket,
   data: RestNodeStateType
@@ -116,10 +67,10 @@ export const sendSocketEvent: sendSocketEventType = async (socket, data) => {
 
   socket.send(strData);
 
-  await Storage.set({
-    key: storage.RED_NODE_STATES,
-    value: strData,
-  });
+  await storageSet(
+    strData,
+    REST_NODE_STATES_KEY
+  );
 
   return data;
 };

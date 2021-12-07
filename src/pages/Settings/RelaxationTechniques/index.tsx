@@ -14,9 +14,10 @@ import RelaxationContext, {
 import RelaxationFooter from '../../../components/RelaxationPlayer';
 import BedTimeContext from '../../../contextStore/BedTimeContext/bedtimeContext';
 import { bedtimeStarted } from '../../../contextStore/BedTimeContext/bedtimeActions';
-import { storage } from '../../../services/constants';
 import { setState } from '../../../contextStore/RelaxationContext/relaxationActions';
 import { getStartEnd } from '../helper';
+import { storageGet } from '../../../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY, RELAXATION_FAVORITES_KEY } from '../../../api/CapacitorStorage/keys';
 
 const Relaxation: React.FC = () => {
   return (
@@ -43,8 +44,8 @@ const Content: React.FC = () => {
   const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
 
   const getState = async () => {
-    const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
-    const favorites = await Storage.get({ key: storage.RELAXATION_FAVORITES });
+    const { value } = await storageGet(REST_NODE_STATES_KEY);
+    const favorites = await storageGet(RELAXATION_FAVORITES_KEY);
     if (!favorites.value) {
       favorites.value = JSON.stringify([]);
     }

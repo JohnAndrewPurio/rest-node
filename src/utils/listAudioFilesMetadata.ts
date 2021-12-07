@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { BASE_URL } from '../api/BASE_URL';
 import { getDownloadUrl, listFiles } from '../api/Firebase/firebaseStorage';
 import {
   availableAudioAssetsInterface,
@@ -7,7 +8,6 @@ import {
   sendAudioFilesMetadata,
 } from '../api/RestNode/POST/sendAudioFilesMetadata';
 import { AudioFilesContextType } from '../contextStore/RestNodeContext/audioFiles';
-import { BASE_URL } from '../services/constants';
 
 export type listAudioFilesType = (
     targetAddress: string | null | undefined,

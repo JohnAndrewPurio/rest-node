@@ -11,9 +11,10 @@ import AudioFilesContext from '../../../../contextStore/RestNodeContext/audioFil
 
 import { bedtimeStarted } from '../../../../contextStore/BedTimeContext/bedtimeActions';
 import { setState } from '../../../../contextStore/SoundsContext/soundsActions';
-import { storage } from '../../../../services/constants';
 import { _styles } from '../styles';
 import { getStartEnd } from '../../helper';
+import { storageGet } from '../../../../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY } from '../../../../api/CapacitorStorage/keys';
 
 const Content: FC = () => {
     const audioTypes = useContext(AudioFilesContext);
@@ -23,7 +24,7 @@ const Content: FC = () => {
     const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
 
     const getState = async () => {
-        const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
+        const { value } = await storageGet(REST_NODE_STATES_KEY);
 
         if (!value) 
             return;
