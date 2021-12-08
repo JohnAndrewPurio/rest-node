@@ -146,6 +146,8 @@ const Content: FC = () => {
         return () => {
             clearInterval(interval);
         };
+
+        // eslint-disable-next-line
     }, []);
 
     const componentsHandler = (component: string, index: number) => (

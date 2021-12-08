@@ -133,12 +133,15 @@ const RestNodeContext: FC = ({ children }) => {
         getInitialValues()
         retrieveSoundMetadata()
         setSocket(webSocket)
+        
+        console.log("Target Address:", targetAddress)
+        // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
         const options: LoadingOptions & HookOverlayOptions = {
             showBackdrop: true,
-            message: 'Loading...',
+            message: 'Connecting...',
         }
 
         if (loading) {
@@ -148,6 +151,8 @@ const RestNodeContext: FC = ({ children }) => {
         }
 
         stopLoading();
+
+        // eslint-disable-next-line
     }, [loading]);
 
     useEffect(() => {

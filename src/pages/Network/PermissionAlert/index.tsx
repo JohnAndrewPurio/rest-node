@@ -1,20 +1,30 @@
 import { IonAlert } from "@ionic/react"
-import { useState } from "react"
+import { useContext } from "react"
+import PermissionAlertContext from "../../../contextStore/NetworkContext/permissionAlert"
 
 const PermissionAlert = () => {
-    const [showPermissionAlert, setShowPermissionAlert] = useState<boolean>(false)
-    const header = "On Android versions 8.0 and above, the GPS or location service are required to scan nearby networks"
+    const [showPermissionAlert, setShowPermissionAlert] = useContext(PermissionAlertContext)
+    const header = "On Android versions 8.0 and above, the GPS or location service is required to scan nearby networks"
 
     const dismissAlert = () => {
-        setShowPermissionAlert(false)
+        if (setShowPermissionAlert)
+            setShowPermissionAlert(false)
+    }
+
+    const okayButton = {
+        text: "Okay",
+        role: "cancel",
+        cssClass: "secondary",
+        handler: dismissAlert
     }
 
     return (
-        <IonAlert 
+        <IonAlert
             isOpen={showPermissionAlert}
             header={header}
             onDidDismiss={dismissAlert}
-        />   
+            buttons={[okayButton]}
+        />
     )
 }
 

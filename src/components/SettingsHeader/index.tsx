@@ -38,6 +38,8 @@ import { sendSocketEvent, updateValues } from '../../services/restnodeServices';
 import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
 
+import { PROFILE } from '../../pages/paths.json'
+
 interface Props
   extends RouteComponentProps<{
     id: string;
@@ -149,58 +151,70 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
         header: 'Error',
         message: 'Cannot connect to REST Node',
         buttons: ['Ok'],
-        onDidDismiss: () => history.replace('/profile'),
+        onDidDismiss: () => history.replace(PROFILE),
       });
     }
   };
 
   // android hardware back button listener
   useEffect(() => {
-    if (isPlatform('android')) {
-      document.addEventListener('ionBackButton', hardwareBackHandlers);
-    }
-    return () => {
-      if (isPlatform('android')) {
-        document.removeEventListener('ionBackButton', hardwareBackHandlers);
-      }
-    };
-  }, []);
+    if (!isPlatform('android'))
+      return
 
-  const hardwareBackHandlers = (event: any) => {
-    const path = window.location.pathname;
-    event.detail.register(5, (processNextHandler: any) => {
+    const hardwareBackHandlers = (event: any) => {
+      const path = window.location.pathname;
       const settingsIncluded = path.includes('settings');
-      if (settingsIncluded) {
-        goBack();
-        return;
-      }
-      processNextHandler();
-    });
-  };
+
+      event.detail.register(5, (processNextHandler: any) => {
+        if (settingsIncluded) {
+          goBack();
+          return;
+        }
+
+        processNextHandler();
+      });
+
+    };
+
+    const cleanup = () => {
+      document.removeEventListener('ionBackButton', hardwareBackHandlers);
+    };
+
+    document.addEventListener('ionBackButton', hardwareBackHandlers);
+
+    return cleanup
+
+    // eslint-disable-next-line
+  }, []);
 
   // instant start/stop sender
   useEffect(() => {
-    stateCheck().then((change) => {
-      if (
-        location.pathname === BEDTIME &&
-        started &&
-        change.status &&
-        change.newState
-      ) {
-        saveChanges(change.newState);
-      }
+    stateCheck().then(({ status, newState }) => {
+      const bedtimeStarted = location.pathname === BEDTIME
+        && started
+
+      if (!bedtimeStarted || !status || !newState)
+        return
+
+      saveChanges(newState);
     });
+
+    // eslint-disable-next-line
   }, [started]);
 
   // socket sender when state changes
   useEffect(() => {
-    if (started) {
-      stateCheck().then(({ status, newState }) => {
-        if (!status || !newState) return;
+    if (!started)
+      return
 
-        if (socket) sendSocketEvent(socket, newState);
-      });
-    }
+    stateCheck().then(({ status, newState }) => {
+      if (!status || !newState || !socket)
+        return;
+
+      sendSocketEvent(socket, newState);
+    });
+    
+    // eslint-disable-next-line
   }, [
     bedtimeState.state,
     lightsState.state,

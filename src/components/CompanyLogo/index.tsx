@@ -6,8 +6,15 @@ import { logo } from './resources.json';
 import './styles.css';
 
 const CompanyLogo = () => {
-  const [darkMode, ] = useContext(DarkModeContext) || [, null];
-  return <IonImg src={darkMode ? logo.src_dark : logo.src} alt={logo.alt} id={logo.id} />;
+  const [darkMode] = useContext(DarkModeContext);
+
+  return (
+    <IonImg
+      src={darkMode ? logo.src_dark : logo.src}
+      alt={logo.alt}
+      id={logo.id}
+    />
+  )
 };
 
 export default CompanyLogo;

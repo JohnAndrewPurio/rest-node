@@ -7,7 +7,7 @@ const WifiItem: FC<wifiInfoProps> = ({ wifiInfo }) => {
   const { SSID } = wifiInfo
 
   return (
-    <IonItem detail style={{
+    <IonItem detail button style={{
       backgroundColor: "inherit"
     }}>
       <IonIcon icon={wifi} slot="start" />

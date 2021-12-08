@@ -1,10 +1,10 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-type LoadingContext = [
+type LoadingContextType = [
     boolean,
     Dispatch<SetStateAction<boolean>>?
 ];
 
-const LoadingContext = createContext<LoadingContext>([false]);
+const LoadingContext = createContext<LoadingContextType>([false]);
 
 export default LoadingContext;

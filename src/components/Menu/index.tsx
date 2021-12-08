@@ -15,43 +15,57 @@ import {
   homeOutline,
   personCircleOutline,
 } from 'ionicons/icons';
-import { useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import MenuContext from '../../contextStore/AppContext/menuContext';
+
+import { HOME, PROFILE, REST_NODE } from "../../pages/paths.json"
 import _styles from './styles';
 
-const Menu: React.FC<RouteComponentProps> = ({ location }) => {
+const paths = [
+  {
+    name: 'Home',
+    path: HOME,
+    icon: homeOutline,
+  },
+  {
+    name: 'Profile',
+    path: PROFILE,
+    icon: personCircleOutline,
+  },
+  {
+    name: 'Rest Node',
+    path: REST_NODE,
+    icon: arrowForwardCircleOutline,
+  },
+];
+
+const Menu: FC<RouteComponentProps> = ({ location }) => {
   const [swiper] = useContext(MenuContext);
+  const [active, setActive] = useState<string | null>(null);
+
+  const selectPath = (pathname: string) => {
+    if (pathname.includes('home'))
+      return HOME
+
+    if (pathname.includes('restnode'))
+      return REST_NODE
+
+    if (pathname.includes('profile'))
+      return PROFILE
+
+    return ""
+  }
 
   const close = () => {
     menuController.close();
   };
 
-  const paths = [
-    {
-      name: 'Home',
-      path: '/home',
-      icon: homeOutline,
-    },
-    {
-      name: 'Profile',
-      path: '/profile',
-      icon: personCircleOutline,
-    },
-    {
-      name: 'Rest Node',
-      path: '/restnode',
-      icon: arrowForwardCircleOutline,
-    },
-  ];
-
-  const [active, setActive] = useState<string | null>(null);
-
   // set highlighted active path
   useEffect(() => {
-    if (location.pathname.includes('home')) setActive('/home');
-    else if (location.pathname.includes('restnode')) setActive('/restnode');
-    else if (location.pathname.includes('profile')) setActive('/profile');
+    const path = selectPath(location.pathname)
+
+    setActive(path)
   }, [location.pathname]);
 
   return (
@@ -60,7 +74,7 @@ const Menu: React.FC<RouteComponentProps> = ({ location }) => {
         <IonToolbar>
           <IonItem lines="none" style={_styles.header}>
             <IonAvatar slot="start">
-              <img src="/assets/splash-logo.png" />
+              <img src="/assets/splash-logo.png" alt="Splash Logo"/>
             </IonAvatar>
             Exist Tribe
           </IonItem>

@@ -1,7 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { getDownloadUrl, listFiles } from '../api/Firebase/firebaseStorage';
 import {
-  availableAudioAssetsInterface,
   filesListInterface,
   sendAudioBodyInterface,
   sendAudioFilesMetadata,
@@ -13,7 +12,7 @@ export type listAudioFilesType = (
     targetAddress: string | null | undefined,
     audioFiles: filesListInterface,
     setAudioFiles: Dispatch<SetStateAction<AudioFilesContextType>>,
-    setLoading: Dispatch<SetStateAction<boolean>>,
+    setLoading?: Dispatch<SetStateAction<boolean>>,
 ) => void
 
 export const listAudioFilesMetadata: listAudioFilesType = async (

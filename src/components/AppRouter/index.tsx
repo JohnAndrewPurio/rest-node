@@ -24,34 +24,39 @@ import Menu from '../Menu';
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();
 
-  const hardwareBackHandlers = (ev: any) => {
-    const path = window.location.pathname;
-    const onRestnodeTabs = path.includes('tabs');
-    const isOnHome = path === '/home';
-    const isOnProfile = path === '/profile';
-
-    ev.detail.register(1, () => {
-      if (onRestnodeTabs || isOnHome || isOnProfile) {
-        present({
-          cssClass: 'my-css',
-          header: 'Exit app?',
-          message: '',
-          buttons: ['No', { text: 'Yes', handler: (d) => CapApp.exitApp() }],
-        });
-      }
-    });
-  };
-
   useEffect(() => {
-    if (isPlatform('android')) {
-      document.addEventListener('ionBackButton', hardwareBackHandlers);
+    if (!isPlatform('android'))
+      return
+
+    const alertConfig = {
+      cssClass: 'my-css',
+      header: 'Exit app?',
+      message: '',
+      buttons: ['No', { text: 'Yes', handler: () => CapApp.exitApp() }],
     }
-    return () => {
-      if (isPlatform('android')) {
-        document.removeEventListener('ionBackButton', hardwareBackHandlers);
-      }
+
+    const hardwareBackHandlers = (event: any) => {
+      const path = window.location.pathname;
+      const onRestnodeTabs = path.includes('tabs');
+      const isOnHome = path === HOME;
+      const isOnProfile = path === PROFILE;
+
+      event.detail.register(1, () => {
+        if (!onRestnodeTabs && !isOnHome && !isOnProfile)
+          return
+
+        present(alertConfig);
+      });
     };
-  }, []);
+
+    const cleanup = () => {
+      document.removeEventListener('ionBackButton', hardwareBackHandlers);
+    }
+
+    document.addEventListener('ionBackButton', hardwareBackHandlers);
+
+    return cleanup
+  }, [present]);
 
   return (
     <IonReactRouter>

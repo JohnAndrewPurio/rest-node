@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { IonContent, IonGrid, IonRow, IonPage } from '@ionic/react';
 import { Redirect } from 'react-router-dom';

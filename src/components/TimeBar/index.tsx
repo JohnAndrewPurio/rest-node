@@ -31,8 +31,28 @@ const TimeBar: React.FC<RouteComponentProps> = ({ location }) => {
   const [bars, setBars] = useState<TimeBarType[]>([]);
 
   useEffect(() => {
+    const updateTimeBar = () => {
+      switch (location.pathname) {
+        case BEDTIME:
+          return getBedtimeBars(bedtimeState.state);
+        case LIGHTS: {
+          return getLightBars(lightsState.state);
+        }
+        case SOUNDS: {
+          return getSoundBars(soundsState.state);
+        }
+        case RELAXATION: {
+          return getRelaxationBars(relaxationState.state);
+        }
+      }
+      
+      return [];
+    };
+
     const timeBars = updateTimeBar();
     setBars(timeBars);
+
+    // eslint-disable-next-line
   }, [
     bedtimeState.state,
     lightsState.state,
@@ -40,22 +60,7 @@ const TimeBar: React.FC<RouteComponentProps> = ({ location }) => {
     relaxationState.state,
   ]);
 
-  const updateTimeBar = () => {
-    switch (location.pathname) {
-      case BEDTIME:
-        return getBedtimeBars(bedtimeState.state);
-      case LIGHTS: {
-        return getLightBars(lightsState.state);
-      }
-      case SOUNDS: {
-        return getSoundBars(soundsState.state);
-      }
-      case RELAXATION: {
-        return getRelaxationBars(relaxationState.state);
-      }
-    }
-    return [];
-  };
+
 
   return (
     <IonRow style={_styles.timeBarContainer}>

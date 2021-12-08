@@ -19,7 +19,6 @@ import _styles from './styles';
 import { BASE_URL } from '../../services/constants';
 import DownloadQueueContext from '../../contextStore/RestNodeContext/downloadQueueContext';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
-import { useSound } from '../../utils/useSound';
 
 interface Props {
   key: Key;
@@ -47,8 +46,6 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   const audioPlaying = state.sample.playing && song.name === state.sample.audio;
   const playIcon = audioPlaying ? stop : play;
   const icon = !audioDownloaded ? cloudDownloadOutline : playIcon;
-
-  const { sound } = useSound("DeepMeditation")
 
   const handlePlayClick: handleClickType = (event) => {
     event.stopPropagation();

@@ -1,4 +1,4 @@
-import React from 'react';
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App';
@@ -7,17 +7,17 @@ import reportWebVitals from './reportWebVitals';
 import { domain, redirectUri, clientId } from './auth0.config';
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <Auth0Provider
-    domain={domain}
-    clientId={clientId}
-    redirectUri={redirectUri}
-    useRefreshTokens
-    cacheLocation="localstorage"
-  >
-    <App />
-  </Auth0Provider>,
-  // </React.StrictMode>,
+  <StrictMode>
+    <Auth0Provider
+      domain={domain}
+      clientId={clientId}
+      redirectUri={redirectUri}
+      useRefreshTokens
+      cacheLocation="localstorage"
+    >
+      <App />
+    </Auth0Provider>,
+  </StrictMode>,
   document.getElementById('root')
 );
 

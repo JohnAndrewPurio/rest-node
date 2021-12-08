@@ -6,21 +6,21 @@ import WifiList from './WifiList';
 
 const Network: FC = () => {
   return (
-    <NetworkContext>
-      <IonPage
-        style={page}
-      >
+    <IonPage
+      style={page}
+    >
+      <NetworkContext>
         <IonContent className="ion-padding" fullscreen>
           <IonGrid>
-            
+
             <IonRow className="ion-justify-content-center">
               <WifiList />
             </IonRow>
 
           </IonGrid>
         </IonContent>
-      </IonPage>
-    </NetworkContext>
+      </NetworkContext>
+    </IonPage>
   );
 };
 

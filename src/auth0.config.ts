@@ -3,7 +3,6 @@ import { isPlatform } from '@ionic/core';
 export const domain = 'eixst-tribe.us.auth0.com';
 export const clientId = '5HCjEt7mBomKtxGXkBxn8QX9OJmYZHAM';
 
-const isDesktop = isPlatform('desktop');
 const isAndroid = isPlatform('android');
 const isIos = isPlatform('ios');
 const nativeCallback =

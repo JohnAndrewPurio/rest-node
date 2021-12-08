@@ -75,7 +75,7 @@ export const getLastValues: getLastValuesType = async (
 
   
   const waketimeResponse = await axios.get(waketimeURL);
-  console.log("BEDTIEMEE WAKTEOTPME", bedtimeResponse, waketimeResponse)
+  console.log("BEDTIEMEE WAKETIME", bedtimeResponse, waketimeResponse)
   const bedtime = bedtimeResponse.data;
   const waketime = waketimeResponse.data;
 

@@ -66,6 +66,20 @@ const Profile: FC = () => {
   };
 
   useEffect(() => {
+    if (setSwiper)
+      setSwiper(true)
+
+    const cleanup = () => {
+      if (setSwiper)
+        setSwiper(false)
+    }
+
+    return cleanup
+
+    // eslint-disable-next-line
+  }, []);
+  
+  useEffect(() => {
     if (setIsLoading)
       setIsLoading(isLoading);
 
@@ -76,19 +90,10 @@ const Profile: FC = () => {
     }
 
     stopLoading();
+
+    // eslint-disable-next-line
   }, [isLoading]);
 
-  useEffect(() => {
-    if (setSwiper)
-      setSwiper(true)
-
-    const cleanup = () => {
-      if (setSwiper)
-        setSwiper(false)
-    }
-
-    return cleanup
-  }, []);
 
   if (!user) 
     return <Redirect to={LOGIN} />;
