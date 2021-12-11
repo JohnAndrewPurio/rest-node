@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^1.8.0",
+    "@awesome-cordova-plugins/core": "^5.37.1",
+    "@awesome-cordova-plugins/firebase-crashlytics": "^5.37.1",
     "@capacitor/android": "3.2.5",
     "@capacitor/app": "^1.0.5",
     "@capacitor/browser": "^1.0.5",
@@ -41,6 +43,7 @@
     "cordova-plugin-discovery": "^0.2.0",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-transfer": "^1.7.1",
+    "cordova-plugin-firebase-crashlytics": "^1.2.0",
     "cordova-plugin-media": "^5.0.3",
     "cordova-plugin-nativegeocoder": "^3.4.1",
     "cordova-plugin-wifiwizard2": "^3.1.1",

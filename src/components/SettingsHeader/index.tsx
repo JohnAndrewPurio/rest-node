@@ -22,7 +22,7 @@ import {
   BEDTIME,
   RELAXATION,
 } from '../../pages/Settings/paths.json';
-import { BASE_URL, storage } from '../../services/constants';
+import { storage } from '../../services/constants';
 import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
 import LightsContext from '../../contextStore/LightsContext/lightsContext';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
@@ -141,7 +141,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   // save changes prompt
   const saveChanges = async (change: RestNodeStateType) => {
     try {
-      const url = targetAddress || BASE_URL;
+      const url = targetAddress;
       const protocol = targetAddress ? 'http' : 'https';
       await updateValues(url, protocol, change);
     } catch (e) {

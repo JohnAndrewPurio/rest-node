@@ -6,10 +6,9 @@ import {
   sendAudioFilesMetadata,
 } from '../api/RestNode/POST/sendAudioFilesMetadata';
 import { AudioFilesContextType } from '../contextStore/RestNodeContext/audioFiles';
-import { BASE_URL } from '../services/constants';
 
 export type listAudioFilesType = (
-    targetAddress: string | null | undefined,
+    targetAddress: string,
     audioFiles: filesListInterface,
     setAudioFiles: Dispatch<SetStateAction<AudioFilesContextType>>,
     setLoading?: Dispatch<SetStateAction<boolean>>,
@@ -21,7 +20,7 @@ export const listAudioFilesMetadata: listAudioFilesType = async (
   setAudioFiles,
   setLoading
 ) => {
-  const protocol = targetAddress ? 'http' : 'https';
+  const protocol = 'http';
   const dirs = ['Wake Sounds', 'Night Sounds', 'Relaxation Sounds'];
   const filesList: filesListInterface = { ...audioFiles };
 
@@ -52,5 +51,5 @@ export const listAudioFilesMetadata: listAudioFilesType = async (
     console.log(error);
   }
 
-  sendAudioFilesMetadata(targetAddress || BASE_URL, filesList, protocol);
+  sendAudioFilesMetadata(targetAddress, filesList, protocol);
 };

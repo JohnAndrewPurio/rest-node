@@ -1,10 +1,16 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { IonContent, IonGrid, IonPage, IonRow } from '@ionic/react';
 import { page } from './styles';
+
 import NetworkContext from '../../contextStore/NetworkContext';
 import WifiList from './WifiList';
+import { crashlytics } from '../../api/Firebase/firebaseCrashlytics';
 
 const Network: FC = () => {
+  useEffect(() => {
+    crashlytics.logException("Test Log Exception Crashlytics")
+  }, [])
+
   return (
     <IonPage
       style={page}

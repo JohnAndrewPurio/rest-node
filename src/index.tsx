@@ -5,6 +5,8 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { domain, redirectUri, clientId } from './auth0.config';
+// import cacheHandler from "./utils/cacheHandler"
+
 
 ReactDOM.render(
   <StrictMode>
@@ -14,6 +16,7 @@ ReactDOM.render(
       redirectUri={redirectUri}
       useRefreshTokens
       cacheLocation="localstorage"
+      // cache={cacheHandler}
     >
       <App />
     </Auth0Provider>,

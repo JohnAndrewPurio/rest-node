@@ -16,7 +16,6 @@ import AudioAssetsContext from '../../contextStore/RestNodeContext/audioAssets';
 import { downloadAudioFile } from '../../api/RestNode/POST/downloadAudioFileFromStorage';
 import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
 import _styles from './styles';
-import { BASE_URL } from '../../services/constants';
 import DownloadQueueContext from '../../contextStore/RestNodeContext/downloadQueueContext';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
 
@@ -76,9 +75,9 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
   const handleDownloadClick: handleClickType = (event) => {
     event.stopPropagation();
-    const protocol = targetAddress ? 'http' : 'https';
+    const protocol = 'http'
 
-    downloadAudioFile(targetAddress || BASE_URL, protocol, {
+    downloadAudioFile(targetAddress, protocol, {
       fullPath: song.fullPath,
 
     });

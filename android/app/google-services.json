@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1023789498659",
+    "firebase_url": "https://exist-tribe-default-rtdb.firebaseio.com",
+    "project_id": "exist-tribe",
+    "storage_bucket": "exist-tribe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023789498659:android:0a2ee14388b2d1f2e94c96",
+        "android_client_info": {
+          "package_name": "com.existtribe.restnode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023789498659-ooj2oo5no3kshakgr6q7r7k7a7kurae2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDe4F5lMeC00gjZdw79ed4vT_HmbauNpTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023789498659-ooj2oo5no3kshakgr6q7r7k7a7kurae2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

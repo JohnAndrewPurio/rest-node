@@ -42,7 +42,7 @@ const AppContext: FC = ({ children }) => {
       const { darkMode } = await storageGet(PROFILE_KEY)
 
       setDarkMode(darkMode);
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
@@ -57,7 +57,7 @@ const AppContext: FC = ({ children }) => {
       }
 
       storageSet(data, key)
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
@@ -67,15 +67,13 @@ const AppContext: FC = ({ children }) => {
       const stateIncluded = url.includes('state');
       const codeIncluded = url.includes('code');
       const errorIncluded = url.includes('error');
-      
-      console.log("Redirect URL:", url)
 
       if (stateIncluded && (codeIncluded || errorIncluded))
         await handleRedirectCallback(url);
 
       await Browser.close();
     };
-    
+
     CapApp.addListener('appUrlOpen', handleRedirect);
 
   }, [handleRedirectCallback]);
@@ -83,18 +81,16 @@ const AppContext: FC = ({ children }) => {
   useEffect(() => {
     getProfileData()
 
-    if ( isPlatform('android') ) 
+    if (isPlatform('android'))
       serviceListener(Zeroconf, setTargetAddress);
 
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    console.log("Dark Mode:", darkMode)
-
     toggleDarkMode(document, darkMode);
     persistDarkMode()
-    
+
     // eslint-disable-next-line
   }, [darkMode]);
 

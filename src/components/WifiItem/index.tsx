@@ -6,8 +6,16 @@ import { wifiInfoProps } from "./types";
 const WifiItem: FC<wifiInfoProps> = ({ wifiInfo }) => {
   const { SSID } = wifiInfo
 
+  const wifiItemClickHandler = () => {
+    console.log("Clicked")
+  }
+
   return (
-    <IonItem detail button style={{
+    <IonItem 
+      detail 
+      button 
+      onClick={wifiItemClickHandler}
+      style={{
       backgroundColor: "inherit"
     }}>
       <IonIcon icon={wifi} slot="start" />
