@@ -49,8 +49,12 @@ const Bedtime: FC = () => {
         dispatch(bedtimeStarted());
       }
     }, 1000);
+
     getState();
+
     return () => clearInterval(interval);
+
+    // eslint-disable-next-line
   }, []);
 
   return (

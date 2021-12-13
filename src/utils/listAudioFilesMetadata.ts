@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { BASE_URL } from '../api/BASE_URL';
 import { getDownloadUrl, listFiles } from '../api/Firebase/firebaseStorage';
 import {
-  availableAudioAssetsInterface,
   filesListInterface,
   sendAudioBodyInterface,
   sendAudioFilesMetadata,
@@ -10,10 +9,10 @@ import {
 import { AudioFilesContextType } from '../contextStore/RestNodeContext/audioFiles';
 
 export type listAudioFilesType = (
-    targetAddress: string | null | undefined,
+    targetAddress: string,
     audioFiles: filesListInterface,
     setAudioFiles: Dispatch<SetStateAction<AudioFilesContextType>>,
-    setLoading: Dispatch<SetStateAction<boolean>>,
+    setLoading?: Dispatch<SetStateAction<boolean>>,
 ) => void
 
 export const listAudioFilesMetadata: listAudioFilesType = async (
@@ -22,7 +21,7 @@ export const listAudioFilesMetadata: listAudioFilesType = async (
   setAudioFiles,
   setLoading
 ) => {
-  const protocol = targetAddress ? 'http' : 'https';
+  const protocol = 'http';
   const dirs = ['Wake Sounds', 'Night Sounds', 'Relaxation Sounds'];
   const filesList: filesListInterface = { ...audioFiles };
 
@@ -53,5 +52,5 @@ export const listAudioFilesMetadata: listAudioFilesType = async (
     console.log(error);
   }
 
-  sendAudioFilesMetadata(targetAddress || BASE_URL, filesList, protocol);
+  sendAudioFilesMetadata(targetAddress, filesList, protocol);
 };

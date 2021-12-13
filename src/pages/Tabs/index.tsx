@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import {
   IonTabBar,
   IonTabs,
@@ -9,13 +9,17 @@ import {
 } from '@ionic/react';
 import { Redirect, Route, RouteComponentProps } from 'react-router';
 
-import { home, informationCircle, time } from 'ionicons/icons';
+import { 
+  home, 
+  // informationCircle, time 
+} from 'ionicons/icons';
 import Dashboard from './Dashboard';
-import History from './History';
-import Help from './Help';
-import { HELP, HISTORY, DASHBOARD } from './paths.json';
+import { 
+  // HELP, HISTORY, 
+  DASHBOARD 
+} from './paths.json';
 
-const BottomNavigationTabs: React.FC<RouteComponentProps> = () => {
+const BottomNavigationTabs: FC<RouteComponentProps> = () => {
   return (
     <IonTabs>
       <IonRouterOutlet>

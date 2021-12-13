@@ -101,10 +101,14 @@ const Content: FC = () => {
     return () => {
       clearInterval(interval);
     };
+
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (started) getState();
+
+    // eslint-disable-next-line
   }, [started]);
 
   return (

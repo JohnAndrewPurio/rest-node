@@ -18,9 +18,11 @@ dependencies {
     implementation project(':capacitor-status-bar')
     implementation project(':capacitor-storage')
     implementation "com.loopj.android:android-async-http:1.4.9"
+    implementation "com.google.firebase:firebase-analytics:17.4.3"
+    implementation "com.google.firebase:firebase-crashlytics:17.1.0"
     implementation "org.jmdns:jmdns:3.5.5"
 }
-
+apply from: "../../node_modules/cordova-plugin-firebase-crashlytics/firebase-crashlytics.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

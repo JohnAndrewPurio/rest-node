@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
-type SocketContext = WebSocket | null;
+type SocketContextType = WebSocket | null;
 
-const SocketContext = createContext<SocketContext>(null);
+const SocketContext = createContext<SocketContextType>(null);
 
 export default SocketContext;

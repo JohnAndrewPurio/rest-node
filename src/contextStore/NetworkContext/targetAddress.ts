@@ -1,7 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
 
-type TargetAddressContext = [string, Dispatch<SetStateAction<string>>?];
+type TargetAddressContextType = [string, Dispatch<SetStateAction<string>>?];
 
-const TargetAddressContext = createContext<TargetAddressContext>(['']);
+const TargetAddressContext = createContext<TargetAddressContextType>(['']);
 
 export default TargetAddressContext;

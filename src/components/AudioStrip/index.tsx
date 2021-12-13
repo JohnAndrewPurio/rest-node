@@ -18,8 +18,6 @@ import TargetAddressContext from '../../contextStore/NetworkContext/targetAddres
 import _styles from './styles';
 import DownloadQueueContext from '../../contextStore/RestNodeContext/downloadQueueContext';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
-import { useSound } from '../../utils/useSound';
-import { BASE_URL } from '../../api/BASE_URL';
 
 interface Props {
   key: Key;
@@ -47,8 +45,6 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
   const audioPlaying = state.sample.playing && song.name === state.sample.audio;
   const playIcon = audioPlaying ? stop : play;
   const icon = !audioDownloaded ? cloudDownloadOutline : playIcon;
-
-  const { sound } = useSound("DeepMeditation")
 
   const handlePlayClick: handleClickType = (event) => {
     event.stopPropagation();
@@ -79,9 +75,9 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
   const handleDownloadClick: handleClickType = (event) => {
     event.stopPropagation();
-    const protocol = targetAddress ? 'http' : 'https';
+    const protocol = 'http'
 
-    downloadAudioFile(targetAddress || BASE_URL, protocol, {
+    downloadAudioFile(targetAddress, protocol, {
       fullPath: song.fullPath,
     });
   };

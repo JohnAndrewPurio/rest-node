@@ -37,23 +37,12 @@ const AppContext: FC = ({ children }) => {
 
   const { user, handleRedirectCallback } = useAuth0();
 
-  const handleRedirect: handleRedirectType = async ({ url }) => {
-    const stateIncluded = url.includes('state');
-    const codeIncluded = url.includes('code');
-    const errorIncluded = url.includes('error');
-
-    if (stateIncluded && (codeIncluded || errorIncluded))
-      await handleRedirectCallback(url);
-
-    await Browser.close();
-  };
-
   const getProfileData = async () => {
     try {
       const { darkMode } = await storageGet(PROFILE_KEY)
 
       setDarkMode(darkMode);
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
@@ -67,27 +56,41 @@ const AppContext: FC = ({ children }) => {
         darkMode
       }
       storageSet(data, key)
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
 
   useEffect(() => {
+    const handleRedirect: handleRedirectType = async ({ url }) => {
+      const stateIncluded = url.includes('state');
+      const codeIncluded = url.includes('code');
+      const errorIncluded = url.includes('error');
+
+      if (stateIncluded && (codeIncluded || errorIncluded))
+        await handleRedirectCallback(url);
+
+      await Browser.close();
+    };
+
     CapApp.addListener('appUrlOpen', handleRedirect);
+
   }, [handleRedirectCallback]);
 
   useEffect(() => {
     getProfileData()
 
-    if ( isPlatform('android') ) 
+    if (isPlatform('android'))
       serviceListener(Zeroconf, setTargetAddress);
 
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    console.log("Dark Mode:", darkMode)
     toggleDarkMode(document, darkMode);
     persistDarkMode()
+
+    // eslint-disable-next-line
   }, [darkMode]);
 
   return (

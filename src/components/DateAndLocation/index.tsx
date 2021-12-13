@@ -24,12 +24,18 @@ const DateAndLocation: React.FC = () => {
   const [, setSwiper] = useContext(MenuContext);
 
   useEffect(() => {
-    if (setSwiper) {
-      setSwiper(true);
-    }
-    return () => {
-      if (setSwiper) setSwiper(false);
+    if (!setSwiper)
+      return
+
+    setSwiper(true);
+
+    const cleanup = () => {
+      setSwiper(false);
     };
+
+    return cleanup
+    
+    // eslint-disable-next-line
   }, []);
 
   const geoLocation = user ? user[geoip] : '';
