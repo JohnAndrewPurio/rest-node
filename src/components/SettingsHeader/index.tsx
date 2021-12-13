@@ -42,6 +42,8 @@ import { BASE_URL } from '../../api/BASE_URL';
 
 import { PROFILE } from '../../pages/paths.json'
 
+import { PROFILE } from '../../pages/paths.json'
+
 interface Props
   extends RouteComponentProps<{
     id: string;
