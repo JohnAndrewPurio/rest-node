@@ -44,6 +44,8 @@ import { PROFILE } from '../../pages/paths.json'
 
 import { PROFILE } from '../../pages/paths.json'
 
+import { PROFILE } from '../../pages/paths.json'
+
 interface Props
   extends RouteComponentProps<{
     id: string;
