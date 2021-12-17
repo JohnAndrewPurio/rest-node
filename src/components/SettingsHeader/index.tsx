@@ -42,10 +42,6 @@ import { BASE_URL } from '../../api/BASE_URL';
 
 import { PROFILE } from '../../pages/paths.json'
 
-import { PROFILE } from '../../pages/paths.json'
-
-import { PROFILE } from '../../pages/paths.json'
-
 interface Props
   extends RouteComponentProps<{
     id: string;
@@ -151,7 +147,6 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
       const protocol = targetAddress ? 'http' : 'https';
       await updateValues(url, protocol, change);
     } catch (e) {
-      console.log(e);
       present({
         cssClass: 'my-css',
         header: 'Error',

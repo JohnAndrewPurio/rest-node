@@ -27,11 +27,13 @@ interface dataObject {
 }
 
 const socketProtocol = 'ws'
-const protocol = 'http'
+const protocol = 'https'
+// const protocol = 'http'
 
 const RestNodeContext: FC = ({ children }) => {
     const history = useHistory()
-    const [targetAddress] = useContext(TargetAddressContext)
+    // const [targetAddress] = useContext(TargetAddressContext)
+    const targetAddress = "restnode.info"
     const [socket, setSocket] = useState<WebSocket | null>(null)
     const [audioFiles, setAudioFiles] = useState<AudioFilesContextType>(null)
     const [audioAssets, setAudioAssets] = useState<availableAudioAssetsInterface>()

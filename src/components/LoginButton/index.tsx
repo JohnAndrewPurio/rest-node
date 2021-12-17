@@ -9,7 +9,7 @@ const LoginButton: React.FC = () => {
 
   const login = async () => {
     // Ask auth0-react to build the login URL
-    logOut(Browser, buildLogoutUrl, logout, logoutUri);
+    // logOut(Browser, buildLogoutUrl, logout, logoutUri);
     const url = await buildAuthorizeUrl();
 
     // Redirect using Capacitor's Browser plugin

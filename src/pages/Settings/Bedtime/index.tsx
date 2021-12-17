@@ -23,7 +23,7 @@ const Bedtime: FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
   const { started, bedtimeStart, wakeUpTime } = state;
 
-  // sync the value of the context states to the stored value
+  // sync the value of the context states to the local stored value
   const getState = async () => {
     const { value } = await storageGet(REST_NODE_STATES_KEY)
     if (value) {

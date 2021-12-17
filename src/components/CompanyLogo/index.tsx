@@ -1,16 +1,13 @@
 import { IonImg } from '@ionic/react';
-import { useContext } from 'react';
-import DarkModeContext from '../../contextStore/AppContext/darkMode';
 import { logo } from './resources.json';
 
 import './styles.css';
 
 const CompanyLogo = () => {
-  const [darkMode] = useContext(DarkModeContext);
 
   return (
     <IonImg
-      src={darkMode ? logo.src_dark : logo.src}
+      src={logo.src}
       alt={logo.alt}
       id={logo.id}
     />
