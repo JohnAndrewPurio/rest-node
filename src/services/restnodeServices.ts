@@ -2,6 +2,8 @@ import { Storage } from '@capacitor/storage';
 import axios from 'axios';
 import { storage } from './constants';
 import { RestNodeStateType } from '../types';
+import { storageSet } from '../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY } from '../api/CapacitorStorage/keys';
 
 export interface websocketMessageResponse {
   type: string;
@@ -108,10 +110,10 @@ export const sendSocketEvent: sendSocketEventType = async (socket, data) => {
 
   socket.send(strData);
 
-  await Storage.set({
-    key: storage.RED_NODE_STATES,
-    value: strData,
-  });
+  await storageSet(
+    strData,
+    REST_NODE_STATES_KEY
+  );
 
   return data;
 };

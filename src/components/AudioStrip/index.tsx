@@ -79,7 +79,6 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     downloadAudioFile(targetAddress, protocol, {
       fullPath: song.fullPath,
-
     });
   };
 

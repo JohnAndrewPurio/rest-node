@@ -55,7 +55,6 @@ const AppContext: FC = ({ children }) => {
         ...previousData,
         darkMode
       }
-
       storageSet(data, key)
     } catch (error) {
       console.log(error)

@@ -1,7 +1,8 @@
 import { Storage } from '@capacitor/storage';
 import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
-import { storage } from '../../services/constants';
+import { storageSet } from '../../api/CapacitorStorage';
+import { RELAXATION_FAVORITES_KEY } from '../../api/CapacitorStorage/keys';
 import { Action, RelaxationActionTypes } from './relaxationActions';
 
 export interface State {
@@ -56,10 +57,10 @@ const reducer = (state: State = initialState, action: Action) => {
         favorites = state.favorites.slice();
         favorites.push(action.payload);
       }
-      Storage.set({
-        key: storage.RELAXATION_FAVORITES,
-        value: JSON.stringify(favorites),
-      });
+      storageSet(
+        JSON.stringify(favorites),
+        RELAXATION_FAVORITES_KEY
+      );
       return {
         ...state,
         favorites,

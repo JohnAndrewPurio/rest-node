@@ -14,7 +14,6 @@ import {
 import { arrowBack, save } from 'ionicons/icons';
 import { useContext, useEffect } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Storage } from '@capacitor/storage';
 import BedTimeContext from '../../contextStore/BedTimeContext/bedtimeContext';
 import {
   LIGHTS,
@@ -22,7 +21,6 @@ import {
   BEDTIME,
   RELAXATION,
 } from '../../pages/Settings/paths.json';
-import { storage } from '../../services/constants';
 import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
 import LightsContext from '../../contextStore/LightsContext/lightsContext';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
@@ -34,9 +32,13 @@ import {
   relaxationStateChangeChecker,
   soundsStateChangeChecker,
 } from './helper';
-import { sendSocketEvent, updateValues } from '../../services/restnodeServices';
+import { sendSocketEvent } from '../../services/restnodeServices';
 import TargetAddressContext from '../../contextStore/NetworkContext/targetAddress';
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
+import { storageGet } from '../../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY } from '../../api/CapacitorStorage/keys';
+import { updateValues } from '../../api/RestNode/POST/updateEventValues';
+import { BASE_URL } from '../../api/BASE_URL';
 
 import { PROFILE } from '../../pages/paths.json'
 
@@ -66,7 +68,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   // checks if current context state is same with last stored local storage value
   const stateCheck = async (): Promise<changeCheck> => {
-    const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
+    const { value } = await storageGet(REST_NODE_STATES_KEY);
     if (value) {
       const states: RestNodeStateType = JSON.parse(value);
       switch (location.pathname) {
@@ -145,7 +147,6 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
       const protocol = targetAddress ? 'http' : 'https';
       await updateValues(url, protocol, change);
     } catch (e) {
-      console.log(e);
       present({
         cssClass: 'my-css',
         header: 'Error',

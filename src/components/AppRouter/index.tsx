@@ -3,7 +3,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import { App as CapApp } from '@capacitor/app';
 
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { isPlatform } from '@ionic/core';
 import Home from '../../pages/Home';
 import Login from '../../pages/Login';
@@ -20,6 +20,9 @@ import {
   REST_NODE,
 } from '../../pages/paths.json';
 import Menu from '../Menu';
+import DarkModeContext from '../../contextStore/AppContext/darkMode';
+import { storageGet, storageSet } from '../../api/CapacitorStorage';
+import { PROFILE_KEY } from '../../api/CapacitorStorage/keys';
 
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();

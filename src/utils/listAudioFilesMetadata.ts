@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
+import { BASE_URL } from '../api/BASE_URL';
 import { getDownloadUrl, listFiles } from '../api/Firebase/firebaseStorage';
 import {
   filesListInterface,

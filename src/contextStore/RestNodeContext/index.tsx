@@ -2,11 +2,13 @@ import { useIonAlert, LoadingOptions, useIonLoading, AlertOptions } from '@ionic
 import { HookOverlayOptions } from '@ionic/react/dist/types/hooks/HookOverlayOptions'
 import { FC, useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import { BASE_URL } from '../../api/BASE_URL'
 import { storageGet, storageSet } from '../../api/CapacitorStorage'
 import { SOUND_KEY } from '../../api/CapacitorStorage/keys'
+import { getLastValues } from '../../api/RestNode/GET/getLastEventValue'
 import { availableAudioAssetsInterface } from '../../api/RestNode/POST/sendAudioFilesMetadata'
 import audioDownloadResponseHandler, { audioAssetsAvailableResponse, AUDIO_DOWNLOAD_RESPONSE } from '../../api/RestNode/WebSocketHandlers/audioDownloadSocketResponse'
-import { getLastValues, initializeWebsocketConnection, websocketMessageResponse } from '../../services/restnodeServices'
+import { initializeWebsocketConnection, websocketMessageResponse } from '../../services/restnodeServices'
 import { listAudioFilesMetadata } from '../../utils/listAudioFilesMetadata'
 import { BedTimeContextProvider } from '../BedTimeContext/bedtimeContext'
 
@@ -25,11 +27,13 @@ interface dataObject {
 }
 
 const socketProtocol = 'ws'
-const protocol = 'http'
+const protocol = 'https'
+// const protocol = 'http'
 
 const RestNodeContext: FC = ({ children }) => {
     const history = useHistory()
-    const [targetAddress] = useContext(TargetAddressContext)
+    // const [targetAddress] = useContext(TargetAddressContext)
+    const targetAddress = "restnode.info"
     const [socket, setSocket] = useState<WebSocket | null>(null)
     const [audioFiles, setAudioFiles] = useState<AudioFilesContextType>(null)
     const [audioAssets, setAudioAssets] = useState<availableAudioAssetsInterface>()

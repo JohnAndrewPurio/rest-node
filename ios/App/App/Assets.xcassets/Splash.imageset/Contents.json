@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "splashx4096.png",
+      "filename" : "restnode-splash.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "splashx4096-1.png",
+      "filename" : "restnode-splash-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "splashx4096-2.png",
+      "filename" : "restnode-splash-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

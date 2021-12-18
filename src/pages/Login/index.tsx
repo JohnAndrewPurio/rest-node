@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { IonContent, IonGrid, IonRow, IonPage } from '@ionic/react';
 import { Redirect } from 'react-router-dom';
@@ -13,6 +13,7 @@ const Login: FC = () => {
   // auth0 user store in storage
 
   if (user) return <Redirect to={HOME} />;
+
 
   return (
     <IonPage>

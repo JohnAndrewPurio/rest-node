@@ -23,6 +23,7 @@ export const serviceListener = async (
 
     if (!address) return;
 
+    console.log(address, "ADDDREESSS")
     setAddress(address);
   };
 

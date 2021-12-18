@@ -13,18 +13,19 @@ import {
   bedtimeStarted,
   setState,
 } from '../../../contextStore/BedTimeContext/bedtimeActions';
-import { storage } from '../../../services/constants';
 import { getStartEnd } from '../helper';
 
 import _styles from './styles';
+import { storageGet } from '../../../api/CapacitorStorage';
+import { REST_NODE_STATES_KEY } from '../../../api/CapacitorStorage/keys';
 
 const Bedtime: FC = () => {
   const { state, dispatch } = useContext(BedTimeContext);
   const { started, bedtimeStart, wakeUpTime } = state;
 
-  // sync the value of the context states to the stored value
+  // sync the value of the context states to the local stored value
   const getState = async () => {
-    const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
+    const { value } = await storageGet(REST_NODE_STATES_KEY)
     if (value) {
       const defaultStates = JSON.parse(value);
       const { start, end } = getStartEnd(defaultStates);

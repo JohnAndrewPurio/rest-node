@@ -7,6 +7,7 @@ import AppContext from './contextStore/AppContext';
 import './styles';
 
 const App: FC = () => {
+
   return (
     <IonApp>
       <AppContext>
