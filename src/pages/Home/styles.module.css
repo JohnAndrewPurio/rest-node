@@ -1,0 +1,41 @@
+.toolbar {
+    display: flex;
+}
+
+.content {
+    padding-top: 3em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.search {
+    padding: 0em .5em 0em 0em;
+    flex: 1
+}
+
+.avatarBtn {
+    height: 100%;
+    --padding-start: 0px;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+}
+
+.grid {
+    display: flex;
+    align-items: center;
+    background-color: var(--ion-color-light-shade);
+    margin: .5em .5em .5em 0em;
+    border-radius: 50px;
+    padding: 0em .5em;
+}
+
+.fullHeight {
+    height: 100%;
+}

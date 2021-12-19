@@ -1,3 +1,4 @@
+import { BASE_URL } from '../../../services/constants';
 import { getAudioAssetsAvailable } from '../POST/sendAudioFilesMetadata';
 import {
   audioAssetsAvailableType,
@@ -20,9 +21,9 @@ export const audioAssetsAvailableResponse: audioAssetsAvailableType = async (
   setAudioAssets
 ) => {
   try {
-    const protocol = "http"
+    const protocol = targetAddress !== BASE_URL ? 'http' : 'https';
     const audioAssetsAvailable = await getAudioAssetsAvailable(
-      targetAddress,
+      targetAddress || BASE_URL,
       protocol
     );
 

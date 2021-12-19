@@ -14,7 +14,8 @@ import { FC, useContext, useEffect, useState } from 'react';
 import CompanyLogo from '../../components/CompanyLogo';
 import MenuContext from '../../contextStore/AppContext/menuContext';
 import UserContext from '../../contextStore/UserContext/userContext';
-import _styles from './styles';
+
+import styles from './styles.module.css';
 import './styles.css';
 
 const Home: FC = () => {
@@ -40,25 +41,37 @@ const Home: FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar style={_styles.toolbar}>
-          <IonButtons slot="start" style={{ height: "100%" }}>
-            <IonMenuButton mode="md" />
+        <IonToolbar
+          className={styles.toolbar}
+        >
+          <IonButtons
+            slot="start"
+            className={styles.fullHeight}
+          >
+            <IonMenuButton
+              mode="md"
+            />
           </IonButtons>
-          <IonGrid style={_styles.grid}>
+          <IonGrid
+            className={styles.grid}
+          >
             <IonSearchbar
               mode="ios"
               color="light"
-              style={_styles.search}
+              className={styles.search}
               value={searchText}
               onIonChange={(e) => setSearchText(e.detail.value!)}
             />
             <IonButton
-              style={_styles.avatarBtn}
+              className={styles.avatarBtn}
               shape="round"
               size="small"
               fill="clear"
             >
-              <IonAvatar slot="icon-only" style={_styles.avatar}>
+              <IonAvatar
+                slot="icon-only"
+                className={styles.avatar}
+              >
                 <img src={user?.picture} alt="User Avatar" />
               </IonAvatar>
             </IonButton>
@@ -66,7 +79,9 @@ const Home: FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonGrid style={_styles.content}>
+        <IonGrid
+          className={styles.content}
+        >
           <CompanyLogo />
         </IonGrid>
       </IonContent>

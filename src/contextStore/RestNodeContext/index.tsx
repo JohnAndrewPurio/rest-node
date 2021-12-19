@@ -1,4 +1,4 @@
-import { useIonAlert, LoadingOptions, useIonLoading, AlertOptions } from '@ionic/react'
+import { useIonAlert, LoadingOptions, useIonLoading } from '@ionic/react'
 import { HookOverlayOptions } from '@ionic/react/dist/types/hooks/HookOverlayOptions'
 import { FC, useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
@@ -12,28 +12,20 @@ import { initializeWebsocketConnection, websocketMessageResponse } from '../../s
 import { listAudioFilesMetadata } from '../../utils/listAudioFilesMetadata'
 import { BedTimeContextProvider } from '../BedTimeContext/bedtimeContext'
 
+import TargetAddressContext from '../NetworkContext/targetAddress'
 import AudioAssetsContext from './audioAssets'
 import AudioFilesContext, { AudioFilesContextType } from './audioFiles'
 import AudioLoadingContext from './audioLoading'
 import DownloadQueueContext, { DownloadQueueContextInterface } from './downloadQueueContext'
 import SocketContext from './socketConnection'
-import TargetAddressContext from '../NetworkContext/targetAddress'
-
-import { HOME } from "../../pages/paths.json"
-import { crashlytics } from '../../api/Firebase/firebaseCrashlytics'
 
 interface dataObject {
     [key: string]: any
 }
 
-const socketProtocol = 'ws'
-const protocol = 'https'
-// const protocol = 'http'
-
 const RestNodeContext: FC = ({ children }) => {
     const history = useHistory()
-    // const [targetAddress] = useContext(TargetAddressContext)
-    const targetAddress = "restnode.info"
+    const [targetAddress] = useContext(TargetAddressContext)
     const [socket, setSocket] = useState<WebSocket | null>(null)
     const [audioFiles, setAudioFiles] = useState<AudioFilesContextType>(null)
     const [audioAssets, setAudioAssets] = useState<availableAudioAssetsInterface>()
@@ -43,30 +35,25 @@ const RestNodeContext: FC = ({ children }) => {
     const [present] = useIonAlert();
     const [startLoading, stopLoading] = useIonLoading();
     const [soundLoading, setSoundLoading] = useState<boolean>(false)
+    const socketProtocol = targetAddress ? 'ws' : 'wss'
 
     const getInitialValues = async () => {
-        const url = targetAddress
-        const options: AlertOptions & HookOverlayOptions = {
-            cssClass: 'my-css',
-            header: 'Error',
-            message: 'Cannot connect to REST Node',
-            buttons: ['Ok'],
-            onDidDismiss: () => history.replace(HOME),
-        }
-
+        const url = targetAddress || BASE_URL
+        const protocol = targetAddress ? 'http' : 'https'
         try {
             setLoading(true);
-
             await getLastValues(url, protocol);
-
             setLoaded(true);
             setLoading(false);
         } catch (error) {
             setLoading(false);
-            present(options);
-
-            crashlytics.setString("Target Address", targetAddress)
-            crashlytics.logException("RestNodeContext: Failed getting initial values")
+            present({
+                cssClass: 'my-css',
+                header: 'Error',
+                message: 'Cannot connect to REST Node',
+                buttons: ['Ok'],
+                onDidDismiss: () => history.replace('/profile'),
+            });
         }
     };
 
@@ -77,7 +64,6 @@ const RestNodeContext: FC = ({ children }) => {
             storageSet(data, key)
         } catch (error) {
             console.log(error)
-            crashlytics.logException("RestNodeContext: Failed storing sound metadata")
         }
     }
 
@@ -91,7 +77,7 @@ const RestNodeContext: FC = ({ children }) => {
 
                 return
             }
-
+            
             // If Audio Assets and Files Metadata are not Stored
             setSoundLoading(() => true);
 
@@ -100,13 +86,11 @@ const RestNodeContext: FC = ({ children }) => {
                 setAudioFiles, setSoundLoading
             )
 
-            await audioAssetsAvailableResponse(targetAddress, setAudioAssets);
+            await audioAssetsAvailableResponse(targetAddress || BASE_URL, setAudioAssets);
 
             setSoundLoading(() => false);
         } catch (error) {
             console.log(error)
-            crashlytics.logException("RestNodeContext: Failed retrieving sound metadata")
-
         }
     }
 
@@ -121,9 +105,6 @@ const RestNodeContext: FC = ({ children }) => {
 
     const socketOnError = (event: Event) => {
         console.log('Websocket Error:', event, socket)
-        
-        crashlytics.setString("Target Address", targetAddress)
-        crashlytics.logException("RestNodeContext: Failed connecting to Rest Node WebSocket")
     }
 
     const socketOnMessage = (event: MessageEvent<any>) => {
@@ -145,34 +126,32 @@ const RestNodeContext: FC = ({ children }) => {
     }
 
     useEffect(() => {
+        const webSocket = initializeWebsocketConnection(
+            targetAddress || BASE_URL, socketProtocol,
+            socketOnOpen, socketOnClose, socketOnError, socketOnMessage
+        )
+
         getInitialValues()
         retrieveSoundMetadata()
-
+        setSocket(webSocket)
+        
+        console.log("Target Address:", targetAddress)
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        if(!targetAddress)
-            return
-
         const options: LoadingOptions & HookOverlayOptions = {
             showBackdrop: true,
             message: 'Connecting...',
         }
 
-        const webSocket = initializeWebsocketConnection(
-            targetAddress, socketProtocol,
-            socketOnOpen, socketOnClose, socketOnError, socketOnMessage
-        )
-
         if (loading) {
             startLoading(options);
-            setSocket(webSocket)
 
             return
         }
 
-        setTimeout( stopLoading, 500 )
+        stopLoading();
 
         // eslint-disable-next-line
     }, [loading]);
