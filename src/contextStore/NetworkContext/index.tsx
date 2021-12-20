@@ -1,10 +1,9 @@
-import { IonLoading } from "@ionic/react"
+import { IonLoading, isPlatform } from "@ionic/react"
 import { FC, useEffect, useState } from "react"
 import { wifiInfo } from "./types"
 import { checkLocationPermission } from "../../utils/getCurrentPosition"
 import { wifiScan } from "../../utils/wifiMethods"
 import WifiListContext from "./wifiList"
-import { isPlatform } from "@ionic/core"
 import PermissionAlertContext from "./permissionAlert"
 import PermissionAlert from "../../pages/Network/PermissionAlert"
 
@@ -21,6 +20,8 @@ const NetworkContext: FC = ({ children }) => {
 
     const wifiScanned = !showPermissionAlert && !isLoading
 
+
+
     useEffect(() => {
         if (!rescanWifi)
             return
@@ -34,7 +35,7 @@ const NetworkContext: FC = ({ children }) => {
 
                 if (!permitted)
                     return
-                
+
                 const wifiAvailable = await wifiScan()
 
                 console.log(wifiAvailable)
@@ -47,18 +48,18 @@ const NetworkContext: FC = ({ children }) => {
             }
         }
 
-        if ( isPlatform('android') && !showPermissionAlert )
+        if (isPlatform('android') && !showPermissionAlert)
             getAvailableWifiAndroid()
 
         // TODO: ***Add wifi scanning for iOS devices***
-        
+
         // eslint-disable-next-line
     }, [rescanWifi, showPermissionAlert])
 
     return (
         <WifiListContext.Provider value={wifiState}>
             <PermissionAlertContext.Provider value={permissionAlert}>
-                { wifiScanned && children }
+                {wifiScanned && children}
 
                 <PermissionAlert />
                 <IonLoading

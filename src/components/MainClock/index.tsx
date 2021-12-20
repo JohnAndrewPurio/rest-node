@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Storage } from '@capacitor/storage';
 import { useIonViewDidEnter } from '@ionic/react';
 import Circle from './Circle';
 import Clock from './Clock';

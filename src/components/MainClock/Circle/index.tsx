@@ -31,16 +31,18 @@ const Circle: React.FC<Props> = ({ size, color, arcs }) => {
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
-      {arcs.map((arc, i) => (
-        <Progress
-          key={`progress${i}${size}`}
-          size={size}
-          color={color}
-          percentage={arc.percentage}
-          placement={arc.placement}
-          strokeWidth={strokeWidth}
-        />
-      ))}
+      {
+        arcs.map((arc, index) => (
+          <Progress
+            key={`progress${index}${size}`}
+            size={size}
+            color={color}
+            percentage={arc.percentage}
+            placement={arc.placement}
+            strokeWidth={strokeWidth}
+          />
+        ))
+      }
     </svg>
   );
 };
