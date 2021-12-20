@@ -1,3 +1,4 @@
+import { isPlatform } from '@ionic/core'
 import { useIonAlert, LoadingOptions, useIonLoading } from '@ionic/react'
 import { HookOverlayOptions } from '@ionic/react/dist/types/hooks/HookOverlayOptions'
 import { FC, useContext, useEffect, useState } from 'react'
@@ -5,6 +6,7 @@ import { useHistory } from 'react-router'
 import { BASE_URL } from '../../api/BASE_URL'
 import { storageGet, storageSet } from '../../api/CapacitorStorage'
 import { SOUND_KEY } from '../../api/CapacitorStorage/keys'
+import { crashlytics } from '../../api/Firebase/firebaseCrashlytics'
 import { getLastValues } from '../../api/RestNode/GET/getLastEventValue'
 import { availableAudioAssetsInterface } from '../../api/RestNode/POST/sendAudioFilesMetadata'
 import audioDownloadResponseHandler, { audioAssetsAvailableResponse, AUDIO_DOWNLOAD_RESPONSE } from '../../api/RestNode/WebSocketHandlers/audioDownloadSocketResponse'
@@ -105,6 +107,11 @@ const RestNodeContext: FC = ({ children }) => {
 
     const socketOnError = (event: Event) => {
         console.log('Websocket Error:', event, socket)
+
+        if(!isPlatform('android') || !isPlatform('ios'))
+            return
+
+        crashlytics.log("Socket Error") // Add more details regarding the error
     }
 
     const socketOnMessage = (event: MessageEvent<any>) => {
@@ -127,7 +134,7 @@ const RestNodeContext: FC = ({ children }) => {
 
     useEffect(() => {
         const webSocket = initializeWebsocketConnection(
-            targetAddress || BASE_URL, socketProtocol,
+            targetAddress, socketProtocol,
             socketOnOpen, socketOnClose, socketOnError, socketOnMessage
         )
 
@@ -135,7 +142,6 @@ const RestNodeContext: FC = ({ children }) => {
         retrieveSoundMetadata()
         setSocket(webSocket)
         
-        console.log("Target Address:", targetAddress)
         // eslint-disable-next-line
     }, []);
 
@@ -151,8 +157,7 @@ const RestNodeContext: FC = ({ children }) => {
             return
         }
 
-        stopLoading();
-
+        setTimeout(stopLoading, 500);
         // eslint-disable-next-line
     }, [loading]);
 

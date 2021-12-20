@@ -1,4 +1,4 @@
-import { IonLoading, isPlatform } from "@ionic/react"
+import { IonLoading } from "@ionic/react"
 import { FC, useEffect, useState } from "react"
 import { wifiInfo } from "./types"
 import { checkLocationPermission } from "../../utils/getCurrentPosition"
@@ -6,6 +6,7 @@ import { wifiScan } from "../../utils/wifiMethods"
 import WifiListContext from "./wifiList"
 import PermissionAlertContext from "./permissionAlert"
 import PermissionAlert from "../../pages/Network/PermissionAlert"
+import { isPlatform } from "@ionic/core"
 
 const NetworkContext: FC = ({ children }) => {
     const wifiState = useState<wifiInfo[]>([])
@@ -19,8 +20,6 @@ const NetworkContext: FC = ({ children }) => {
     const loadingMessage = "Scanning Wifi..."
 
     const wifiScanned = !showPermissionAlert && !isLoading
-
-
 
     useEffect(() => {
         if (!rescanWifi)
