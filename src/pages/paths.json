@@ -4,5 +4,6 @@
     "REST_NODE": "/restnode",
     "NETWORK": "/network",
     "PROFILE": "/profile",
-    "DEFAULT": "/login"
+    "DEFAULT": "/login",
+    "DEVICE_SETUP": "/devicesetup"
 }

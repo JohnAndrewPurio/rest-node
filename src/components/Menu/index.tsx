@@ -33,11 +33,11 @@ const paths = [
     path: PROFILE,
     icon: personCircleOutline,
   },
-  {
-    name: 'Rest Node',
-    path: REST_NODE,
-    icon: arrowForwardCircleOutline,
-  },
+  // {
+  //   name: 'Rest Node',
+  //   path: REST_NODE,
+  //   icon: arrowForwardCircleOutline,
+  // },
 ];
 
 const Menu: FC<RouteComponentProps> = ({ location }) => {
@@ -74,9 +74,9 @@ const Menu: FC<RouteComponentProps> = ({ location }) => {
         <IonToolbar>
           <IonItem lines="none" style={_styles.header}>
             <IonAvatar slot="start">
-              <img src="/assets/splash-logo.png" alt="Splash Logo"/>
+              <img src="/assets/restnode-icon.png" alt="Rest Node Logo" />
             </IonAvatar>
-            Exist Tribe
+            Rest Node
           </IonItem>
         </IonToolbar>
       </IonHeader>
@@ -99,10 +99,10 @@ const Menu: FC<RouteComponentProps> = ({ location }) => {
               {path.name}
             </IonItem>
           ))}
-          <IonItem button style={_styles.add} detail={false}>
+          {/* <IonItem button style={_styles.add} detail={false}>
             <IonIcon slot="end" color="primary" icon={addCircleOutline} />
             Add new device
-          </IonItem>
+          </IonItem> */}
         </IonList>
       </IonContent>
     </IonMenu>

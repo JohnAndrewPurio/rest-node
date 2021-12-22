@@ -18,11 +18,13 @@ import {
   NETWORK,
   PROFILE,
   REST_NODE,
+  DEVICE_SETUP
 } from '../../pages/paths.json';
 import Menu from '../Menu';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 import { storageGet, storageSet } from '../../api/CapacitorStorage';
 import { PROFILE_KEY } from '../../api/CapacitorStorage/keys';
+import DeviceSetup from '../../pages/DeviceSetup';
 
 const AppRouter: React.FC = () => {
   const [present] = useIonAlert();
@@ -74,6 +76,7 @@ const AppRouter: React.FC = () => {
         <Route path={REST_NODE} render={(props) => <RestNode {...props} />} />
         <Route path={NETWORK} component={Network} />
         <Route path={PROFILE} component={Profile} />
+        <Route path={DEVICE_SETUP} component={DeviceSetup} />
         <Route render={() => <Redirect to={DEFAULT} />} />
       </IonRouterOutlet>
     </IonReactRouter>

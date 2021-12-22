@@ -16,7 +16,7 @@ const LoginButton: React.FC = () => {
     await Browser.open({ url });
   };
 
-  return <IonButton onClick={login}>Log in</IonButton>;
+  return <IonButton size='small' onClick={login}>Log in</IonButton>;
 };
 
 export default LoginButton;

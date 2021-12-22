@@ -11,7 +11,7 @@ export type getLastValuesType = (
 
 export const getLastValues: getLastValuesType = async (
     url = BASE_URL,
-    protocol = 'https'
+    protocol = 'http'
 ) => {
     const bedtimeURL = `${protocol}://${url}/restnode/event/bedtime`;
     const waketimeURL = `${protocol}://${url}/restnode/event/waketime`;
