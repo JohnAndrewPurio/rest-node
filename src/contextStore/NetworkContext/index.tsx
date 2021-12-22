@@ -4,9 +4,9 @@ import { wifiInfo } from "./types"
 import { checkLocationPermission } from "../../utils/getCurrentPosition"
 import { wifiScan } from "../../utils/wifiMethods"
 import WifiListContext from "./wifiList"
-import { isPlatform } from "@ionic/core"
 import PermissionAlertContext from "./permissionAlert"
 import PermissionAlert from "../../pages/Network/PermissionAlert"
+import { isPlatform } from "@ionic/core"
 
 const NetworkContext: FC = ({ children }) => {
     const wifiState = useState<wifiInfo[]>([])
@@ -34,7 +34,7 @@ const NetworkContext: FC = ({ children }) => {
 
                 if (!permitted)
                     return
-                
+
                 const wifiAvailable = await wifiScan()
 
                 console.log(wifiAvailable)
@@ -47,18 +47,18 @@ const NetworkContext: FC = ({ children }) => {
             }
         }
 
-        if ( isPlatform('android') && !showPermissionAlert )
+        if (isPlatform('android') && !showPermissionAlert)
             getAvailableWifiAndroid()
 
         // TODO: ***Add wifi scanning for iOS devices***
-        
+
         // eslint-disable-next-line
     }, [rescanWifi, showPermissionAlert])
 
     return (
         <WifiListContext.Provider value={wifiState}>
             <PermissionAlertContext.Provider value={permissionAlert}>
-                { wifiScanned && children }
+                {wifiScanned && children}
 
                 <PermissionAlert />
                 <IonLoading

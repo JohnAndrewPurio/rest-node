@@ -143,7 +143,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   // save changes prompt
   const saveChanges = async (change: RestNodeStateType) => {
     try {
-      const url = targetAddress;
+      const url = targetAddress || BASE_URL;
       const protocol = targetAddress ? 'http' : 'https';
       await updateValues(url, protocol, change);
     } catch (e) {

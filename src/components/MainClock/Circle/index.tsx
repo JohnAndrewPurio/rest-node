@@ -1,7 +1,8 @@
 import Progress from '../Progress';
 import { strokeWidth } from './constants.json';
 import { TimeArc } from '../../../types';
-import _styles from '../styles';
+
+import styles from "../styles.module.css"
 
 interface Props {
   size: number;
@@ -21,25 +22,27 @@ const Circle: React.FC<Props> = ({ size, color, arcs }) => {
       width={sqSize}
       height={sqSize}
       viewBox={viewBox}
-      style={_styles.circleSVG}
+      className={styles.circleSVG}
     >
       <circle
-        style={_styles.circleBackground}
+        className={styles.circleBackground}
         cx={sqSize / 2}
         cy={sqSize / 2}
         r={radius}
         strokeWidth={`${strokeWidth}px`}
       />
-      {arcs.map((arc, i) => (
-        <Progress
-          key={`progress${i}${size}`}
-          size={size}
-          color={color}
-          percentage={arc.percentage}
-          placement={arc.placement}
-          strokeWidth={strokeWidth}
-        />
-      ))}
+      {
+        arcs.map((arc, index) => (
+          <Progress
+            key={`progress${index}${size}`}
+            size={size}
+            color={color}
+            percentage={arc.percentage}
+            placement={arc.placement}
+            strokeWidth={strokeWidth}
+          />
+        ))
+      }
     </svg>
   );
 };

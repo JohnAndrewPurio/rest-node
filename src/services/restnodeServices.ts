@@ -1,6 +1,6 @@
 import { Storage } from '@capacitor/storage';
 import axios from 'axios';
-import { storage } from './constants';
+import { BASE_URL, storage } from './constants';
 import { RestNodeStateType } from '../types';
 import { storageSet } from '../api/CapacitorStorage';
 import { REST_NODE_STATES_KEY } from '../api/CapacitorStorage/keys';
@@ -31,24 +31,25 @@ export type initializeWebsocketConnectionType = (
   socketOnMessage: socketMessageHandlerType
 ) => WebSocket;
 
-export const initializeWebsocketConnection: initializeWebsocketConnectionType = (
-  url,
-  protocol,
-  socketOnOpen,
-  socketOnClose,
-  socketOnError,
-  socketOnMessage
-) => {
-  const socket_endpoint = `${protocol}://${url}/restnode`;
-  const socket = new WebSocket(socket_endpoint);
+export const initializeWebsocketConnection: initializeWebsocketConnectionType =
+  (
+    url,
+    protocol,
+    socketOnOpen,
+    socketOnClose,
+    socketOnError,
+    socketOnMessage
+  ) => {
+    const socket_endpoint = `${protocol}://${url}/restnode`;
+    const socket = new WebSocket(socket_endpoint);
 
-  socket.addEventListener('open', socketOnOpen);
-  socket.addEventListener('close', socketOnClose);
-  socket.addEventListener('error', socketOnError);
-  socket.addEventListener('message', socketOnMessage);
+    socket.addEventListener('open', socketOnOpen);
+    socket.addEventListener('close', socketOnClose);
+    socket.addEventListener('error', socketOnError);
+    socket.addEventListener('message', socketOnMessage);
 
-  return socket;
-};
+    return socket;
+  };
 
 type closeWebsocketConnectionType = (socket: WebSocket) => void;
 
@@ -63,13 +64,20 @@ export type getLastValuesType = (
   protocol?: string
 ) => Promise<RestNodeStateType>;
 
-export const getLastValues: getLastValuesType = async (url, protocol) => {
+export const getLastValues: getLastValuesType = async (
+  url = BASE_URL,
+  protocol = 'https'
+) => {
   const bedtimeURL = `${protocol}://${url}/restnode/event/bedtime`;
   const waketimeURL = `${protocol}://${url}/restnode/event/waketime`;
 
+  console.log(bedtimeURL, waketimeURL, "URRRL")
+
   const bedtimeResponse = await axios.get(bedtimeURL);
 
+  
   const waketimeResponse = await axios.get(waketimeURL);
+  console.log("BEDTIEMEE WAKETIME", bedtimeResponse, waketimeResponse)
   const bedtime = bedtimeResponse.data;
   const waketime = waketimeResponse.data;
 

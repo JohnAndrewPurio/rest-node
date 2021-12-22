@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import {
   IonGrid,
   IonItem,
@@ -7,25 +8,41 @@ import {
   IonRow,
 } from '@ionic/react';
 import HoursSetter from './HourSetter';
-import _styles from './styles';
 import WakeUpTimePicker from './WakeUpTimePicker';
 
-const BedTimeControl: React.FC = () => {
+import styles from './styles.module.css';
+
+const BedTimeControl: FC = () => {
+  const labels = {
+    bedtimeSchedule: "Configure bed time schedule",
+    hoursNeeded: "How many hours do you need to sleep?",
+    timeToWakeup: "What time do you need to wake up?"
+  }
+
   return (
-    <IonRow style={_styles.timeControlContainer}>
-      <IonList style={_styles.settingsList}>
+    <IonRow
+      className={styles.timeControlContainer}
+    >
+      <IonList
+        className={styles.settingsList}
+      >
         <IonListHeader lines="full">
-          <IonLabel style={_styles.headerText}>
-            Configure bed time schedule
+          <IonLabel
+            className={styles.headerText}
+          >
+            {labels.bedtimeSchedule}
           </IonLabel>
         </IonListHeader>
-        <IonItem lines="none" style={_styles.settingItem}>
+        <IonItem
+          lines="none"
+          className={styles.settingItem}
+        >
           <IonGrid>
             <IonRow>
               <IonLabel>
                 {' '}
-                <span style={_styles.bullet}>●</span> How many hours do you need
-                to sleep?
+                <span className={styles.bullet}>●</span>
+                {labels.hoursNeeded}
               </IonLabel>
             </IonRow>
             <IonRow>
@@ -33,16 +50,21 @@ const BedTimeControl: React.FC = () => {
             </IonRow>
           </IonGrid>
         </IonItem>
-        <IonItem lines="none" style={_styles.settingItem}>
+        <IonItem
+          lines="none"
+          className={styles.settingItem}
+        >
           <IonGrid>
             <IonRow>
               <IonLabel>
                 {' '}
-                <span style={_styles.bullet}>●</span> What time do you need to
-                wake up?
+                <span className={styles.bullet}>●</span>
+                {labels.timeToWakeup}
               </IonLabel>
             </IonRow>
-            <IonRow style={{ width: '100%' }}>
+            <IonRow
+              className={styles.fullWidth}
+            >
               <WakeUpTimePicker />
             </IonRow>
           </IonGrid>

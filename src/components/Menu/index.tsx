@@ -10,8 +10,6 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import {
-  addCircleOutline,
-  arrowForwardCircleOutline,
   homeOutline,
   personCircleOutline,
 } from 'ionicons/icons';
@@ -20,7 +18,8 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import MenuContext from '../../contextStore/AppContext/menuContext';
 
 import { HOME, PROFILE, REST_NODE } from "../../pages/paths.json"
-import _styles from './styles';
+
+import styles from './styles.module.css';
 
 const paths = [
   {
@@ -69,10 +68,18 @@ const Menu: FC<RouteComponentProps> = ({ location }) => {
   }, [location.pathname]);
 
   return (
-    <IonMenu side="start" contentId="main" menuId="main" swipeGesture={swiper}>
+    <IonMenu
+      side="start"
+      contentId="main"
+      menuId="main"
+      swipeGesture={swiper}
+    >
       <IonHeader>
         <IonToolbar>
-          <IonItem lines="none" style={_styles.header}>
+          <IonItem
+            lines="none"
+            className={styles.header}
+          >
             <IonAvatar slot="start">
               <img src="/assets/restnode-icon.png" alt="Rest Node Logo" />
             </IonAvatar>

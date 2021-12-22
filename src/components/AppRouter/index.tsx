@@ -3,7 +3,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import { App as CapApp } from '@capacitor/app';
 
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { isPlatform } from '@ionic/core';
 import Home from '../../pages/Home';
 import Login from '../../pages/Login';
@@ -21,9 +21,6 @@ import {
   DEVICE_SETUP
 } from '../../pages/paths.json';
 import Menu from '../Menu';
-import DarkModeContext from '../../contextStore/AppContext/darkMode';
-import { storageGet, storageSet } from '../../api/CapacitorStorage';
-import { PROFILE_KEY } from '../../api/CapacitorStorage/keys';
 import DeviceSetup from '../../pages/DeviceSetup';
 
 const AppRouter: React.FC = () => {

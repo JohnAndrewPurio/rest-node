@@ -1,0 +1,101 @@
+.timeControlContainer {
+    flex: 1;
+}
+
+.settingsList {
+    width: 100%;
+    background-color: transparent;
+}
+
+settingItem {
+    --background: transparent;
+}
+
+headerText {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.bullet {
+    color: var(--ion-color-primary-shade);
+}
+
+.hourSetterContainer {
+    width: 100%;
+    height: 8vh;
+    margin: 5vw 10vw 3vw 10vw;
+    background-color: var(--ion-color-primary-tint);
+    border-radius: '10px';
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.hourSetterNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 8vw;
+    padding: 0;
+    border: 3px solid var(--ion-color-primary-shade);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.hourSetterbutton {
+    height: 100%;
+    width: 100%;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+}
+
+.hourSetterColumn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 8vw;
+    padding: 0;
+}
+
+.icon {
+    font-size: 10vw;
+}
+
+.buttonColMinus {
+    border: 3px solid var(--ion-color-primary-shade);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.buttonColAdd {
+    border: 3px solid var(--ion-color-primary-shade);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.picker {
+    font-size: 6vw;
+    font-weight: 700;
+}
+
+.timePickerContainer {
+    border-radius: 10px;
+    border: 3px solid var(--ion-color-primary-shade);
+    margin: 5vw 10vw;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.label {
+    font-size: 8vw;
+    margin-bottom: 5px;
+    margin-right: 3vw;
+}
+
+.fullWidth {
+    width: 100%;
+}
