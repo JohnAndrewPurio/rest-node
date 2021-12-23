@@ -20,9 +20,7 @@ import './styles.css';
 
 const Home: FC = () => {
   const user = useContext(UserContext);
-
   const [searchText, setSearchText] = useState('');
-
   const [, setSwiper] = useContext(MenuContext);
 
   useEffect(() => {

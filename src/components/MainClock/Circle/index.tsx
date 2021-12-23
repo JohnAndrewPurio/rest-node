@@ -12,7 +12,6 @@ interface Props {
 
 const Circle: React.FC<Props> = ({ size, color, arcs }) => {
   // method source: https://codepen.io/juhaelee/pen/GxymWP
-
   const sqSize = size;
   const radius = (sqSize - strokeWidth) / 2;
   const viewBox = `0 0 ${sqSize} ${sqSize}`;

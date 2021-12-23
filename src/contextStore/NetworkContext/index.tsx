@@ -12,7 +12,7 @@ const NetworkContext: FC = ({ children }) => {
     const wifiState = useState<wifiInfo[]>([])
     const permissionAlert = useState<boolean>(true)
     const [rescanWifi, setRescanWifi] = useState<boolean>(true)
-    const [locationAccessPermitted, setLocationAccessPermitted] = useState<boolean>(false)
+    const [, setLocationAccessPermitted] = useState<boolean>(false)
 
     const [, setAvailableWifi] = wifiState
     const [showPermissionAlert, setShowPermissionAlert] = permissionAlert
@@ -46,6 +46,9 @@ const NetworkContext: FC = ({ children }) => {
                 setRescanWifi(false)
             }
         }
+
+        console.log("Android:", isPlatform("android"))
+        console.log("Show Permission Alert:", showPermissionAlert)
 
         if (isPlatform('android') && !showPermissionAlert)
             getAvailableWifiAndroid()

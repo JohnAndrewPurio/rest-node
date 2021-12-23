@@ -1,15 +1,35 @@
-import { IonItem, IonIcon, IonLabel } from "@ionic/react";
+import { IonItem, IonIcon, IonLabel, useIonModal } from "@ionic/react";
 import { wifi } from "ionicons/icons";
-import { FC } from "react";
+import { FC, useContext } from "react";
+import UserContext, { geoip } from "../../contextStore/UserContext/userContext";
+import WifiConnect from "../WifiConnect";
 import { wifiInfoProps } from "./types";
 
 const WifiItem: FC<wifiInfoProps> = ({ wifiInfo }) => {
+  const user = useContext(UserContext)
   const { SSID } = wifiInfo
 
+  const wifiCredentials = {
+    ssid: SSID
+  }
+
+  const dismissModal = () => {
+    dismiss()
+  }
+
+  const [present, dismiss] = useIonModal(WifiConnect, {
+    wifiCredentials,
+    dismissModal
+  })
+
+  const showWifiDialog = () => {
+    present()
+  }
+
+  console.log("User GeoIP", user ? user[geoip] : "None")
+
   return (
-    <IonItem detail button style={{
-      backgroundColor: "inherit"
-    }}>
+    <IonItem detail button onClick={showWifiDialog}>
       <IonIcon icon={wifi} slot="start" />
       <IonLabel>
         <h3>{SSID}</h3>
