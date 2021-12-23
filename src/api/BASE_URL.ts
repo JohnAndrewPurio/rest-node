@@ -1,1 +1,1 @@
-export const BASE_URL = 'restnode.local';
+export const BASE_URL = 'restnode.info';

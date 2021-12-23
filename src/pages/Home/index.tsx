@@ -47,6 +47,7 @@ const Home: FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar
+          mode="md"
           className={styles.toolbar}
         >
           <IonButtons

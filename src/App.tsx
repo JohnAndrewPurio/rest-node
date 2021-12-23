@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { IonApp, setupIonicReact } from '@ionic/react';
+import { IonApp } from '@ionic/react';
 
 import AppRouter from './components/AppRouter';
 import AppContext from './contextStore/AppContext';
@@ -7,7 +7,7 @@ import AppContext from './contextStore/AppContext';
 import './styles';
 
 // Required for migrating from Ionic v5 to v6
-setupIonicReact()
+// setupIonicReact()
 
 const App: FC = () => {
   return (
