@@ -1,0 +1,8 @@
+{
+    "devices": {
+        "Rest Node": {
+            "logo": "/assets/restnode-icon.png",
+            "path": "/restnode"
+        }
+    }
+}

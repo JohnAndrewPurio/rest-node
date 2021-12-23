@@ -5,18 +5,23 @@ import {
   IonContent,
   IonGrid,
   IonHeader,
+  IonLabel,
   IonMenuButton,
   IonPage,
+  IonRouterLink,
   IonSearchbar,
+  IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import { FC, useContext, useEffect, useState } from 'react';
 import CompanyLogo from '../../components/CompanyLogo';
+import DevicesList from '../../components/DevicesList';
 import MenuContext from '../../contextStore/AppContext/menuContext';
 import UserContext from '../../contextStore/UserContext/userContext';
 
 import styles from './styles.module.css';
 import './styles.css';
+import { PROFILE } from "../paths.json"
 
 const Home: FC = () => {
   const user = useContext(UserContext);
@@ -52,38 +57,33 @@ const Home: FC = () => {
               mode="md"
             />
           </IonButtons>
-          <IonGrid
-            className={styles.grid}
-          >
-            <IonSearchbar
+          <IonGrid className={styles.grid}>
+            {/* <IonSearchbar
               mode="ios"
               color="light"
               className={styles.search}
               value={searchText}
               onIonChange={(e) => setSearchText(e.detail.value!)}
-            />
+            /> */}
+            <IonTitle className={styles.headerTitle} size='large'>REST NODE</IonTitle>
             <IonButton
               className={styles.avatarBtn}
               shape="round"
               size="small"
               fill="clear"
             >
-              <IonAvatar
-                slot="icon-only"
-                className={styles.avatar}
-              >
-                <img src={user?.picture} alt="User Avatar" />
-              </IonAvatar>
+              <IonRouterLink slot="icon-only" routerLink={PROFILE}>
+                <IonAvatar className={styles.avatar}>
+                  <img src={user?.picture} alt="User Avatar" />
+                </IonAvatar>
+              </IonRouterLink>
             </IonButton>
           </IonGrid>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonGrid
-          className={styles.content}
-        >
-          <CompanyLogo />
-        </IonGrid>
+      <IonContent className="ion-padding" fullscreen>
+        <IonLabel className={styles.devices}>Your Devices:</IonLabel>
+        <DevicesList />
       </IonContent>
     </IonPage>
   );
