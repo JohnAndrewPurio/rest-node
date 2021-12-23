@@ -3,10 +3,7 @@ const _styles = {
     display: "flex"
   },
   content: {
-    paddingTop: '3em',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    // '--padding-top': '1.5em',
   },
   search: {
     padding: '0em .5em 0em 0em',
@@ -26,11 +23,21 @@ const _styles = {
   grid: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: 'var(--ion-color-light-shade)',
+    // backgroundColor: 'var(--ion-color-light-shade)',
     margin: '.5em .5em .5em 0em',
     borderRadius: '50px',
     padding: '0em .5em',
   },
+  devices: {
+    fontWeight: 700,
+    fontSize: "1.1rem",
+    padding: ".5em"
+  },
+  headerTitle: {
+    fontWeight: 300,
+    letterSpacing: "3px",
+    fontSize: "1.1rem"
+  }
 };
 
 export default _styles;

@@ -1,3 +1,5 @@
+import { devices } from "./devices.json"
+
 interface LightPayload {
   light: string;
   max_brightness: number;
@@ -77,4 +79,17 @@ export interface songInterface {
   id: string;
   fullPath: string;
   source: string;
+}
+
+export interface deviceInfo {
+  type: string,
+  new: boolean,
+  id?: number,
+  nickname?: string,
+}
+
+export interface newDeviceDetailsType {
+  type: string|null,
+  switchedOn: boolean,
+  hotspotConnected: boolean
 }
