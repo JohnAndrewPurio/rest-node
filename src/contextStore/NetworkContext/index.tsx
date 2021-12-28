@@ -5,7 +5,7 @@ import { checkLocationPermission } from "../../utils/getCurrentPosition"
 import { wifiScan } from "../../utils/wifiMethods"
 import WifiListContext from "./wifiList"
 import PermissionAlertContext from "./permissionAlert"
-import PermissionAlert from "../../pages/Network/PermissionAlert"
+import PermissionAlert from "../../pages/DeviceSetup/ConnectWifiNetwork/PermissionAlert"
 import { isPlatform } from "@ionic/core"
 
 const NetworkContext: FC = ({ children }) => {

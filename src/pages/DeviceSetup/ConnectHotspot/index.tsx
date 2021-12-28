@@ -1,6 +1,8 @@
-import { dismiss } from '@ionic/core/dist/types/utils/overlays'
-import { IonButton, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonText, useIonLoading } from '@ionic/react'
-import { arrowForward, informationCircle, informationCircleOutline, thumbsUpOutline } from 'ionicons/icons'
+import { 
+    IonButton, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow
+    // , IonText, useIonLoading 
+} from '@ionic/react'
+import { arrowForward, informationCircleOutline, thumbsUpOutline } from 'ionicons/icons'
 import { FC } from 'react'
 import { newDeviceDetailsType } from '../../../types'
 import _styles from './styles'
@@ -12,16 +14,16 @@ interface Props {
 }
 
 const ConnectHotspot: FC<Props> = ({ deviceDetails, setDetails, nextStep }) => {
-
-    const [present, dismiss] = useIonLoading()
+    // const [present, dismiss] = useIonLoading()
 
     const wifiName: { [key: string]: string } = {
-        "Rest Node": "REST_NODE_XXXX"
+        "Rest Node": "Rest_Node_XXXX"
     }
 
     const connect = () => {
-        present(`Connecting to ${deviceDetails.type}`)
-        setTimeout(() => dismiss(), 10000)
+        nextStep()
+        // present(`Connecting to ${deviceDetails.type}`)
+        // setTimeout(() => dismiss(), 10000)
     }
 
     return (

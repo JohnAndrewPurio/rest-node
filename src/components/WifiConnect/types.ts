@@ -23,3 +23,9 @@ export interface boolObject {
 export interface textFieldObject {
     [key: string]: TextFieldTypes
 }
+
+export interface numberObject {
+    [key: string]: number
+}
+
+export type inputItemType = ("ssid" | "password" | "country")[]

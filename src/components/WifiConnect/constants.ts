@@ -1,4 +1,4 @@
-import { inputNamesInterface, stringObject, boolObject, textFieldObject } from "./types"
+import { inputNamesInterface, stringObject, boolObject, textFieldObject, numberObject } from "./types"
 
 export const inputNames: inputNamesInterface = {
     SSID: "ssid",
@@ -25,4 +25,8 @@ export const placeholders: stringObject = {
 
 export const types: textFieldObject = {
     password: "password"
+}
+
+export const minlength: numberObject = {
+    password: 8
 }

@@ -1,18 +1,26 @@
-import { IonButton, IonContent, IonHeader, IonList, IonPage } from "@ionic/react"
-import { FC, FormEventHandler } from "react"
-import { inputNames, types, labels, hidden, readonly, placeholders } from "./constants"
+import { IonButton, IonCol, IonGrid, IonList, IonRow } from "@ionic/react"
+import { FC, FormEventHandler, useContext } from "react"
+import { postNetworkCredentials, wifiCredentialsInterface } from "../../api/RestNode/POST/updateNetworkCredentials"
+import TargetAddressContext from "../../contextStore/NetworkContext/targetAddress"
+import { inputNames, types, labels, hidden, readonly, placeholders, minlength } from "./constants"
 import InputItems from "./InputItems"
-import { Props } from "./types"
+import { inputItemType, Props } from "./types"
 
-const WifiConnect: FC<Props>  = ({ wifiCredentials, dismissModal }) => {
-    const inputItems: ("ssid" | "password" | "country")[] = Object.values(inputNames)
+const inputItems: inputItemType = Object.values(inputNames)
+
+const WifiConnect: FC<Props> = ({ wifiCredentials, dismissModal }) => {
+    const [targetAddress] = useContext(TargetAddressContext)
 
     const connectToWifi: FormEventHandler<HTMLFormElement> = async (event) => {
         event.preventDefault()
 
+        const url = `http://${targetAddress}/restnode/network`
+
         try {
-            // const formData = new FormData(event)
-            console.log("Event Target:", event.target)
+            const formData = new FormData((event.target) as HTMLFormElement)
+            const data = (Object.fromEntries(formData.entries())) as wifiCredentialsInterface
+
+            postNetworkCredentials(url, data)
 
         } catch (error) {
             console.log(error)
@@ -22,38 +30,52 @@ const WifiConnect: FC<Props>  = ({ wifiCredentials, dismissModal }) => {
     }
 
     return (
-        <IonPage>
-            <IonHeader>
-                <IonButton slot="end" onClick={dismissModal}>
-                    Close
-                </IonButton>
-            </IonHeader>
-            <IonContent>
-                <form onSubmit={connectToWifi}>
-                    <IonList>
-                        {
-                            inputItems.map((inputName) => (
-                                <InputItems
-                                    type={types[inputName]}
-                                    label={labels[inputName]}
-                                    hidden={hidden[inputName]}
-                                    readonly={readonly[inputName]}
-                                    name={inputName}
-                                    placeholder={placeholders[inputName]}
-                                    value={wifiCredentials[inputName]}
-                                />
-                            ))
-                        }
+        <form onSubmit={connectToWifi}>
+            <IonGrid>
+                <IonRow className="ion-justify-content-center">
+                    <IonCol className="ion-text-right">
+                        <IonButton
+                            fill="clear"
+                            color="warning"
+                            onClick={dismissModal}
+                        >
+                            Cancel
+                        </IonButton>
+                    </IonCol>
+                </IonRow>
 
+                <IonRow className="ion-justify-content-center">
+                    <IonCol size="10">
+                        <IonList>
+                            {
+                                inputItems.map((inputName) => (
+                                    <InputItems
+                                        type={types[inputName]}
+                                        label={labels[inputName]}
+                                        hidden={hidden[inputName]}
+                                        readonly={readonly[inputName]}
+                                        name={inputName}
+                                        placeholder={placeholders[inputName]}
+                                        value={wifiCredentials[inputName]}
+                                        minlength={minlength[inputName]}
+                                    />
+                                ))
+                            }
+                        </IonList>
+                    </IonCol>
+                </IonRow>
+
+                <IonRow className="ion-justify-content-end">
+                    <IonCol className="ion-text-center">
                         <IonButton
                             type="submit"
                         >
                             Connect
                         </IonButton>
-                    </IonList>
-                </form>
-            </IonContent>
-        </IonPage>
+                    </IonCol>
+                </IonRow>
+            </IonGrid>
+        </form>
     )
 }
 

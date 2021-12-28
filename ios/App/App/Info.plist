@@ -67,5 +67,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSBonjourServices</key>
+	<array>
+	 <string>_http._tcp.</string>
+	</array>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>To find your device servers.</string>
 </dict>
 </plist>

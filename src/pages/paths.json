@@ -2,7 +2,6 @@
     "LOGIN": "/login",
     "HOME": "/home",
     "REST_NODE": "/restnode",
-    "NETWORK": "/network",
     "PROFILE": "/profile",
     "DEVICE_SETUP": "/devicesetup",
     "DEFAULT": "/login"

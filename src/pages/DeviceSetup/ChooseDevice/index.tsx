@@ -1,9 +1,10 @@
-import { IonCol, IonGrid, IonRow } from '@ionic/react'
+import { IonCol, IonRow } from '@ionic/react'
 import { FC } from 'react'
 import Device from '../../../components/Device'
-import _styles from './styles'
 import { devices } from "../../../devices.json"
 import { newDeviceDetailsType } from '../../../types'
+
+import _styles from './styles'
 
 interface Props {
     setDetails: any,
@@ -20,11 +21,13 @@ const ChooseDevice: FC<Props> = ({ setDetails, nextStep }) => {
 
     return (
         <IonRow style={_styles.container}>
-            {devicesList.map((device) =>
-                <IonCol style={_styles.tiles} size="6" onClick={() => deviceChosen(device)}>
-                    <Device device={{ type: device, new: true }} />
-                </IonCol>
-            )}
+            {
+                devicesList.map((device) =>
+                    <IonCol style={_styles.tiles} size="6" onClick={() => deviceChosen(device)}>
+                        <Device device={{ type: device, new: true }} />
+                    </IonCol>
+                )
+            }
         </IonRow>
     )
 }

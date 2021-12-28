@@ -1,8 +1,8 @@
 import { IonList, IonItemGroup, IonListHeader, IonText } from '@ionic/react'
 import { useContext } from 'react'
 
-import WifiItem from '../../../components/WifiItem'
-import WifiListContext from '../../../contextStore/NetworkContext/wifiList'
+import WifiItem from '../../../../components/WifiItem'
+import WifiListContext from '../../../../contextStore/NetworkContext/wifiList'
 
 const WifiList = () => {
     const [availableWifi] = useContext(WifiListContext)

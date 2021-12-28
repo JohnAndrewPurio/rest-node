@@ -1,7 +1,5 @@
 export interface wifiCredentialsInterface {
-    ssid: string
-    password: string
-    country: string
+    [key: string]: string
 }
 
 type postNetworkCredentialsType = (url: string, wifiCredentials: wifiCredentialsInterface) => Promise<void>

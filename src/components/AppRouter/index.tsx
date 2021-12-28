@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import { isPlatform } from '@ionic/core';
 import Home from '../../pages/Home';
 import Login from '../../pages/Login';
-import Network from '../../pages/Network';
 import Profile from '../../pages/Profile';
 import RestNode from '../../pages/RestNode';
 
@@ -15,7 +14,6 @@ import {
   DEFAULT,
   LOGIN,
   HOME,
-  NETWORK,
   PROFILE,
   REST_NODE,
   DEVICE_SETUP
@@ -71,7 +69,6 @@ const AppRouter: React.FC = () => {
           <Home />
         </Route>
         <Route path={REST_NODE} render={(props) => <RestNode {...props} />} />
-        <Route path={NETWORK} component={Network} />
         <Route path={PROFILE} component={Profile} />
         <Route path={DEVICE_SETUP} component={DeviceSetup} />
         <Route render={() => <Redirect to={DEFAULT} />} />

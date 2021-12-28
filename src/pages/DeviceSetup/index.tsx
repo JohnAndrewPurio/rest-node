@@ -5,17 +5,18 @@ import { newDeviceDetailsType } from "../../types"
 import { HOME } from '../paths.json'
 import ChooseDevice from "./ChooseDevice"
 import ConnectHotspot from "./ConnectHotspot"
-import _styles from "./styles"
 import TurnOnDevice from "./TurnOnDevice"
 
+import _styles from "./styles"
+import ConnectWifiNetwork from "./ConnectWifiNetwork"
+
+const initialDeviceDetails = {
+    type: null,
+    switchedOn: false,
+    hotspotConnected: false
+}
+
 const DeviceSetup: FC = () => {
-
-    const initialDeviceDetails = {
-        type: null,
-        switchedOn: false,
-        hotspotConnected: false
-    }
-
     const [currentStep, setCurrentStep] = useState(0)
     const [newDeviceDetails, setNewDeviceDetails] = useState<newDeviceDetailsType>(initialDeviceDetails)
     const setStep = (index: number) => {
@@ -33,7 +34,11 @@ const DeviceSetup: FC = () => {
         },
         {
             title: "Connect to Hotspot",
-            component: <ConnectHotspot nextStep={() => setCurrentStep(2)} setDetails={setNewDeviceDetails} deviceDetails={newDeviceDetails} />
+            component: <ConnectHotspot nextStep={() => setCurrentStep(3)} setDetails={setNewDeviceDetails} deviceDetails={newDeviceDetails} />
+        },
+        {
+            title: "Connect to Wifi Network",
+            component: <ConnectWifiNetwork nextStep={() => setCurrentStep(4)} />
         }
     ]
 

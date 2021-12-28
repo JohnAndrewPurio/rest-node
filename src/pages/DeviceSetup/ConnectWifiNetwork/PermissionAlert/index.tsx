@@ -1,6 +1,6 @@
 import { IonAlert } from "@ionic/react"
 import { useContext } from "react"
-import PermissionAlertContext from "../../../contextStore/NetworkContext/permissionAlert"
+import PermissionAlertContext from "../../../../contextStore/NetworkContext/permissionAlert"
 
 const PermissionAlert = () => {
     const [showPermissionAlert, setShowPermissionAlert] = useContext(PermissionAlertContext)
