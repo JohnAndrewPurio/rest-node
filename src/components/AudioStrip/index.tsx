@@ -34,6 +34,7 @@ type handleClickType = (
 ) => void;
 
 const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
+  console.log(song)
   const socket = useContext(SocketContext);
   const [targetAddress] = useContext(TargetAddressContext);
   const audioAssets = useContext(AudioAssetsContext);

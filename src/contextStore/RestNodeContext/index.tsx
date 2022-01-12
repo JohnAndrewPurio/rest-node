@@ -107,6 +107,7 @@ const RestNodeContext: FC = ({ children }) => {
 
     const socketOnError = (event: Event) => {
         console.log('Websocket Error:', event, socket)
+        console.log("Target Address:", targetAddress)
 
         if(!isPlatform('android') || !isPlatform('ios'))
             return

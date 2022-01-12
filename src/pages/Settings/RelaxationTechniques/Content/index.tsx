@@ -12,8 +12,13 @@ import { setState } from '../../../../contextStore/RelaxationContext/relaxationA
 import { storage } from "../../../../services/constants";
 import { getStartEnd } from "../../helper";
 import { Storage } from '@capacitor/storage';
+import RelaxationModal from "../../../../components/RelaxationModal";
 
-const Content: FC = () => {
+interface Props {
+    router: HTMLIonRouterOutletElement | null;
+  }
+
+const Content: FC<Props> = ({ router }) => {
     const [selected, setSelected] = useState('All');
 
     const onSelect = (time: string) => {
@@ -107,13 +112,22 @@ const Content: FC = () => {
         // eslint-disable-next-line
     }, [started]);
 
+    const [modalOpen, setModalOpen] = useState(false)
+    const [chosenTechnique, setChosenTechnique] = useState(null)
+
+    const openModal = (technique: any) => {
+        setChosenTechnique(technique)
+        setModalOpen(true)
+    }
+
     return (
         <IonContent>
+            <RelaxationModal technique={chosenTechnique} router={router} isOpen={modalOpen} closeModal={() => setModalOpen(false)} />
             <IonGrid>
                 <TimeBar />
                 <RelaxationFilter selected={selected} onSelect={onSelect} />
-                <RelaxationFavorites />
-                <RelaxationList />
+                <RelaxationFavorites openModal={openModal} />
+                <RelaxationList openModal={openModal} />
             </IonGrid>
         </IonContent>
     );

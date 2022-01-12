@@ -4,12 +4,16 @@ import SettingsHeader from '../../../components/SettingsHeader';
 import { RelaxationContextProvider } from '../../../contextStore/RelaxationContext/relaxationContext';
 import Content from './Content';
 
-const Relaxation: React.FC = () => {
+interface Props {
+  router: HTMLIonRouterOutletElement | null;
+}
+
+const Relaxation: React.FC<Props> = ({ router }) => {
   return (
     <RelaxationContextProvider>
       <IonPage>
         <SettingsHeader title="Relaxation Techniques" />
-        <Content />
+        <Content router={router} />
         <RelaxationFooter />
       </IonPage>
     </RelaxationContextProvider>

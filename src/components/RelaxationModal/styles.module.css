@@ -1,0 +1,37 @@
+
+
+.image {
+    height: 100px;
+    width: 100px;
+    padding: .5em;
+}
+
+.image::part(image) {
+    border-radius: 5px;
+}
+
+.title {
+    font-weight: 700;
+}
+
+.creator {
+    font-size: .8rem;
+    color: var(--ion-color-secondary);
+}
+
+.details {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.songDetails {
+    padding: 1em;
+    align-items: center;
+    display: flex;
+}
+
+.playIcon {
+    align-self: flex-end;
+    padding-right: .5em;
+}

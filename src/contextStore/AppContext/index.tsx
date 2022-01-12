@@ -82,7 +82,9 @@ const AppContext: FC = ({ children }) => {
   useEffect(() => {
     getProfileData()
 
-    if ( isPlatform('android') ) 
+    console.log("ENTERING SERVICE LISTENER 1111")
+    if ( isPlatform('android') || isPlatform('ios') ) 
+      console.log("ENTERING SERVICE LISTENER")
       serviceListener(Zeroconf, setTargetAddress);
 
     // eslint-disable-next-line
