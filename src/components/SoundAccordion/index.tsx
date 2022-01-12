@@ -77,8 +77,9 @@ const SoundAccordion: FC<Props> = ({
   };
 
   const songsHandler = (song: sendAudioBodyInterface, index: number) => (
+    
     <AudioStrip
-      key={index}
+      key={index} 
       index={index}
       onclick={chooseSong}
       active={index === activeSong}
