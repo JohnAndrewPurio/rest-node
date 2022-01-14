@@ -11,7 +11,7 @@
 		427FAF1727697056004D8932 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 427FAF1627697056004D8932 /* FirebaseCore.framework */; };
 		427FAF1B27698486004D8932 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423048BB2768F3F7001EECD5 /* FirebaseCore.framework */; };
 		427FAF1C27698488004D8932 /* FirebaseCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423048C32768F466001EECD5 /* FirebaseCore.framework */; };
-		427FAF1E27698B1A004D8932 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 427FAF1D27698B1A004D8932 /* GoogleService-Info.plist */; };
+		428D58FD27905DDC008449D4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 428D58FC27905DDC008449D4 /* GoogleService-Info.plist */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
 		504EC3081FED79650016851F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504EC3071FED79650016851F /* AppDelegate.swift */; };
 		504EC30D1FED79650016851F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC30B1FED79650016851F /* Main.storyboard */; };
@@ -31,7 +31,7 @@
 		423048C92768F471001EECD5 /* FirebaseInstallations.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseInstallations.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		423048CC2768F476001EECD5 /* FirebaseMessaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseMessaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		427FAF1627697056004D8932 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		427FAF1D27698B1A004D8932 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		428D58FC27905DDC008449D4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,8 +96,8 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				428D58FC27905DDC008449D4 /* GoogleService-Info.plist */,
 				420CF118278D9EE70010D894 /* App.entitlements */,
-				427FAF1D27698B1A004D8932 /* GoogleService-Info.plist */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				504EC30B1FED79650016851F /* Main.storyboard */,
@@ -187,7 +187,7 @@
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,
 				504EC30D1FED79650016851F /* Main.storyboard in Resources */,
 				2FAD9763203C412B000D30F8 /* config.xml in Resources */,
-				427FAF1E27698B1A004D8932 /* GoogleService-Info.plist in Resources */,
+				428D58FD27905DDC008449D4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -47,7 +47,9 @@ const DeviceSetup: FC = () => {
         setCurrentStep(0)
     }
 
-    useEffect(() => reset(), [])
+    useEffect(() => {
+        reset()
+    }, [])
     useIonViewDidEnter(() => reset())
 
     return (
