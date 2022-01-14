@@ -37,11 +37,11 @@ const RestNodeContext: FC = ({ children }) => {
     const [present] = useIonAlert();
     const [startLoading, stopLoading] = useIonLoading();
     const [soundLoading, setSoundLoading] = useState<boolean>(false)
-    const socketProtocol = targetAddress ? 'ws' : 'wss'
+    const socketProtocol = 'ws'
 
     const getInitialValues = async () => {
         const url = targetAddress || BASE_URL
-        const protocol = targetAddress ? 'http' : 'https'
+        const protocol = 'http'
         try {
             setLoading(true);
             await getLastValues(url, protocol);
@@ -84,7 +84,7 @@ const RestNodeContext: FC = ({ children }) => {
             setSoundLoading(() => true);
 
             await listAudioFilesMetadata(
-                targetAddress, audioFiles,
+                targetAddress || BASE_URL, audioFiles,
                 setAudioFiles, setSoundLoading
             )
 
@@ -98,6 +98,7 @@ const RestNodeContext: FC = ({ children }) => {
 
     // Websocket Event Handlers
     const socketOnOpen = (event: Event) => {
+        console.log("Target Address:", targetAddress)
         console.log('Websocket Started:', event, socket);
     }
 
@@ -122,7 +123,7 @@ const RestNodeContext: FC = ({ children }) => {
         switch (message.type) {
             case AUDIO_DOWNLOAD_RESPONSE:
                 audioDownloadResponseHandler(
-                    message, targetAddress, downloadQueue,
+                    message, targetAddress || BASE_URL, downloadQueue,
                     setAudioAssets, setDownloadQueue
                 )
 
@@ -135,7 +136,7 @@ const RestNodeContext: FC = ({ children }) => {
 
     useEffect(() => {
         const webSocket = initializeWebsocketConnection(
-            targetAddress, socketProtocol,
+            targetAddress || BASE_URL, socketProtocol,
             socketOnOpen, socketOnClose, socketOnError, socketOnMessage
         )
 
