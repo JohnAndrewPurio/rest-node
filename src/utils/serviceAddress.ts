@@ -16,7 +16,6 @@ export const serviceListener = async (
   }) => {
     const { txtRecord, ipv4Addresses } = service;
     const address = ipv4Addresses[0];
-    console.log(service, action, 'ABOVE ADDRESS');
 
     if (action !== 'resolved') return;
 
@@ -24,7 +23,6 @@ export const serviceListener = async (
 
     if (!address) return;
 
-    console.log(address, 'ADDDREESSS');
     setAddress(address);
   };
 

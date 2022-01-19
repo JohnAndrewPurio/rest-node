@@ -18,7 +18,7 @@ const _styles = {
     fontWeight: 700,
     top: '100%',
     position: 'absolute' as const,
-    left: '-3.2ch',
+    left: '-2.5ch',
     color: 'var(--ion-color-tertiary)',
   },
   end: {
@@ -26,7 +26,7 @@ const _styles = {
     fontWeight: 700,
     top: '100%',
     position: 'absolute' as const,
-    marginLeft: '-1ch',
+    marginLeft: '-2ch',
     left: '100%',
     color: 'var(--ion-color-primary)',
   },

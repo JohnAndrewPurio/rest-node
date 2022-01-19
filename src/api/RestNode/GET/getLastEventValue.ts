@@ -22,7 +22,7 @@ export const getLastValues: getLastValuesType = async (
   const bedtime = bedtimeResponse.data;
   const waketime = waketimeResponse.data;
 
-  await storageSet(JSON.stringify({ bedtime, waketime }), REST_NODE_STATES_KEY);
+  await storageSet({ bedtime, waketime }, REST_NODE_STATES_KEY);
 
   return { bedtime, waketime };
 };

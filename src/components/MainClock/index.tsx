@@ -24,14 +24,13 @@ const MainClock: React.FC<Props> = ({ biggest }) => {
   // calculate arcs based on current states
   const configureArcs = () => {
     storageGet(REST_NODE_STATES_KEY).then((res) => {
-      if (!res.value) return;
+      if (!res) return;
 
-      const states = JSON.parse(res.value);
       const clockArcs: ClockArcs = {
-        bedtime: getBedtimeArcs(states),
-        lights: getLightArcs(states),
-        sounds: getSoundsArcs(states),
-        relaxation: getRelaxationArcs(states),
+        bedtime: getBedtimeArcs(res),
+        lights: getLightArcs(res),
+        sounds: getSoundsArcs(res),
+        relaxation: getRelaxationArcs(res),
       };
 
       setArcs(clockArcs);

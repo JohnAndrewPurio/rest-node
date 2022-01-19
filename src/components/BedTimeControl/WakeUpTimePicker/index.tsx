@@ -13,8 +13,8 @@ const WakeUpTimePicker: React.FC = () => {
   return (
     <IonItem lines="none" style={_styles.timePickerContainer}>
       <IonDatetime
-        slot="start"
         style={_styles.picker}
+        presentation="time"
         value={wakeUpTime.format()}
         onIonChange={(e) => dispatch(setWakeUpTime(moment(e.detail.value!)))}
         min={moment().add(24, 'h').format('YYYY-MM-DD')}

@@ -20,12 +20,11 @@ const Content: FC = () => {
   const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
 
   const getState = async () => {
-    const { value } = await storageGet(REST_NODE_STATES_KEY);
+    const defaultStates = await storageGet(REST_NODE_STATES_KEY);
 
-    if (!value) return;
+    if (!defaultStates) return;
 
     const _moment = moment();
-    const defaultStates: RestNodeStateType = JSON.parse(value);
     const { start, end } = getStartEnd(defaultStates);
     const _start = start;
     const _end = end;

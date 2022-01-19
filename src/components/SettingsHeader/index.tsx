@@ -68,9 +68,8 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   // checks if current context state is same with last stored local storage value
   const stateCheck = async (): Promise<changeCheck> => {
-    const { value } = await storageGet(REST_NODE_STATES_KEY);
-    if (value) {
-      const states: RestNodeStateType = JSON.parse(value);
+    const states = await storageGet(REST_NODE_STATES_KEY);
+    if (states) {
       switch (location.pathname) {
         case BEDTIME: {
           return bedtimeStateChangeChecker(bedtimeState.state, states);

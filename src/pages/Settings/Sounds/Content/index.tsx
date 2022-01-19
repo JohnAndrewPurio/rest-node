@@ -24,11 +24,11 @@ const Content: FC = () => {
   const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
 
   const getState = async () => {
-    const { value } = await storageGet(REST_NODE_STATES_KEY);
+    const value = await storageGet(REST_NODE_STATES_KEY);
 
     if (!value) return;
 
-    const { bedtime, waketime } = JSON.parse(value);
+    const { bedtime, waketime } = value;
 
     const _moment = moment();
     const { start, end } = getStartEnd({ bedtime, waketime });

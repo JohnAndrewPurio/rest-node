@@ -72,9 +72,7 @@ const _styles = {
   timePickerContainer: {
     borderRadius: '10px',
     border: '3px solid var(--ion-color-primary-shade)',
-    margin: '5vw 10vw',
-    display: 'flex',
-    justifyContent: 'center',
+    margin: '5vw 0vw',
     width: '100%',
   },
   label: {

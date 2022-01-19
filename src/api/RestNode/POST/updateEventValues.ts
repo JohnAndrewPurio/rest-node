@@ -14,7 +14,7 @@ export const updateValues: updateValuesType = async (url, protocol, data) => {
 
   await axios.post(URL, data.bedtime);
   await axios.post(URL, data.waketime);
-  await storageSet(JSON.stringify(data), REST_NODE_STATES_KEY);
+  await storageSet(data, REST_NODE_STATES_KEY);
 
   return data;
 };
