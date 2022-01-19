@@ -9,14 +9,14 @@ import {
 } from '@ionic/react';
 import { Redirect, Route, RouteComponentProps } from 'react-router';
 
-import { 
-  home, 
-  // informationCircle, time 
+import {
+  home,
+  // informationCircle, time
 } from 'ionicons/icons';
 import Dashboard from './Dashboard';
-import { 
-  // HELP, HISTORY, 
-  DASHBOARD 
+import {
+  // HELP, HISTORY,
+  DASHBOARD,
 } from './paths.json';
 
 const BottomNavigationTabs: FC<RouteComponentProps> = () => {

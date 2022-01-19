@@ -1,3 +1,7 @@
-import { FirebaseCrashlytics, FirebaseCrashlyticsOriginal } from "@awesome-cordova-plugins/firebase-crashlytics"
+import {
+  FirebaseCrashlytics,
+  FirebaseCrashlyticsOriginal,
+} from '@awesome-cordova-plugins/firebase-crashlytics';
 
-export const crashlytics: FirebaseCrashlyticsOriginal = FirebaseCrashlytics.initialise()
+export const crashlytics: FirebaseCrashlyticsOriginal =
+  FirebaseCrashlytics.initialise();

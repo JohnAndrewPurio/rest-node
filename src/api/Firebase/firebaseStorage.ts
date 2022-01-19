@@ -46,4 +46,3 @@ export const listFiles: listFilesType = async (dir) => {
 
   return page;
 };
-

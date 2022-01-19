@@ -3,8 +3,8 @@ import { IonRow } from '@ionic/react';
 import NetworkContext from '../../../contextStore/NetworkContext';
 import WifiList from './WifiList';
 
-interface Props { 
-  nextStep: () => void 
+interface Props {
+  nextStep: () => void;
 }
 
 const ConnectWifiNetwork: FC<Props> = ({ nextStep }) => {

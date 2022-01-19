@@ -22,8 +22,7 @@ const Content: FC = () => {
   const getState = async () => {
     const { value } = await storageGet(REST_NODE_STATES_KEY);
 
-    if (!value) 
-      return;
+    if (!value) return;
 
     const _moment = moment();
     const defaultStates: RestNodeStateType = JSON.parse(value);
@@ -90,8 +89,7 @@ const Content: FC = () => {
       const bedtime = isBedtime();
       const bedtimeHasStarted = bedtimeStarted();
 
-      if (!started && bedtime) 
-        bedtimeState.dispatch(bedtimeHasStarted);
+      if (!started && bedtime) bedtimeState.dispatch(bedtimeHasStarted);
     };
 
     const interval = setInterval(bedtimeCheckHandler, 1000);

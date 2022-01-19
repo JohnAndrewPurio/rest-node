@@ -1,18 +1,13 @@
-import {
-  IonGrid,
-  IonLabel,
-  IonRow,
-} from '@ionic/react';
+import { IonGrid, IonLabel, IonRow } from '@ionic/react';
 import { techniques } from '../../pages/Settings/RelaxationTechniques/techniques.json';
 import RelaxationCard from '../RelaxationCard';
 import _styles from './styles';
 
 interface Props {
-  openModal: (technique: any) => void
+  openModal: (technique: any) => void;
 }
 
 const RelaxationList: React.FC<Props> = ({ openModal }) => {
-
   return (
     <IonRow style={_styles.container}>
       <IonGrid>

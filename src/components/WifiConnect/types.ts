@@ -1,31 +1,31 @@
-import { TextFieldTypes } from "@ionic/core";
-import { wifiCredentialsInterface } from "../../api/RestNode/POST/updateNetworkCredentials";
+import { TextFieldTypes } from '@ionic/core';
+import { wifiCredentialsInterface } from '../../api/RestNode/POST/updateNetworkCredentials';
 
 export interface Props {
-    wifiCredentials: wifiCredentialsInterface
-    dismissModal: () => void
+  wifiCredentials: wifiCredentialsInterface;
+  dismissModal: () => void;
 }
 
 export interface inputNamesInterface {
-    SSID: "ssid",
-    PASSWORD: "password"
-    COUNTRY: "country"
+  SSID: 'ssid';
+  PASSWORD: 'password';
+  COUNTRY: 'country';
 }
 
 export interface stringObject {
-    [key: string]: string
+  [key: string]: string;
 }
 
 export interface boolObject {
-    [key: string]: boolean
+  [key: string]: boolean;
 }
 
 export interface textFieldObject {
-    [key: string]: TextFieldTypes
+  [key: string]: TextFieldTypes;
 }
 
 export interface numberObject {
-    [key: string]: number
+  [key: string]: number;
 }
 
-export type inputItemType = ("ssid" | "password" | "country")[]
+export type inputItemType = ('ssid' | 'password' | 'country')[];

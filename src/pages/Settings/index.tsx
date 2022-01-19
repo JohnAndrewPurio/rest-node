@@ -9,7 +9,6 @@ import { DASHBOARD } from '../Tabs/paths.json';
 import { useRef } from 'react';
 
 const SettingsRouter: React.FC<RouteComponentProps> = () => {
-
   const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
 
   return (
@@ -18,7 +17,10 @@ const SettingsRouter: React.FC<RouteComponentProps> = () => {
         <Route path={BEDTIME} component={Bedtime} />
         <Route path={SOUNDS} component={Sounds} />
         <Route path={LIGHTS} component={Lights} />
-        <Route path={RELAXATION} render={() => <Relaxation router={routerRef.current} />} />
+        <Route
+          path={RELAXATION}
+          render={() => <Relaxation router={routerRef.current} />}
+        />
         <Route render={() => <Redirect to={DASHBOARD} />} />
       </IonRouterOutlet>
     </IonPage>

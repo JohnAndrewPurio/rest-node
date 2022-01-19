@@ -39,63 +39,62 @@ const AppContext: FC = ({ children }) => {
 
   const getProfileData = async () => {
     try {
-      const { darkMode } = await storageGet(PROFILE_KEY)
+      const { darkMode } = await storageGet(PROFILE_KEY);
 
       setDarkMode(darkMode);
-    } catch(error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const persistDarkMode = async () => {
     try {
-      const key = PROFILE_KEY
-      const previousData = await storageGet(key)
+      const key = PROFILE_KEY;
+      const previousData = await storageGet(key);
       const data = {
         ...previousData,
-        darkMode
-      }
-      storageSet(data, key)
-    } catch(error) {
-      console.log(error)
+        darkMode,
+      };
+      storageSet(data, key);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   useEffect(() => {
     const handleRedirect: handleRedirectType = async ({ url }) => {
       const stateIncluded = url.includes('state');
       const codeIncluded = url.includes('code');
       const errorIncluded = url.includes('error');
-      
-      console.log("Redirect URL:", url)
+
+      console.log('Redirect URL:', url);
 
       if (stateIncluded && (codeIncluded || errorIncluded))
         await handleRedirectCallback(url);
 
       await Browser.close();
     };
-    
-    CapApp.addListener('appUrlOpen', handleRedirect);
 
+    CapApp.addListener('appUrlOpen', handleRedirect);
   }, [handleRedirectCallback]);
 
   useEffect(() => {
-    getProfileData()
+    getProfileData();
 
-    console.log("ENTERING SERVICE LISTENER 1111")
-    if ( isPlatform('android') || isPlatform('ios') ) 
-      console.log("ENTERING SERVICE LISTENER")
-      serviceListener(Zeroconf, setTargetAddress);
+    console.log('ENTERING SERVICE LISTENER 1111');
+    if (isPlatform('android') || isPlatform('ios'))
+      console.log('ENTERING SERVICE LISTENER');
+    serviceListener(Zeroconf, setTargetAddress);
 
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    console.log("Dark Mode:", darkMode)
+    console.log('Dark Mode:', darkMode);
 
     toggleDarkMode(document, darkMode);
-    persistDarkMode()
-    
+    persistDarkMode();
+
     // eslint-disable-next-line
   }, [darkMode]);
 

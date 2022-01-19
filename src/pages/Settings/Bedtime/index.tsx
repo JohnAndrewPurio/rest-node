@@ -25,7 +25,7 @@ const Bedtime: FC = () => {
 
   // sync the value of the context states to the local stored value
   const getState = async () => {
-    const { value } = await storageGet(REST_NODE_STATES_KEY)
+    const { value } = await storageGet(REST_NODE_STATES_KEY);
     if (value) {
       const defaultStates = JSON.parse(value);
       const { start, end } = getStartEnd(defaultStates);

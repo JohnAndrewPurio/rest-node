@@ -57,10 +57,7 @@ const reducer = (state: State = initialState, action: Action) => {
         favorites = state.favorites.slice();
         favorites.push(action.payload);
       }
-      storageSet(
-        JSON.stringify(favorites),
-        RELAXATION_FAVORITES_KEY
-      );
+      storageSet(JSON.stringify(favorites), RELAXATION_FAVORITES_KEY);
       return {
         ...state,
         favorites,

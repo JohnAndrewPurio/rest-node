@@ -39,7 +39,7 @@ import { getAddress } from '../../utils/userGeoIP';
 import DarkModeContext from '../../contextStore/AppContext/darkMode';
 
 import { layerise } from '../externalLinks.json';
-import { LOGIN } from "../paths.json"
+import { LOGIN } from '../paths.json';
 import MenuContext from '../../contextStore/AppContext/menuContext';
 
 const Profile: FC = () => {
@@ -61,32 +61,28 @@ const Profile: FC = () => {
   }: CustomEvent<ToggleChangeEventDetail>) => {
     const darkMode = detail.checked;
 
-    if (setDarkMode)
-      setDarkMode(darkMode)
+    if (setDarkMode) setDarkMode(darkMode);
   };
 
   useEffect(() => {
-    if (setSwiper)
-      setSwiper(true)
+    if (setSwiper) setSwiper(true);
 
     const cleanup = () => {
-      if (setSwiper)
-        setSwiper(false)
-    }
+      if (setSwiper) setSwiper(false);
+    };
 
-    return cleanup
+    return cleanup;
 
     // eslint-disable-next-line
   }, []);
-  
+
   useEffect(() => {
-    if (setIsLoading)
-      setIsLoading(isLoading);
+    if (setIsLoading) setIsLoading(isLoading);
 
     if (loading) {
       startLoading('Loading', undefined, 'dots');
 
-      return
+      return;
     }
 
     stopLoading();
@@ -94,24 +90,20 @@ const Profile: FC = () => {
     // eslint-disable-next-line
   }, [isLoading]);
 
-
-  if (!user) 
-    return <Redirect to={LOGIN} />;
+  if (!user) return <Redirect to={LOGIN} />;
 
   const toolbar = (
     <IonToolbar>
       <IonButtons slot="start">
-        <IonMenuButton menu="main" mode="md"/>
+        <IonMenuButton menu="main" mode="md" />
       </IonButtons>
       <IonTitle>Profile</IonTitle>
     </IonToolbar>
-  )
+  );
 
   return (
     <IonPage>
-      <IonHeader>
-        {toolbar}
-      </IonHeader>
+      <IonHeader>{toolbar}</IonHeader>
       <IonContent className="ion-padding" fullscreen>
         <IonGrid>
           <IonRow className="ion-justify-content-center">

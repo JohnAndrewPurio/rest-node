@@ -1,4 +1,4 @@
-import { devices } from "./devices.json"
+import { devices } from './devices.json';
 
 interface LightPayload {
   light: string;
@@ -82,14 +82,14 @@ export interface songInterface {
 }
 
 export interface deviceInfo {
-  type: string,
-  new: boolean,
-  id?: number,
-  nickname?: string,
+  type: string;
+  new: boolean;
+  id?: number;
+  nickname?: string;
 }
 
 export interface newDeviceDetailsType {
-  type: string|null,
-  switchedOn: boolean,
-  hotspotConnected: boolean
+  type: string | null;
+  switchedOn: boolean;
+  hotspotConnected: boolean;
 }

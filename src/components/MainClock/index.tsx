@@ -24,8 +24,7 @@ const MainClock: React.FC<Props> = ({ biggest }) => {
   // calculate arcs based on current states
   const configureArcs = () => {
     storageGet(REST_NODE_STATES_KEY).then((res) => {
-      if (!res.value)
-        return
+      if (!res.value) return;
 
       const states = JSON.parse(res.value);
       const clockArcs: ClockArcs = {

@@ -15,13 +15,10 @@ const LoginButton: React.FC = () => {
   };
 
   return (
-    <IonButton
-      onClick={login}
-      shape='round'
-    >
+    <IonButton onClick={login} shape="round">
       Sign in
     </IonButton>
-  )
+  );
 };
 
 export default LoginButton;

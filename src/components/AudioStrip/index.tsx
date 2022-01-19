@@ -34,16 +34,18 @@ type handleClickType = (
 ) => void;
 
 const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
-  console.log(song)
+  console.log(song);
   const socket = useContext(SocketContext);
   const [targetAddress] = useContext(TargetAddressContext);
   const audioAssets = useContext(AudioAssetsContext);
-  const asset = `${component.replace(component[0], component[0].toUpperCase())} Sounds`
+  const asset = `${component.replace(
+    component[0],
+    component[0].toUpperCase()
+  )} Sounds`;
   const downloadQueue = useContext(DownloadQueueContext);
   const { state, dispatch } = useContext(SoundsContext);
   const audioDownloading = downloadQueue[song.name];
-  const audioDownloaded =
-    audioAssets && audioAssets[asset].includes(song.name); // Temporary hack for searching if audio is already downloaded
+  const audioDownloaded = audioAssets && audioAssets[asset].includes(song.name); // Temporary hack for searching if audio is already downloaded
   const audioPlaying = state.sample.playing && song.name === state.sample.audio;
   const playIcon = audioPlaying ? stop : play;
   const icon = !audioDownloaded ? cloudDownloadOutline : playIcon;
@@ -53,9 +55,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
 
     const { fullPath, name } = song;
 
-    dispatch(
-      playSample(name)
-    );
+    dispatch(playSample(name));
 
     // sound.play({ playAudioWhenScreenIsLocked: false, numberOfLoops: 1 })
     // setTimeout(() => {
@@ -70,9 +70,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
       type: 'audio',
     };
 
-    socket?.send(
-      JSON.stringify(data)
-    );
+    socket?.send(JSON.stringify(data));
   };
 
   const handleDownloadClick: handleClickType = (event) => {
@@ -84,10 +82,9 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
     });
   };
 
-  const onClickHandler =
-    !audioDownloaded
-      ? handleDownloadClick
-      : handlePlayClick;
+  const onClickHandler = !audioDownloaded
+    ? handleDownloadClick
+    : handlePlayClick;
 
   const actionButton = (
     <IonButton fill="clear" slot="end" onClick={onClickHandler}>
@@ -99,9 +96,7 @@ const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
     </IonButton>
   );
 
-  const downloading = (
-    <IonSpinner color="secondary" />
-  )
+  const downloading = <IonSpinner color="secondary" />;
 
   return (
     <IonItem

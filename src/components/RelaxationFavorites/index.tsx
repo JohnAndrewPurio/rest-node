@@ -13,7 +13,7 @@ import _styles from './styles';
 import { techniques } from '../../pages/Settings/RelaxationTechniques/techniques.json';
 
 interface Props {
-  openModal: (technique: any) => void
+  openModal: (technique: any) => void;
 }
 
 const RelaxationFavorites: React.FC<Props> = ({ openModal }) => {
@@ -56,7 +56,7 @@ const RelaxationFavorites: React.FC<Props> = ({ openModal }) => {
               options={slideOpt}
               style={_styles.fullHeight}
             >
-              <IonSlide key={"default"} style={_styles.slide}>
+              <IonSlide key={'default'} style={_styles.slide}>
                 <RelaxationCard
                   onClick={openModal}
                   slide
@@ -66,11 +66,7 @@ const RelaxationFavorites: React.FC<Props> = ({ openModal }) => {
               </IonSlide>
               {favorites.map((item, i) => (
                 <IonSlide key={item.id} style={_styles.slide}>
-                  <RelaxationCard
-                    item={item}
-                    slide
-                    onClick={openModal}
-                  />
+                  <RelaxationCard item={item} slide onClick={openModal} />
                 </IonSlide>
               ))}
             </IonSlides>

@@ -16,15 +16,15 @@ export const serviceListener = async (
   }) => {
     const { txtRecord, ipv4Addresses } = service;
     const address = ipv4Addresses[0];
-    console.log(service, action, "ABOVE ADDRESS")
+    console.log(service, action, 'ABOVE ADDRESS');
 
     if (action !== 'resolved') return;
 
-    if (!txtRecord['Rest Node by Exist Tribe']) return;
+    if (txtRecord['Rest Node by Exist Tribe'] === undefined || txtRecord['Rest Node by Exist Tribe'] === null) return
 
     if (!address) return;
 
-    console.log(address, "ADDDREESSS")
+    console.log(address, 'ADDDREESSS');
     setAddress(address);
   };
 

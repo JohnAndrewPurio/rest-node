@@ -7,7 +7,7 @@ import AppContext from './contextStore/AppContext';
 import './styles';
 
 // Required for migrating from Ionic v5 to v6
-setupIonicReact()
+setupIonicReact();
 
 const App: FC = () => {
   return (

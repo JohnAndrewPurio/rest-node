@@ -1,6 +1,6 @@
 const _styles = {
   toolbar: {
-    display: "flex"
+    display: 'flex',
   },
   content: {
     // '--padding-top': '1.5em',
@@ -30,14 +30,14 @@ const _styles = {
   },
   devices: {
     fontWeight: 700,
-    fontSize: "1.1rem",
-    padding: ".5em"
+    fontSize: '1.1rem',
+    padding: '.5em',
   },
   headerTitle: {
     fontWeight: 300,
-    letterSpacing: "3px",
-    fontSize: "1.1rem"
-  }
+    letterSpacing: '3px',
+    fontSize: '1.1rem',
+  },
 };
 
 export default _styles;

@@ -16,7 +16,7 @@ import {
   HOME,
   PROFILE,
   REST_NODE,
-  DEVICE_SETUP
+  DEVICE_SETUP,
 } from '../../pages/paths.json';
 import Menu from '../Menu';
 import DeviceSetup from '../../pages/DeviceSetup';
@@ -25,15 +25,14 @@ const AppRouter: React.FC = () => {
   const [present] = useIonAlert();
 
   useEffect(() => {
-    if (!isPlatform('android'))
-      return
+    if (!isPlatform('android')) return;
 
     const alertConfig = {
       cssClass: 'my-css',
       header: 'Exit app?',
       message: '',
       buttons: ['No', { text: 'Yes', handler: () => CapApp.exitApp() }],
-    }
+    };
 
     const hardwareBackHandlers = (event: any) => {
       const path = window.location.pathname;
@@ -42,8 +41,7 @@ const AppRouter: React.FC = () => {
       const isOnProfile = path === PROFILE;
 
       event.detail.register(1, () => {
-        if (!onRestnodeTabs && !isOnHome && !isOnProfile)
-          return
+        if (!onRestnodeTabs && !isOnHome && !isOnProfile) return;
 
         present(alertConfig);
       });
@@ -51,11 +49,11 @@ const AppRouter: React.FC = () => {
 
     const cleanup = () => {
       document.removeEventListener('ionBackButton', hardwareBackHandlers);
-    }
+    };
 
     document.addEventListener('ionBackButton', hardwareBackHandlers);
 
-    return cleanup
+    return cleanup;
   }, [present]);
 
   return (

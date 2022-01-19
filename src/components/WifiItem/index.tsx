@@ -1,36 +1,36 @@
-import { IonItem, IonIcon, IonLabel, useIonModal } from "@ionic/react";
-import { wifi } from "ionicons/icons";
-import { FC, useContext } from "react";
+import { IonItem, IonIcon, IonLabel, useIonModal } from '@ionic/react';
+import { wifi } from 'ionicons/icons';
+import { FC, useContext } from 'react';
 
-import UserContext, { geoip } from "../../contextStore/UserContext/userContext";
-import WifiConnect from "../WifiConnect";
+import UserContext, { geoip } from '../../contextStore/UserContext/userContext';
+import WifiConnect from '../WifiConnect';
 
-import { wifiInfoProps } from "./types";
+import { wifiInfoProps } from './types';
 
 const WifiItem: FC<wifiInfoProps> = ({ wifiInfo }) => {
-  const user = useContext(UserContext)
-  const { country_code: country } = user && user[geoip]
-  const { SSID } = wifiInfo
+  const user = useContext(UserContext);
+  const { country_code: country } = user && user[geoip];
+  const { SSID } = wifiInfo;
 
   const wifiCredentials = {
     ssid: SSID,
-    country
-  }
+    country,
+  };
 
   const dismissModal = () => {
-    dismiss()
-  }
+    dismiss();
+  };
 
   const [present, dismiss] = useIonModal(WifiConnect, {
     wifiCredentials,
-    dismissModal
-  })
+    dismissModal,
+  });
 
   const showWifiDialog = () => {
-    present()
-  }
+    present();
+  };
 
-  console.log("User GeoIP", user ? user[geoip] : "None")
+  console.log('User GeoIP', user ? user[geoip] : 'None');
 
   return (
     <IonItem detail button onClick={showWifiDialog}>
@@ -39,7 +39,7 @@ const WifiItem: FC<wifiInfoProps> = ({ wifiInfo }) => {
         <h3>{SSID}</h3>
       </IonLabel>
     </IonItem>
-  )
+  );
 };
 
 export default WifiItem;

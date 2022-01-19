@@ -14,29 +14,20 @@ import styles from './styles.module.css';
 
 const BedTimeControl: FC = () => {
   const labels = {
-    bedtimeSchedule: "Configure bed time schedule",
-    hoursNeeded: "How many hours do you need to sleep?",
-    timeToWakeup: "What time do you need to wake up?"
-  }
+    bedtimeSchedule: 'Configure bed time schedule',
+    hoursNeeded: 'How many hours do you need to sleep?',
+    timeToWakeup: 'What time do you need to wake up?',
+  };
 
   return (
-    <IonRow
-      className={styles.timeControlContainer}
-    >
-      <IonList
-        className={styles.settingsList}
-      >
+    <IonRow className={styles.timeControlContainer}>
+      <IonList className={styles.settingsList}>
         <IonListHeader lines="full">
-          <IonLabel
-            className={styles.headerText}
-          >
+          <IonLabel className={styles.headerText}>
             {labels.bedtimeSchedule}
           </IonLabel>
         </IonListHeader>
-        <IonItem
-          lines="none"
-          className={styles.settingItem}
-        >
+        <IonItem lines="none" className={styles.settingItem}>
           <IonGrid>
             <IonRow>
               <IonLabel>
@@ -50,10 +41,7 @@ const BedTimeControl: FC = () => {
             </IonRow>
           </IonGrid>
         </IonItem>
-        <IonItem
-          lines="none"
-          className={styles.settingItem}
-        >
+        <IonItem lines="none" className={styles.settingItem}>
           <IonGrid>
             <IonRow>
               <IonLabel>
@@ -62,9 +50,7 @@ const BedTimeControl: FC = () => {
                 {labels.timeToWakeup}
               </IonLabel>
             </IonRow>
-            <IonRow
-              className={styles.fullWidth}
-            >
+            <IonRow className={styles.fullWidth}>
               <WakeUpTimePicker />
             </IonRow>
           </IonGrid>

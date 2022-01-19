@@ -144,7 +144,6 @@ export type AudioFilesContextType = filesListInterface | null;
 //   },
 // };
 
-const AudioFilesContext =
-  createContext<AudioFilesContextType>(null);
+const AudioFilesContext = createContext<AudioFilesContextType>(null);
 
 export default AudioFilesContext;

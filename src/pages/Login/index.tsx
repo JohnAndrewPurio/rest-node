@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import CompanyLogo from '../../components/CompanyLogo';
 import LoginButton from '../../components/LoginButton';
 
-import { HOME } from "../paths.json"
+import { HOME } from '../paths.json';
 import './styles.css';
 
 const Login: FC = () => {
@@ -13,7 +13,6 @@ const Login: FC = () => {
   // auth0 user store in storage
 
   if (user) return <Redirect to={HOME} />;
-
 
   return (
     <IonPage>

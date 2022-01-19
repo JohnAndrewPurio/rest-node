@@ -29,7 +29,7 @@ const initialState = {
 
 const initialContext = {
   state: initialState,
-  dispatch: () => { }
+  dispatch: () => {},
 };
 
 const LightsContext = createContext<Context>(initialContext);
@@ -39,7 +39,7 @@ const reducer = (state: State = initialState, action: Action) => {
     case LightsActionTypes.TOGGLE_LIGHT: {
       const light = {
         night: false,
-        wake: false
+        wake: false,
       };
 
       if (action.payload) {

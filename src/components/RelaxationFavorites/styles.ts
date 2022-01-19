@@ -9,7 +9,7 @@ const _styles = {
   slider: {
     height: '28vh',
     marginTop: '1em',
-    overflowY: 'hidden'
+    overflowY: 'hidden',
   },
   slide: {
     width: '22vh',

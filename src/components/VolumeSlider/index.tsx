@@ -14,25 +14,22 @@ interface Props {
 }
 
 const VolumeSlider: FC<Props> = ({ index, open, onclick, component }) => {
-  const socket = useContext(SocketContext)
+  const socket = useContext(SocketContext);
   const { state, dispatch } = useContext(SoundsContext);
 
   const handleRangeChange = (event: any) => {
     const value = event.target.value;
 
-    if (value !== 0 && !value)
-      return
+    if (value !== 0 && !value) return;
 
-    dispatch(
-      adjustVolume(component === 'night', value)
-    );
+    dispatch(adjustVolume(component === 'night', value));
 
     const data = {
       volume: value,
-      type: "volume"
-    }
+      type: 'volume',
+    };
 
-    socket?.send(JSON.stringify(data))
+    socket?.send(JSON.stringify(data));
   };
 
   return (

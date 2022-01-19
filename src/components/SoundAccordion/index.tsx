@@ -77,9 +77,8 @@ const SoundAccordion: FC<Props> = ({
   };
 
   const songsHandler = (song: sendAudioBodyInterface, index: number) => (
-    
     <AudioStrip
-      key={index} 
+      key={index}
       index={index}
       onclick={chooseSong}
       active={index === activeSong}
@@ -108,19 +107,17 @@ const SoundAccordion: FC<Props> = ({
               open={sliderOpen}
               component={key}
             />
-            {
-              sliderOpen ? (
-                <IonCol
-                  size="auto"
-                  style={_styles.sliderCloseBtn}
-                  onClick={closeSlider}
-                >
-                  <IonIcon color="light" style={_styles.closeIcon} icon={close} />
-                </IonCol>
-              ) : (
-                <PlayButton component={key} />
-              )
-            }
+            {sliderOpen ? (
+              <IonCol
+                size="auto"
+                style={_styles.sliderCloseBtn}
+                onClick={closeSlider}
+              >
+                <IonIcon color="light" style={_styles.closeIcon} icon={close} />
+              </IonCol>
+            ) : (
+              <PlayButton component={key} />
+            )}
           </IonRow>
           <IonRow style={_styles.songListContainer}>
             <IonHeader>
