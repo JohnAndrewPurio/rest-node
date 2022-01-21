@@ -8,6 +8,8 @@ import Tabs from '../Tabs';
 import RestNodeContext from '../../contextStore/RestNodeContext';
 import UserContext from '../../contextStore/UserContext/userContext';
 
+// a lot of rest node processing happens in the SettingsHeader component
+
 const RestNode: FC<RouteComponentProps> = (props) => {
   const user = useContext(UserContext);
 
