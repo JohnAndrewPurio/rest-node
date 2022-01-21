@@ -16,7 +16,6 @@ const _styles = {
     padding: '1em',
   },
   innerCircle: {
-    backgroundColor: 'var(--ion-color-primary)',
     borderRadius: '50%',
     width: '100%',
     height: '100%',
@@ -28,6 +27,12 @@ const _styles = {
     fontWeight: '700',
     fontSize: '3vh',
     textTransform: 'uppercase',
+  },
+  notStartedInnerCircle: {
+    backgroundColor: 'var(--ion-color-primary)',
+  },
+  startedInnerCircle: {
+    backgroundColor: 'var(--ion-color-danger-tint)',
   },
   circleText: {
     display: 'flex',

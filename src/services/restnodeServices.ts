@@ -69,10 +69,7 @@ export const sendSocketEvent: sendSocketEventType = async (socket, data) => {
 
   socket.send(strData);
 
-  await storageSet(
-    strData,
-    REST_NODE_STATES_KEY
-  );
+  await storageSet(data, REST_NODE_STATES_KEY);
 
   return data;
 };

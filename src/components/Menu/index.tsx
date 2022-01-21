@@ -9,15 +9,12 @@ import {
   IonMenu,
   IonToolbar,
 } from '@ionic/react';
-import {
-  homeOutline,
-  personCircleOutline,
-} from 'ionicons/icons';
+import { homeOutline, personCircleOutline } from 'ionicons/icons';
 import { FC, useContext, useEffect, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import MenuContext from '../../contextStore/AppContext/menuContext';
 
-import { HOME, PROFILE, REST_NODE } from "../../pages/paths.json"
+import { HOME, PROFILE, REST_NODE } from '../../pages/paths.json';
 
 import styles from './styles.module.css';
 
@@ -44,17 +41,14 @@ const Menu: FC<RouteComponentProps> = ({ location }) => {
   const [active, setActive] = useState<string | null>(null);
 
   const selectPath = (pathname: string) => {
-    if (pathname.includes('home'))
-      return HOME
+    if (pathname.includes('home')) return HOME;
 
-    if (pathname.includes('restnode'))
-      return REST_NODE
+    if (pathname.includes('restnode')) return REST_NODE;
 
-    if (pathname.includes('profile'))
-      return PROFILE
+    if (pathname.includes('profile')) return PROFILE;
 
-    return ""
-  }
+    return '';
+  };
 
   const close = () => {
     menuController.close();
@@ -62,24 +56,16 @@ const Menu: FC<RouteComponentProps> = ({ location }) => {
 
   // set highlighted active path
   useEffect(() => {
-    const path = selectPath(location.pathname)
+    const path = selectPath(location.pathname);
 
-    setActive(path)
+    setActive(path);
   }, [location.pathname]);
 
   return (
-    <IonMenu
-      side="start"
-      contentId="main"
-      menuId="main"
-      swipeGesture={swiper}
-    >
+    <IonMenu side="start" contentId="main" menuId="main" swipeGesture={swiper}>
       <IonHeader>
         <IonToolbar>
-          <IonItem
-            lines="none"
-            className={styles.header}
-          >
+          <IonItem lines="none" className={styles.header}>
             <IonAvatar slot="start">
               <img src="/assets/restnode-icon.png" alt="Rest Node Logo" />
             </IonAvatar>

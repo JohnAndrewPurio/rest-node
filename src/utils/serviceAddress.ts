@@ -19,11 +19,10 @@ export const serviceListener = async (
 
     if (action !== 'resolved') return;
 
-    if (!txtRecord['Rest Node by Exist Tribe']) return;
+    if (txtRecord['Rest Node by Exist Tribe'] === undefined || txtRecord['Rest Node by Exist Tribe'] === null) return
 
     if (!address) return;
 
-    console.log(address, "ADDDREESSS")
     setAddress(address);
   };
 

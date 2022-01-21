@@ -9,7 +9,7 @@ import {
   IonTitle,
 } from '@ionic/react';
 import moment from 'moment';
-import "./styles.css"
+import './styles.css';
 
 import UserContext, { geoip } from '../../contextStore/UserContext/userContext';
 import { getCurrentPosition } from '../../utils/getCurrentPosition';
@@ -24,8 +24,7 @@ const DateAndLocation: React.FC = () => {
   const [, setSwiper] = useContext(MenuContext);
 
   useEffect(() => {
-    if (!setSwiper)
-      return
+    if (!setSwiper) return;
 
     setSwiper(true);
 
@@ -33,8 +32,8 @@ const DateAndLocation: React.FC = () => {
       setSwiper(false);
     };
 
-    return cleanup
-    
+    return cleanup;
+
     // eslint-disable-next-line
   }, []);
 
@@ -46,7 +45,7 @@ const DateAndLocation: React.FC = () => {
 
   return (
     <IonHeader>
-      <IonToolbar mode="ios" >
+      <IonToolbar mode="ios">
         <IonButtons slot="start">
           <IonMenuButton menu="main" mode="md" />
         </IonButtons>
@@ -58,7 +57,10 @@ const DateAndLocation: React.FC = () => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonCol className="ion-text-center" style={{ paddingBottom: ".5em" }}>
+            <IonCol
+              className="ion-text-center"
+              style={{ paddingBottom: '.5em' }}
+            >
               {date.format('DD MMMM YYYY')}
             </IonCol>
           </IonRow>

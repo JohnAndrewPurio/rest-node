@@ -21,7 +21,7 @@ import UserContext from '../../contextStore/UserContext/userContext';
 
 import styles from './styles.module.css';
 import './styles.css';
-import { PROFILE } from "../paths.json"
+import { PROFILE } from '../paths.json';
 
 const Home: FC = () => {
   const user = useContext(UserContext);
@@ -29,8 +29,7 @@ const Home: FC = () => {
   const [, setSwiper] = useContext(MenuContext);
 
   useEffect(() => {
-    if (!setSwiper)
-      return
+    if (!setSwiper) return;
 
     setSwiper(true);
 
@@ -44,17 +43,9 @@ const Home: FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar
-          mode="md"
-          className={styles.toolbar}
-        >
-          <IonButtons
-            slot="start"
-            className={styles.fullHeight}
-          >
-            <IonMenuButton
-              mode="md"
-            />
+        <IonToolbar mode="md" className={styles.toolbar}>
+          <IonButtons slot="start" className={styles.fullHeight}>
+            <IonMenuButton mode="md" />
           </IonButtons>
           <IonGrid className={styles.grid}>
             {/* <IonSearchbar
@@ -64,7 +55,9 @@ const Home: FC = () => {
               value={searchText}
               onIonChange={(e) => setSearchText(e.detail.value!)}
             /> */}
-            <IonTitle className={styles.headerTitle} size='large'>REST NODE</IonTitle>
+            <IonTitle className={styles.headerTitle} size="large">
+              REST NODE
+            </IonTitle>
             <IonButton
               className={styles.avatarBtn}
               shape="round"

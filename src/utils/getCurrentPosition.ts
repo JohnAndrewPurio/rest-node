@@ -32,31 +32,31 @@ export const getCurrentPosition = async (
 export const requestLocation = {
   cssClass: 'my-css',
   header: 'Enable Location',
-  message: 'The app is having a hard time connecting to the Rest Node. Consider enabling location.',
+  message:
+    'The app is having a hard time connecting to the Rest Node. Consider enabling location.',
   buttons: [
     { text: 'Close', role: 'cancel' },
     {
       text: 'Enable location',
       handler: async () => {
-        Geolocation.requestPermissions()
-        alertController.dismiss()
+        Geolocation.requestPermissions();
+        alertController.dismiss();
       },
     },
   ],
-}
+};
 
 export const checkLocationPermission = async () => {
   try {
-    const PERMISSION_GRANTED: PermissionState = "granted"
-    const { location } = await Geolocation.checkPermissions()
+    const PERMISSION_GRANTED: PermissionState = 'granted';
+    const { location } = await Geolocation.checkPermissions();
 
-    if(location !== PERMISSION_GRANTED)
-      await Geolocation.requestPermissions()
+    if (location !== PERMISSION_GRANTED) await Geolocation.requestPermissions();
 
-    const { location: permission } = await Geolocation.checkPermissions()
+    const { location: permission } = await Geolocation.checkPermissions();
 
-    return permission === PERMISSION_GRANTED
-  } catch(error) {
-    console.log(error)
+    return permission === PERMISSION_GRANTED;
+  } catch (error) {
+    console.log(error);
   }
-}
+};

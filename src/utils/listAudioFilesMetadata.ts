@@ -9,11 +9,11 @@ import {
 import { AudioFilesContextType } from '../contextStore/RestNodeContext/audioFiles';
 
 export type listAudioFilesType = (
-    targetAddress: string | null | undefined,
-    audioFiles: filesListInterface,
-    setAudioFiles: Dispatch<SetStateAction<AudioFilesContextType>>,
-    setLoading?: Dispatch<SetStateAction<boolean>>,
-) => void
+  targetAddress: string | null | undefined,
+  audioFiles: filesListInterface,
+  setAudioFiles: Dispatch<SetStateAction<AudioFilesContextType>>,
+  setLoading?: Dispatch<SetStateAction<boolean>>
+) => void;
 
 export const listAudioFilesMetadata: listAudioFilesType = async (
   targetAddress,

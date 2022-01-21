@@ -40,7 +40,7 @@ import { REST_NODE_STATES_KEY } from '../../api/CapacitorStorage/keys';
 import { updateValues } from '../../api/RestNode/POST/updateEventValues';
 import { BASE_URL } from '../../api/BASE_URL';
 
-import { PROFILE } from '../../pages/paths.json'
+import { PROFILE } from '../../pages/paths.json';
 
 interface Props
   extends RouteComponentProps<{
@@ -68,9 +68,8 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   // checks if current context state is same with last stored local storage value
   const stateCheck = async (): Promise<changeCheck> => {
-    const { value } = await storageGet(REST_NODE_STATES_KEY);
-    if (value) {
-      const states: RestNodeStateType = JSON.parse(value);
+    const states = await storageGet(REST_NODE_STATES_KEY);
+    if (states) {
       switch (location.pathname) {
         case BEDTIME: {
           return bedtimeStateChangeChecker(bedtimeState.state, states);
@@ -159,8 +158,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   // android hardware back button listener
   useEffect(() => {
-    if (!isPlatform('android'))
-      return
+    if (!isPlatform('android')) return;
 
     const hardwareBackHandlers = (event: any) => {
       const path = window.location.pathname;
@@ -174,7 +172,6 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
         processNextHandler();
       });
-
     };
 
     const cleanup = () => {
@@ -183,7 +180,7 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
     document.addEventListener('ionBackButton', hardwareBackHandlers);
 
-    return cleanup
+    return cleanup;
 
     // eslint-disable-next-line
   }, []);
@@ -191,11 +188,9 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
   // instant start/stop sender
   useEffect(() => {
     stateCheck().then(({ status, newState }) => {
-      const bedtimeStarted = location.pathname === BEDTIME
-        && started
+      const bedtimeStarted = location.pathname === BEDTIME && started;
 
-      if (!bedtimeStarted || !status || !newState)
-        return
+      if (!bedtimeStarted || !status || !newState) return;
 
       saveChanges(newState);
     });
@@ -205,16 +200,14 @@ const SettingsHeader: React.FC<Props> = ({ title, history, location }) => {
 
   // socket sender when state changes
   useEffect(() => {
-    if (!started)
-      return
+    if (!started) return;
 
     stateCheck().then(({ status, newState }) => {
-      if (!status || !newState || !socket)
-        return;
+      if (!status || !newState || !socket) return;
 
       sendSocketEvent(socket, newState);
     });
-    
+
     // eslint-disable-next-line
   }, [
     bedtimeState.state,

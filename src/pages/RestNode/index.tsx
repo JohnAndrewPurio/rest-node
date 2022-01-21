@@ -9,11 +9,9 @@ import RestNodeContext from '../../contextStore/RestNodeContext';
 import UserContext from '../../contextStore/UserContext/userContext';
 
 const RestNode: FC<RouteComponentProps> = (props) => {
-
   const user = useContext(UserContext);
 
-  if (!user) 
-    return <Redirect to="/login" />;
+  if (!user) return <Redirect to="/login" />;
 
   return (
     <IonPage>

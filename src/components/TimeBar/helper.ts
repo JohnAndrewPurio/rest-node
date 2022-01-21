@@ -59,8 +59,8 @@ const getBarDetails = (
   end: moment.Moment | null
 ) => {
   return {
-    start: start?.format('HH:mm') || '',
-    end: end?.format('HH:mm') || '',
+    start: start?.format('H:mm') || '',
+    end: end?.format('H:mm') || '',
     position: computePosition(min, max, start),
     width: computeWidth(min, max, start, end),
   };

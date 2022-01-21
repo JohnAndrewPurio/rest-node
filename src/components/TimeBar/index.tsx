@@ -45,7 +45,7 @@ const TimeBar: React.FC<RouteComponentProps> = ({ location }) => {
           return getRelaxationBars(relaxationState.state);
         }
       }
-      
+
       return [];
     };
 
@@ -59,8 +59,6 @@ const TimeBar: React.FC<RouteComponentProps> = ({ location }) => {
     soundsState.state,
     relaxationState.state,
   ]);
-
-
 
   return (
     <IonRow style={_styles.timeBarContainer}>

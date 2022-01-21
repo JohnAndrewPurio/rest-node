@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-export type AudioLoadingContextType =  boolean;
+export type AudioLoadingContextType = boolean;
 
 const AudioLoadingContext = createContext<AudioLoadingContextType>(false);
 
