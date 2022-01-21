@@ -117,15 +117,15 @@ export const relaxationStateChangeChecker = (
         onpayload: {
           ...states.bedtime.sound.onpayload,
           sound: 'NIGHT_SOUND',
-          max_volume: relaxationState.relaxationVolume.night,
-          volume: relaxationState.relaxationVolume.night / 2,
+          max_volume: relaxationState.relaxationVolume,
+          volume: relaxationState.relaxationVolume / 2,
           audio_file: relaxationState.relaxationAudio.night,
         },
         offpayload: {
           ...states.bedtime.sound.offpayload,
           sound: 'NIGHT_SOUND',
-          max_volume: relaxationState.relaxationVolume.night,
-          volume: relaxationState.relaxationVolume.night / 2,
+          max_volume: relaxationState.relaxationVolume,
+          volume: relaxationState.relaxationVolume / 2,
           audio_file: relaxationState.relaxationAudio.night,
         },
       },
@@ -136,15 +136,15 @@ export const relaxationStateChangeChecker = (
         onpayload: {
           ...states.waketime.sound.onpayload,
           sound: 'WAKE_SOUND',
-          max_volume: relaxationState.relaxationVolume.wake,
-          volume: relaxationState.relaxationVolume.wake / 2,
+          max_volume: relaxationState.relaxationVolume,
+          volume: relaxationState.relaxationVolume / 2,
           audio_file: relaxationState.relaxationAudio.wake,
         },
         offpayload: {
           ...states.waketime.sound.offpayload,
           sound: 'WAKE_SOUND',
-          max_volume: relaxationState.relaxationVolume.wake,
-          volume: relaxationState.relaxationVolume.wake / 2,
+          max_volume: relaxationState.relaxationVolume,
+          volume: relaxationState.relaxationVolume / 2,
           audio_file: relaxationState.relaxationAudio.wake,
         },
       },
@@ -157,7 +157,7 @@ export const equalityChecker = (change: any, states: RestNodeStateType) => {
   const bedtime = { ...states.bedtime, ...change.bedtime };
   const waketime = { ...states.waketime, ...change.waketime };
   const newState = { bedtime, waketime };
-  console.log(newState, states);
+  console.log(newState, states, _.isEqual(newState, states), "NEW STATE??");
   if (_.isEqual(newState, states)) {
     return { status: false };
   }

@@ -11,21 +11,16 @@ import RelaxationContext, {
   State,
 } from '../../../../contextStore/RelaxationContext/relaxationContext';
 import { setState } from '../../../../contextStore/RelaxationContext/relaxationActions';
-import { storage } from '../../../../services/constants';
 import { getStartEnd } from '../../helper';
-import { Storage } from '@capacitor/storage';
 import RelaxationModal from '../../../../components/RelaxationModal';
+import { storageGet } from '../../../../api/CapacitorStorage';
+import { RELAXATION_FAVORITES_KEY, REST_NODE_STATES_KEY } from '../../../../api/CapacitorStorage/keys';
 
 interface Props {
   router: HTMLIonRouterOutletElement | null;
 }
 
 const Content: FC<Props> = ({ router }) => {
-  const [selected, setSelected] = useState('All');
-
-  const onSelect = (time: string) => {
-    setSelected(time);
-  };
 
   const bedtimeState = useContext(BedTimeContext);
   const relaxationState = useContext(RelaxationContext);
@@ -34,89 +29,88 @@ const Content: FC<Props> = ({ router }) => {
   const isBedtime = () =>
     moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime);
 
+
+  const getState = async () => {
+    const defaultStates = await storageGet(REST_NODE_STATES_KEY);
+    let favorites = await storageGet(RELAXATION_FAVORITES_KEY);
+    if (!favorites) {
+      favorites = []
+    }
+    
+    if (defaultStates && favorites) {
+      const { start, end } = getStartEnd(defaultStates);
+      const newState: State = {
+        relaxationAudio: { night: null, wake: null },
+        relaxationFilter: 'All',
+        relaxationPlaying: { night: false, wake: false },
+        nightRelaxationSchedule: { start: null, end: null },
+        wakeRelaxationSchedule: { start: null, end: null },
+        relaxationVolume: 50,
+        sample: { playing: false, audio: null },
+        favorites: favorites,
+      };
+
+      if (defaultStates.bedtime.relax) {
+        const nightStart = start
+          .clone()
+          .add(defaultStates.bedtime.relax.onoffset, 'minutes');
+        const nightEnd = start
+          .clone()
+          .add(defaultStates.bedtime.relax.offoffset, 'minutes');
+        const isNightRelaxationOn =
+          moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd);
+        newState.relaxationAudio.night =
+          defaultStates.bedtime.relax.onpayload.audio_file;
+        newState.relaxationPlaying.night = isNightRelaxationOn;
+        newState.nightRelaxationSchedule = {
+          start: nightStart,
+          end: nightEnd,
+        };
+        newState.relaxationVolume =
+          defaultStates.bedtime.relax.onpayload.max_volume;
+      }
+
+      if (defaultStates.waketime.relax) {
+        const wakeStart = end
+          .clone()
+          .add(defaultStates.waketime.relax.onoffset, 'minutes');
+        const wakeEnd = end
+          .clone()
+          .add(defaultStates.waketime.relax.offoffset, 'minutes');
+
+        const isWakeRelaxationOn =
+          moment().isSameOrAfter(wakeStart) && moment().isBefore(wakeEnd);
+
+        newState.relaxationAudio.wake =
+          defaultStates.waketime.relax.onpayload.audio_file;
+        newState.relaxationPlaying.wake = isWakeRelaxationOn;
+        newState.wakeRelaxationSchedule = { start: wakeStart, end: wakeEnd };
+        newState.relaxationVolume =
+          defaultStates.waketime.relax.onpayload.max_volume;
+      }
+
+      relaxationState.dispatch(setState(newState));
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       if (!started && isBedtime()) {
         bedtimeState.dispatch(bedtimeStarted());
       }
     }, 1000);
-
+    getState()
     return () => clearInterval(interval);
 
     // eslint-disable-next-line
-    }, []);
+  }, []);
+
 
   useEffect(() => {
-    const getState = async () => {
-      const { value } = await Storage.get({ key: storage.RED_NODE_STATES });
-      const favorites = await Storage.get({
-        key: storage.RELAXATION_FAVORITES,
-      });
-      if (!favorites.value) {
-        favorites.value = JSON.stringify([]);
-      }
-
-      if (value && favorites.value) {
-        const defaultStates = JSON.parse(value);
-        const { start, end } = getStartEnd(defaultStates);
-        const newState: State = {
-          relaxationAudio: { night: null, wake: null },
-          relaxationFilter: 'All',
-          relaxationPlaying: { night: false, wake: false },
-          nightRelaxationSchedule: { start: null, end: null },
-          wakeRelaxationSchedule: { start: null, end: null },
-          relaxationVolume: { night: 50, wake: 50 },
-          sample: { playing: false, audio: null },
-          favorites: JSON.parse(favorites.value),
-        };
-
-        if (defaultStates.bedtime.relax) {
-          const nightStart = start
-            .clone()
-            .add(defaultStates.bedtime.relax.onoffset, 'minutes');
-          const nightEnd = start
-            .clone()
-            .add(defaultStates.bedtime.relax.offoffset, 'minutes');
-          const isNightRelaxationOn =
-            moment().isSameOrAfter(nightStart) && moment().isBefore(nightEnd);
-          newState.relaxationAudio.night =
-            defaultStates.bedtime.relax.onpayload.audio_file;
-          newState.relaxationPlaying.night = isNightRelaxationOn;
-          newState.nightRelaxationSchedule = {
-            start: nightStart,
-            end: nightEnd,
-          };
-          newState.relaxationVolume.night =
-            defaultStates.bedtime.relax.onpayload.max_volume;
-        }
-
-        if (defaultStates.waketime.relax) {
-          const wakeStart = end
-            .clone()
-            .add(defaultStates.waketime.relax.onoffset, 'minutes');
-          const wakeEnd = end
-            .clone()
-            .add(defaultStates.waketime.relax.offoffset, 'minutes');
-
-          const isWakeRelaxationOn =
-            moment().isSameOrAfter(wakeStart) && moment().isBefore(wakeEnd);
-
-          newState.relaxationAudio.wake =
-            defaultStates.waketime.relax.onpayload.audio_file;
-          newState.relaxationPlaying.wake = isWakeRelaxationOn;
-          newState.wakeRelaxationSchedule = { start: wakeStart, end: wakeEnd };
-          newState.relaxationVolume.wake =
-            defaultStates.waketime.relax.onpayload.max_volume;
-        }
-
-        relaxationState.dispatch(setState(newState));
-      }
-    };
-
     if (started) getState();
 
     // eslint-disable-next-line
-    }, [started]);
+  }, [started]);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [chosenTechnique, setChosenTechnique] = useState(null);
@@ -136,7 +130,7 @@ const Content: FC<Props> = ({ router }) => {
       />
       <IonGrid>
         <TimeBar />
-        <RelaxationFilter selected={selected} onSelect={onSelect} />
+        <RelaxationFilter />
         <RelaxationFavorites openModal={openModal} />
         <RelaxationList openModal={openModal} />
       </IonGrid>

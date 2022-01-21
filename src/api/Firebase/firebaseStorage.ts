@@ -5,6 +5,8 @@ import {
   list,
   ListOptions,
   ListResult,
+  getMetadata,
+  FullMetadata,
 } from 'firebase/storage';
 import { firebaseApp } from './firebaseInit';
 
@@ -46,3 +48,13 @@ export const listFiles: listFilesType = async (dir) => {
 
   return page;
 };
+
+type retrieveMetadataType = (path: string) => Promise<FullMetadata>;
+
+export const retrieveMetadata: retrieveMetadataType = async (path) => {
+  const storageRef = ref(storage, path);
+
+  const page = await getMetadata(storageRef);
+
+  return page;
+}

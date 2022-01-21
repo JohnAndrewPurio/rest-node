@@ -27,7 +27,13 @@ const RelaxationCard: React.FC<Props> = ({
   onClick,
 }) => {
   const { state, dispatch } = useContext(RelaxationContext);
-  const [showModal, setShowModel] = useState(false);
+
+  const formatLength = (str: string) => {
+    const num = parseInt(str)
+    const min = Math.floor(num/60)
+    const sec = num % 60
+    return `${min}:${sec}`
+  }
 
   return (
     <IonCol
@@ -35,19 +41,19 @@ const RelaxationCard: React.FC<Props> = ({
       sizeXs={slide ? undefined : '6'}
       sizeMd={slide ? undefined : '4'}
       key={item.id}
-      className={`&{styles.card} grid-box`}
+      className={`${styles.card} grid-box`}
     >
-      <IonRow className={styles.gridPicture} onClick={() => setShowModel(true)}>
+      <IonRow className={styles.gridPicture}>
         <IonImg
           className={styles.gridIonPicture}
-          src="https://picsum.photos/200"
+          src={item.image}
         />
-        <div className={styles.lengthIndicator}>05:14</div>
+        <div className={styles.lengthIndicator}>{formatLength(item.length)}</div>
       </IonRow>
       <IonGrid className={styles.detailsGrid}>
         <IonCol className={styles.paddingZero}>
           <IonGrid className={styles.paddingZero}>
-            <IonRow className={styles.title}>{item.title} title</IonRow>
+            <IonRow className={slide ? styles.title : `${styles.title} ${styles.listTitle}`}>{item.name || "title"}</IonRow>
             <IonRow className={styles.creator}>Creator</IonRow>
           </IonGrid>
         </IonCol>

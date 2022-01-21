@@ -11,7 +11,7 @@ export interface State {
   relaxationPlaying: { [key: string]: boolean };
   nightRelaxationSchedule: { [key: string]: moment.Moment | null };
   wakeRelaxationSchedule: { [key: string]: moment.Moment | null };
-  relaxationVolume: { [key: string]: number };
+  relaxationVolume: number;
   sample: { playing: boolean; audio: null | string };
   favorites: string[];
 }
@@ -27,7 +27,7 @@ const initialState = {
   relaxationPlaying: { night: false, wake: false },
   nightRelaxationSchedule: { start: null, end: null },
   wakeRelaxationSchedule: { start: null, end: null },
-  relaxationVolume: { night: 50, wake: 50 },
+  relaxationVolume: 50,
   sample: { playing: false, audio: null },
   favorites: [],
 };
@@ -66,12 +66,19 @@ const reducer = (state: State = initialState, action: Action) => {
     case RelaxationActionTypes.ADJUST_VOLUME: {
       return {
         ...state,
-        relaxationVolume: { night: action.payload, wake: action.payload },
+        relaxationVolume: action.payload,
       };
     }
+    case RelaxationActionTypes.SET_FILTER:
+      return { ...state, relaxationFilter: action.payload }
     case RelaxationActionTypes.SET_STATE:
-      console.log('REDUCERRELAX', action.payload);
       return action.payload;
+    case RelaxationActionTypes.PLAY_SAMPLE:
+      return {
+        ...state,
+        sample: { playing: !state.sample.playing, audio: action.payload },
+        relaxationPlaying: { night: false, wake: false },
+      }
     default:
       return state;
   }

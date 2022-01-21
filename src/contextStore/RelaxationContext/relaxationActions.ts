@@ -9,6 +9,8 @@ export enum RelaxationActionTypes {
   REWIND_OR_FORWARD = 'REWIND_OR_FORWARD',
   TOGGLE_FAVORITE = 'TOGGLE_FAVORITE',
   SET_STATE = 'SET_STATE',
+  SET_FILTER = 'SET_FILTER',
+  PLAY_SAMPLE = 'PLAY_SAMPLE'
 }
 
 interface setStateType {
@@ -82,6 +84,26 @@ export const toggleFavorite = (id: string): toggleFavoriteType => ({
   payload: id,
 });
 
+interface setFilterType {
+  type: RelaxationActionTypes.SET_FILTER;
+  payload: string;
+}
+
+export const setFilter = (str: string): setFilterType => ({
+  type: RelaxationActionTypes.SET_FILTER,
+  payload: str,
+});
+
+interface playSampleType {
+  type: RelaxationActionTypes.PLAY_SAMPLE;
+  payload: string;
+}
+
+export const playSample = (str: string): playSampleType => ({
+  type: RelaxationActionTypes.PLAY_SAMPLE,
+  payload: str,
+});
+
 export type Action =
   | setStateType
   | toggleRelaxationType
@@ -89,4 +111,6 @@ export type Action =
   | setScheduleType
   | chooseAudioType
   | rewindOrForwardType
-  | toggleFavoriteType;
+  | toggleFavoriteType
+  | setFilterType
+  | playSampleType;

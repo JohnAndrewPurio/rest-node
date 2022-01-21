@@ -5,6 +5,9 @@ export interface sendAudioBodyInterface {
   source: string | undefined;
   fullPath: string;
   artist?: string;
+  image?: string;
+  id?: string;
+  length?: string;
 }
 
 export interface fileMetadataType {

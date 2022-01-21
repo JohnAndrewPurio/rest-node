@@ -19,8 +19,6 @@ const Progress: React.FC<Props> = ({
   const dashArray = radius * Math.PI * 2;
   const dashOffset = dashArray - (dashArray * percentage) / 100;
 
-  console.log('Stroke Color:', color);
-
   return (
     <circle
       stroke={color}

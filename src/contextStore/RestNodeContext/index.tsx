@@ -86,7 +86,6 @@ const RestNodeContext: FC = ({ children }) => {
       if (audioAssets && audioFiles) {
         setAudioAssets(audioAssets);
         setAudioFiles(audioFiles);
-
         return;
       }
 

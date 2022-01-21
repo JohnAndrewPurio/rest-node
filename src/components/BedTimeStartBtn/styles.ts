@@ -15,7 +15,8 @@ const _styles = {
     margin: '2em 1em 1em 1em',
     padding: '1em',
   },
-  innerCircle: {
+  notStartedInnerCircle: {
+    backgroundColor: 'var(--ion-color-primary)',
     borderRadius: '50%',
     width: '100%',
     height: '100%',
@@ -28,11 +29,19 @@ const _styles = {
     fontSize: '3vh',
     textTransform: 'uppercase',
   },
-  notStartedInnerCircle: {
-    backgroundColor: 'var(--ion-color-primary)',
-  },
   startedInnerCircle: {
     backgroundColor: 'var(--ion-color-danger-tint)',
+    borderRadius: '50%',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    flexDirection: 'column',
+    fontWeight: '700',
+    fontSize: '3vh',
+    textTransform: 'uppercase',
   },
   circleText: {
     display: 'flex',

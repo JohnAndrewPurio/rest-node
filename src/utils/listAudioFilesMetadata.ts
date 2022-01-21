@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { BASE_URL } from '../api/BASE_URL';
-import { getDownloadUrl, listFiles } from '../api/Firebase/firebaseStorage';
+import { getDownloadUrl, listFiles, retrieveMetadata } from '../api/Firebase/firebaseStorage';
 import {
   filesListInterface,
   sendAudioBodyInterface,
@@ -36,11 +36,15 @@ export const listAudioFilesMetadata: listAudioFilesType = async (
         const item = items[count];
         const { name, fullPath } = item;
         const source = await getDownloadUrl(fullPath);
+        const metadata = await retrieveMetadata(fullPath);
 
         const audioMetadata: sendAudioBodyInterface = {
           name,
           fullPath,
           source,
+          image: metadata.customMetadata?.image,
+          id: metadata.customMetadata?.id,
+          length: metadata.customMetadata?.length
         };
 
         filesList[dir][name] = audioMetadata;

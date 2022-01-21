@@ -10,14 +10,14 @@ import { useContext, useState } from 'react';
 import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 import RelaxationCard from '../RelaxationCard';
 import _styles from './styles';
-import { techniques } from '../../pages/Settings/RelaxationTechniques/techniques.json';
+import AudioFilesContext from '../../contextStore/RestNodeContext/audioFiles';
 
 interface Props {
   openModal: (technique: any) => void;
 }
 
 const RelaxationFavorites: React.FC<Props> = ({ openModal }) => {
-  const { state, dispatch } = useContext(RelaxationContext);
+  const { state } = useContext(RelaxationContext);
 
   const slideOpt = {
     initialSlide: 0,
@@ -27,21 +27,10 @@ const RelaxationFavorites: React.FC<Props> = ({ openModal }) => {
     grabCursor: true,
   };
 
-  const [playingIndex, setPlayingIndex] = useState<null | number>(null);
-  const [playing, setPlaying] = useState(false);
+  const songs = useContext(AudioFilesContext);
+  const techniques = songs ? Object.values(songs["Relaxation Sounds"]) : []
 
-  const showPlay = (index: number) => {
-    if (index !== playingIndex) {
-      setPlaying(false);
-      setPlayingIndex(index);
-    }
-  };
-
-  const playSong = () => {
-    setPlaying((p) => !p);
-  };
-
-  const favorites = techniques.filter((el) => state.favorites.includes(el.id));
+  const favorites = techniques.filter((el) => el.id && state.favorites.includes(el.id))
 
   return (
     <IonRow style={_styles.container}>

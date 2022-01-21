@@ -22,7 +22,7 @@ const BedTimeStartBtn: React.FC = () => {
           <IonButton
             fill="clear"
             shape="round"
-            style={{ ..._styles.innerCircle, ..._styles.startedInnerCircle}}
+            style={_styles.startedInnerCircle}
             color="light"
             onClick={() => dispatch(stopBedTimeNow())}
           >
@@ -35,7 +35,7 @@ const BedTimeStartBtn: React.FC = () => {
           <IonButton
             fill="clear"
             shape="round"
-            style={[_styles.innerCircle, _styles.notStartedInnerCircle]}
+            style={_styles.notStartedInnerCircle}
             color="light"
             onClick={() => dispatch(startBedTimeNow())}
           >

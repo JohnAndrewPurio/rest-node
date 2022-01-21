@@ -1,12 +1,11 @@
 import { IonButton, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
+import { useContext } from 'react';
+import { setFilter } from '../../contextStore/RelaxationContext/relaxationActions';
+import RelaxationContext from '../../contextStore/RelaxationContext/relaxationContext';
 import _styles from './styles';
 
-interface Props {
-  selected: string;
-  onSelect: (val: string) => void;
-}
-
-const RelaxationFilter: React.FC<Props> = ({ selected, onSelect }) => {
+const RelaxationFilter = () => {
+  const { state, dispatch } = useContext(RelaxationContext)
   const filters = ['All', '5', '10', '15', '20', '30', '30+'];
 
   return (
@@ -20,11 +19,11 @@ const RelaxationFilter: React.FC<Props> = ({ selected, onSelect }) => {
             {filters.map((time) => (
               <IonCol key={time}>
                 <IonButton
-                  onClick={() => onSelect(time)}
+                  onClick={() => dispatch(setFilter(time))}
                   size="small"
                   shape="round"
                   style={_styles.btn}
-                  fill={selected === time ? 'solid' : 'outline'}
+                  fill={state.relaxationFilter === time ? 'solid' : 'outline'}
                 >
                   {time}
                 </IonButton>

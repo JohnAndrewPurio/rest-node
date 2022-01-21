@@ -1,5 +1,5 @@
 .card {
-    height: 22vh;
+    height: 33vh;
     min-width: 18vh;
     border-radius: 10px;
     padding: .5em .3em;
@@ -24,19 +24,24 @@
 .gridPicture {
     position: relative;
     /* width: 100%; */
-    height: 80%;
+    height: 75%;
     border: 2px solid var(--ion-color-primary);
     border-radius: 10px;
     background-color: var(--ion-color-step-100);
     display: flex;
     overflow: hidden;
     z-index: 1;
+    text-align: left;
   }
 
 .gridIonPicture {
     object-fit: cover;
     width: 100%;
   }
+
+.gridIonPicture::part(image) {
+  object-fit: cover;
+}
 
 .lengthIndicator {
     position: absolute;
@@ -51,7 +56,18 @@
   }
 
   .title {
-      font-weight: 700;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    line-clamp: 2; 
+    text-align: left;
+    -webkit-box-orient: vertical;
+  }
+
+  .listTitle {
+    -webkit-box-orient: vertical;
   }
 
   .creator {

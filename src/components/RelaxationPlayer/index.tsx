@@ -94,7 +94,7 @@ const RelaxationFooter: React.FC = () => {
             <IonRange
               style={_styles.range}
               color="primary"
-              value={state.relaxationVolume.night}
+              value={state.relaxationVolume}
               onIonChange={(e: any) => {
                 const val = e.target.value;
                 if (val) {

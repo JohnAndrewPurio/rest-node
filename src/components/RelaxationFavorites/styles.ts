@@ -7,27 +7,18 @@ const _styles = {
     fontWeight: 700,
   },
   slider: {
-    height: '28vh',
+    height: '30vh',
     marginTop: '1em',
     overflowY: 'hidden',
   },
   slide: {
-    width: '22vh',
+    width: '23vh',
   },
   paddingZero: {
     padding: 0,
   },
   fullHeight: {
     height: '100%',
-  },
-  sliderPictureContainer: {
-    position: 'relative',
-    height: '80%',
-    border: '2px solid var(--ion-color-primary)',
-    borderRadius: '10px',
-    backgroundColor: 'var(--ion-color-step-100)',
-    display: 'flex',
-    overflow: 'hidden',
   },
   sliderIonImage: {
     objectFit: 'cover',
