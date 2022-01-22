@@ -6,15 +6,15 @@ import { listStyle } from './styles';
 import './styles.css';
 
 const SettingsList: React.FC = () => {
-  const settings = Object.keys(listOfSettings);
+    const settings = Object.keys(listOfSettings);
 
-  return (
-    <IonList style={listStyle}>
-      {settings.map((page, index) => (
-        <SettingPillStrips key={page} title={page} icon={index} />
-      ))}
-    </IonList>
-  );
+    return (
+        <IonList style={listStyle}>
+            {settings.map((page, index) => (
+                <SettingPillStrips key={page} title={page} icon={index} />
+            ))}
+        </IonList>
+    );
 };
 
 export default SettingsList;

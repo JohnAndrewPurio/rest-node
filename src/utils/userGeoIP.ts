@@ -3,10 +3,10 @@ import { geoip } from '../contextStore/UserContext/userContext';
 
 type getAddressType = (user: User | undefined) => string;
 
-export const getAddress: getAddressType = (user) => {
-  if (!user) return '';
+export const getAddress: getAddressType = user => {
+    if (!user) return '';
 
-  const { city_name, country_name } = user[geoip];
+    const { city_name, country_name } = user[geoip];
 
-  return `${city_name}, ${country_name}`;
+    return `${city_name}, ${country_name}`;
 };

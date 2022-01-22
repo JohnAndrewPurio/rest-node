@@ -21,94 +21,94 @@ import { storageGet, storageSet } from '../../api/CapacitorStorage';
 import { PROFILE_KEY } from '../../api/CapacitorStorage/keys';
 
 interface paramsInterface {
-  url: string;
+    url: string;
 }
 
 type handleRedirectType = (params: paramsInterface) => void;
 
 const AppContext: FC = ({ children }) => {
-  const loadingState = useState<boolean>(false);
-  const darkModeState = useState<boolean>(true);
-  const targetAddressState = useState<string>('');
-  const menuSwiper = useState<boolean>(false);
+    const loadingState = useState<boolean>(false);
+    const darkModeState = useState<boolean>(true);
+    const targetAddressState = useState<string>('');
+    const menuSwiper = useState<boolean>(false);
 
-  const [darkMode, setDarkMode] = darkModeState;
-  const [, setTargetAddress] = targetAddressState;
+    const [darkMode, setDarkMode] = darkModeState;
+    const [, setTargetAddress] = targetAddressState;
 
-  const { user, handleRedirectCallback } = useAuth0();
+    const { user, handleRedirectCallback } = useAuth0();
 
-  const getProfileData = async () => {
-    try {
-      const { darkMode } = await storageGet(PROFILE_KEY);
+    const getProfileData = async () => {
+        try {
+            const { darkMode } = await storageGet(PROFILE_KEY);
 
-      setDarkMode(darkMode);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const persistDarkMode = async () => {
-    try {
-      const key = PROFILE_KEY;
-      const previousData = await storageGet(key);
-      const data = {
-        ...previousData,
-        darkMode,
-      };
-      storageSet(data, key);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    const handleRedirect: handleRedirectType = async ({ url }) => {
-      const stateIncluded = url.includes('state');
-      const codeIncluded = url.includes('code');
-      const errorIncluded = url.includes('error');
-
-      console.log('Redirect URL:', url);
-
-      if (stateIncluded && (codeIncluded || errorIncluded))
-        await handleRedirectCallback(url);
-
-      await Browser.close();
+            setDarkMode(darkMode);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    CapApp.addListener('appUrlOpen', handleRedirect);
-  }, [handleRedirectCallback]);
+    const persistDarkMode = async () => {
+        try {
+            const key = PROFILE_KEY;
+            const previousData = await storageGet(key);
+            const data = {
+                ...previousData,
+                darkMode,
+            };
+            storageSet(data, key);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-  useEffect(() => {
-    getProfileData();
+    useEffect(() => {
+        const handleRedirect: handleRedirectType = async ({ url }) => {
+            const stateIncluded = url.includes('state');
+            const codeIncluded = url.includes('code');
+            const errorIncluded = url.includes('error');
 
-    if (isPlatform('android') || isPlatform('ios'))
-    serviceListener(Zeroconf, setTargetAddress);
+            console.log('Redirect URL:', url);
 
-    // eslint-disable-next-line
-  }, []);
+            if (stateIncluded && (codeIncluded || errorIncluded))
+                await handleRedirectCallback(url);
 
-  useEffect(() => {
-    console.log('Dark Mode:', darkMode);
+            await Browser.close();
+        };
 
-    toggleDarkMode(document, darkMode);
-    persistDarkMode();
+        CapApp.addListener('appUrlOpen', handleRedirect);
+    }, [handleRedirectCallback]);
 
-    // eslint-disable-next-line
-  }, [darkMode]);
+    useEffect(() => {
+        getProfileData();
 
-  return (
-    <DarkModeContext.Provider value={darkModeState}>
-      <UserContext.Provider value={user}>
-        <LoadingContext.Provider value={loadingState}>
-          <TargetAddressContext.Provider value={targetAddressState}>
-            <MenuContext.Provider value={menuSwiper}>
-              {children}
-            </MenuContext.Provider>
-          </TargetAddressContext.Provider>
-        </LoadingContext.Provider>
-      </UserContext.Provider>
-    </DarkModeContext.Provider>
-  );
+        if (isPlatform('android') || isPlatform('ios'))
+            serviceListener(Zeroconf, setTargetAddress);
+
+        // eslint-disable-next-line
+    }, [])
+
+    useEffect(() => {
+        console.log('Dark Mode:', darkMode);
+
+        toggleDarkMode(document, darkMode);
+        persistDarkMode();
+
+        // eslint-disable-next-line
+    }, [darkMode])
+
+    return (
+        <DarkModeContext.Provider value={darkModeState}>
+            <UserContext.Provider value={user}>
+                <LoadingContext.Provider value={loadingState}>
+                    <TargetAddressContext.Provider value={targetAddressState}>
+                        <MenuContext.Provider value={menuSwiper}>
+                            {children}
+                        </MenuContext.Provider>
+                    </TargetAddressContext.Provider>
+                </LoadingContext.Provider>
+            </UserContext.Provider>
+        </DarkModeContext.Provider>
+    );
 };
 
 export default AppContext;

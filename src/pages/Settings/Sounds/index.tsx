@@ -6,15 +6,13 @@ import Content from './Content';
 
 import { SoundsContextProvider } from '../../../contextStore/SoundsContext/soundsContext';
 
-const Sounds: FC = () => {
-  return (
+const Sounds: FC = () => (
     <SoundsContextProvider>
-      <IonPage>
-        <SettingsHeader title="Sounds Settings" />
-        <Content />
-      </IonPage>
+        <IonPage>
+            <SettingsHeader title="Sounds Settings" />
+            <Content />
+        </IonPage>
     </SoundsContextProvider>
-  );
-};
+);
 
 export default Sounds;

@@ -1,9 +1,7 @@
-
-
 .image {
     height: 100px;
     width: 100px;
-    padding: .5em;
+    padding: 0.5em;
 }
 
 .image::part(image) {
@@ -15,7 +13,7 @@
 }
 
 .creator {
-    font-size: .8rem;
+    font-size: 0.8rem;
     color: var(--ion-color-secondary);
 }
 
@@ -33,5 +31,5 @@
 
 .playIcon {
     align-self: flex-end;
-    padding-right: .5em;
+    padding-right: 0.5em;
 }

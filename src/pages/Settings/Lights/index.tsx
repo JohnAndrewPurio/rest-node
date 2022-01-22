@@ -7,15 +7,13 @@ import Content from './Content';
 
 import './styles.css';
 
-const Lights: FC = () => {
-  return (
+const Lights: FC = () => (
     <IonPage>
-      <LightsContextProvider>
-        <SettingsHeader title="Lights Settings" />
-        <Content />
-      </LightsContextProvider>
+        <LightsContextProvider>
+            <SettingsHeader title="Lights Settings" />
+            <Content />
+        </LightsContextProvider>
     </IonPage>
-  );
-};
+);
 
 export default Lights;

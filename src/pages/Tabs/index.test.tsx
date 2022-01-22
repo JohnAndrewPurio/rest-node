@@ -4,10 +4,10 @@ import { render } from '@testing-library/react';
 import BottomNavigationTabs from './index';
 
 test('renders BottomNavigationTabs without crashing', () => {
-  const { baseElement } = render(
-    <IonReactRouter>
-      <Route render={(props) => <BottomNavigationTabs {...props} />} />
-    </IonReactRouter>
-  );
-  expect(baseElement).toBeDefined();
+    const { baseElement } = render(
+        <IonReactRouter>
+            <Route render={props => <BottomNavigationTabs {...props} />} />
+        </IonReactRouter>
+    );
+    expect(baseElement).toBeDefined();
 });

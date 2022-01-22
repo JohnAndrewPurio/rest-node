@@ -7,51 +7,58 @@ import SoundsContext from '../../contextStore/SoundsContext/soundsContext';
 import _styles from './styles';
 
 interface Props {
-  open: boolean;
-  onclick: (index: number) => void;
-  index: number;
-  component: string;
+    open: boolean;
+    onclick: (index: number) => void;
+    index: number;
+    component: string;
 }
 
 const VolumeSlider: FC<Props> = ({ index, open, onclick, component }) => {
-  const socket = useContext(SocketContext);
-  const { state, dispatch } = useContext(SoundsContext);
+    const socket = useContext(SocketContext);
+    const { state, dispatch } = useContext(SoundsContext);
 
-  const handleRangeChange = (event: any) => {
-    const value = event.target.value;
+    const handleRangeChange = (event: any) => {
+        const { value } = event.target;
 
-    if (value !== 0 && !value) return;
+        if (value !== 0 && !value) return;
 
-    dispatch(adjustVolume(component === 'night', value));
+        dispatch(adjustVolume(component === 'night', value));
 
-    const data = {
-      volume: value,
-      type: 'volume',
+        const data = {
+            volume: value,
+            type: 'volume',
+        };
+
+        socket?.send(JSON.stringify(data));
     };
 
-    socket?.send(JSON.stringify(data));
-  };
-
-  return (
-    <IonCol
-      style={{ ..._styles.sliderContainer, maxWidth: open ? '500px' : '200px' }}
-      onClick={() => onclick(index)}
-    >
-      {open ? (
-        <IonRange
-          color="primary"
-          style={_styles.rangeSlider}
-          value={state.volume[component]}
-          onIonChange={handleRangeChange}
+    return (
+        <IonCol
+            style={{
+                ..._styles.sliderContainer,
+                maxWidth: open ? '500px' : '200px',
+            }}
+            onClick={() => onclick(index)}
         >
-          <IonIcon color="primary" slot="start" icon={volumeLow} />
-          <IonIcon color="primary" slot="end" icon={volumeHigh} />
-        </IonRange>
-      ) : (
-        <IonIcon style={_styles.icon} color="primary" icon={volumeHigh} />
-      )}
-    </IonCol>
-  );
+            {open ? (
+                <IonRange
+                    color="primary"
+                    style={_styles.rangeSlider}
+                    value={state.volume[component]}
+                    onIonChange={handleRangeChange}
+                >
+                    <IonIcon color="primary" slot="start" icon={volumeLow} />
+                    <IonIcon color="primary" slot="end" icon={volumeHigh} />
+                </IonRange>
+            ) : (
+                <IonIcon
+                    style={_styles.icon}
+                    color="primary"
+                    icon={volumeHigh}
+                />
+            )}
+        </IonCol>
+    );
 };
 
 export default VolumeSlider;

@@ -6,18 +6,16 @@ export const { set: setData, get: getData, remove: removeData } = Storage;
 
 type getType = <T = Cacheable>(key: string) => MaybePromise<T | null>;
 
-const get: getType = async () => {
-  return JSON.parse(JSON.stringify({}));
-};
+const get: getType = async () => JSON.parse(JSON.stringify({}));
 
 const set = () => {};
 
 const remove = () => {};
 
 const cacheHandler: ICache = {
-  get,
-  set,
-  remove,
+    get,
+    set,
+    remove,
 };
 
 export default cacheHandler;

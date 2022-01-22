@@ -5,16 +5,16 @@ import { Route } from 'react-router-dom';
 import RestNode from './index';
 
 test('renders RestNode without crashing', () => {
-  const { baseElement } = render(
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route
-          exact
-          path="/restnode"
-          render={(props) => <RestNode {...props} />}
-        />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  );
-  expect(baseElement).toBeDefined();
+    const { baseElement } = render(
+        <IonReactRouter>
+            <IonRouterOutlet>
+                <Route
+                    exact
+                    path="/restnode"
+                    render={props => <RestNode {...props} />}
+                />
+            </IonRouterOutlet>
+        </IonReactRouter>
+    );
+    expect(baseElement).toBeDefined();
 });

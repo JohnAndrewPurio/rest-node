@@ -10,30 +10,30 @@ import UserContext from '../../contextStore/UserContext/userContext';
 
 // a lot of rest node processing happens in the SettingsHeader component
 
-const RestNode: FC<RouteComponentProps> = (props) => {
-  const user = useContext(UserContext);
+const RestNode: FC<RouteComponentProps> = props => {
+    const user = useContext(UserContext);
 
-  if (!user) return <Redirect to="/login" />;
+    if (!user) return <Redirect to="/login" />;
 
-  return (
-    <IonPage>
-      <RestNodeContext {...props}>
-        <IonContent>
-          <IonRouterOutlet>
-            <Route
-              path="/restnode/tabs/:tab"
-              render={() => <Tabs {...props} />}
-            />
-            <Route
-              path="/restnode/settings/:page"
-              render={() => <SettingsRouter {...props} />}
-            />
-            <Redirect exact from="/restnode" to={DASHBOARD} />
-          </IonRouterOutlet>
-        </IonContent>
-      </RestNodeContext>
-    </IonPage>
-  );
+    return (
+        <IonPage>
+            <RestNodeContext {...props}>
+                <IonContent>
+                    <IonRouterOutlet>
+                        <Route
+                            path="/restnode/tabs/:tab"
+                            render={() => <Tabs {...props} />}
+                        />
+                        <Route
+                            path="/restnode/settings/:page"
+                            render={() => <SettingsRouter {...props} />}
+                        />
+                        <Redirect exact from="/restnode" to={DASHBOARD} />
+                    </IonRouterOutlet>
+                </IonContent>
+            </RestNodeContext>
+        </IonPage>
+    );
 };
 
 export default RestNode;

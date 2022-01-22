@@ -9,14 +9,12 @@ import './styles';
 // Required for migrating from Ionic v5 to v6
 setupIonicReact();
 
-const App: FC = () => {
-  return (
+const App: FC = () => (
     <IonApp>
-      <AppContext>
-        <AppRouter />
-      </AppContext>
+        <AppContext>
+            <AppRouter />
+        </AppContext>
     </IonApp>
-  );
-};
+);
 
 export default App;
