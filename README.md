@@ -91,4 +91,4 @@ Change line 5 to
     - click `Build` in the top navigation and choose `Build APK(s)`
     - apk is located in `./android/app/build/outputs/apk/app-debug.apk`
 
-_please edit and update installation guide if needed_
+_p.s. please edit and update installation guide if needed_
