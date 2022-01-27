@@ -1,2 +1,5 @@
 public/
 bin/
+node_modules
+*.css
+*.svg

@@ -4,22 +4,22 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import { domain, redirectUri, clientId } from './auth0.config';
+import { clientId, domain, redirectUri } from './auth0.config';
 
 ReactDOM.render(
-  <StrictMode>
-    <Auth0Provider
-      domain={domain}
-      clientId={clientId}
-      redirectUri={redirectUri}
-      useRefreshTokens
-      cacheLocation="localstorage"
-    >
-      <App />
-    </Auth0Provider>
-    ,
-  </StrictMode>,
-  document.getElementById('root')
+    <StrictMode>
+        <Auth0Provider
+            domain={domain}
+            clientId={clientId}
+            redirectUri={redirectUri}
+            useRefreshTokens
+            cacheLocation="localstorage"
+        >
+            <App />
+        </Auth0Provider>
+        ,
+    </StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

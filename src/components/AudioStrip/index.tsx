@@ -1,10 +1,10 @@
-import { FC, useContext, MouseEvent, Key } from 'react';
+import { FC, Key, MouseEvent, useContext } from 'react';
 import {
-  IonButton,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonSpinner,
+    IonButton,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonSpinner,
 } from '@ionic/react';
 import { cloudDownloadOutline, play, stop } from 'ionicons/icons';
 import { playSample } from '../../contextStore/SoundsContext/soundsActions';
@@ -21,96 +21,97 @@ import DownloadQueueContext from '../../contextStore/RestNodeContext/downloadQue
 import SocketContext from '../../contextStore/RestNodeContext/socketConnection';
 
 interface Props {
-  key: Key;
-  song: sendAudioBodyInterface;
-  active: boolean;
-  onclick: (index: number) => void;
-  index: number;
-  component: string;
+    key: Key;
+    song: sendAudioBodyInterface;
+    active: boolean;
+    onclick: (index: number) => void;
+    index: number;
+    component: string;
 }
 
 type handleClickType = (
-  event: MouseEvent<HTMLIonButtonElement, globalThis.MouseEvent>
+    event: MouseEvent<HTMLIonButtonElement, globalThis.MouseEvent>
 ) => void;
 
 const AudioStrip: FC<Props> = ({ index, song, active, onclick, component }) => {
-  console.log(song);
-  const socket = useContext(SocketContext);
-  const [targetAddress] = useContext(TargetAddressContext);
-  const audioAssets = useContext(AudioAssetsContext);
-  const asset = `${component.replace(
-    component[0],
-    component[0].toUpperCase()
-  )} Sounds`;
-  const downloadQueue = useContext(DownloadQueueContext);
-  const { state, dispatch } = useContext(SoundsContext);
-  const audioDownloading = downloadQueue[song.name];
-  const audioDownloaded = audioAssets && audioAssets[asset].includes(song.name); // Temporary hack for searching if audio is already downloaded
-  const audioPlaying = state.sample.playing && song.name === state.sample.audio;
-  const playIcon = audioPlaying ? stop : play;
-  const icon = !audioDownloaded ? cloudDownloadOutline : playIcon;
+    const socket = useContext(SocketContext);
+    const [targetAddress] = useContext(TargetAddressContext);
+    const audioAssets = useContext(AudioAssetsContext);
+    const asset = `${component.replace(
+        component[0],
+        component[0].toUpperCase()
+    )} Sounds`;
+    const downloadQueue = useContext(DownloadQueueContext);
+    const { state, dispatch } = useContext(SoundsContext);
+    const audioDownloading = downloadQueue[song.name];
+    const audioDownloaded =
+        audioAssets && audioAssets[asset].includes(song.name); // Temporary hack for searching if audio is already downloaded
+    const audioPlaying =
+        state.sample.playing && song.name === state.sample.audio;
+    const playIcon = audioPlaying ? stop : play;
+    const icon = !audioDownloaded ? cloudDownloadOutline : playIcon;
 
-  const handlePlayClick: handleClickType = (event) => {
-    event.stopPropagation();
+    const handlePlayClick: handleClickType = event => {
+        event.stopPropagation();
 
-    const { fullPath, name } = song;
+        const { fullPath, name } = song;
 
-    dispatch(playSample(name));
+        dispatch(playSample(name));
 
-    // sound.play({ playAudioWhenScreenIsLocked: false, numberOfLoops: 1 })
-    // setTimeout(() => {
-    //   sound.stop()
-    // }, 10000)
+        // sound.play({ playAudioWhenScreenIsLocked: false, numberOfLoops: 1 })
+        // setTimeout(() => {
+        //   sound.stop()
+        // }, 10000)
 
-    const data = {
-      fullPath,
-      volume: state.volume[component],
-      state: audioPlaying ? 'STOPPED' : 'PLAYING',
-      sound: `${component.toUpperCase()}_SOUND`,
-      type: 'audio',
+        const data = {
+            fullPath,
+            volume: state.volume[component],
+            state: audioPlaying ? 'STOPPED' : 'PLAYING',
+            sound: `${component.toUpperCase()}_SOUND`,
+            type: 'audio',
+        };
+
+        socket?.send(JSON.stringify(data));
     };
 
-    socket?.send(JSON.stringify(data));
-  };
+    const handleDownloadClick: handleClickType = event => {
+        event.stopPropagation();
+        const protocol = targetAddress ? 'http' : 'https';
 
-  const handleDownloadClick: handleClickType = (event) => {
-    event.stopPropagation();
-    const protocol = targetAddress ? 'http' : 'https';
+        downloadAudioFile(targetAddress || BASE_URL, protocol, {
+            fullPath: song.fullPath,
+        });
+    };
 
-    downloadAudioFile(targetAddress || BASE_URL, protocol, {
-      fullPath: song.fullPath,
-    });
-  };
+    const onClickHandler = !audioDownloaded
+        ? handleDownloadClick
+        : handlePlayClick;
 
-  const onClickHandler = !audioDownloaded
-    ? handleDownloadClick
-    : handlePlayClick;
+    const actionButton = (
+        <IonButton fill="clear" slot="end" onClick={onClickHandler}>
+            <IonIcon
+                color={active ? 'light' : 'primary'}
+                slot="icon-only"
+                icon={icon}
+            />
+        </IonButton>
+    );
 
-  const actionButton = (
-    <IonButton fill="clear" slot="end" onClick={onClickHandler}>
-      <IonIcon
-        color={active ? 'light' : 'primary'}
-        slot="icon-only"
-        icon={icon}
-      />
-    </IonButton>
-  );
+    const downloading = <IonSpinner color="secondary" />;
 
-  const downloading = <IonSpinner color="secondary" />;
-
-  return (
-    <IonItem
-      onClick={() => onclick(index)}
-      color={active ? 'primary' : undefined}
-      button
-      detail={false}
-      lines="full"
-      style={_styles.audioContainer}
-    >
-      <IonLabel>{song.name}</IonLabel>
-      {audioDownloading ? downloading : actionButton}
-    </IonItem>
-  );
+    return (
+        <IonItem
+            onClick={() => onclick(index)}
+            color={active ? 'primary' : undefined}
+            button
+            detail={false}
+            lines="full"
+            style={_styles.audioContainer}
+        >
+            <IonLabel>{song.name}</IonLabel>
+            {audioDownloading ? downloading : actionButton}
+        </IonItem>
+    );
 };
 
 export default AudioStrip;

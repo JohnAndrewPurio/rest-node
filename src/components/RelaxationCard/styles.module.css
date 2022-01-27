@@ -1,42 +1,47 @@
 .card {
-    height: 22vh;
+    height: 33vh;
     min-width: 18vh;
     border-radius: 10px;
-    padding: .5em .3em;
-  }
+    padding: 0.5em 0.3em;
+}
 
 .detailsGrid {
-    font-size: .8rem;
+    font-size: 0.8rem;
     display: flex;
-  }
+}
 
 .paddingZero {
     padding: 0;
-  }
+}
 
 .favBtn {
     --padding-start: 0px;
     --padding-end: 0px;
     --padding-top: 0px;
     --padding-bottom: 0px;
-  }
+}
 
 .gridPicture {
     position: relative;
     /* width: 100%; */
-    height: 80%;
+    height: 75%;
     border: 2px solid var(--ion-color-primary);
     border-radius: 10px;
     background-color: var(--ion-color-step-100);
     display: flex;
     overflow: hidden;
     z-index: 1;
-  }
+    text-align: left;
+}
 
 .gridIonPicture {
     object-fit: cover;
     width: 100%;
-  }
+}
+
+.gridIonPicture::part(image) {
+    object-fit: cover;
+}
 
 .lengthIndicator {
     position: absolute;
@@ -46,14 +51,25 @@
     bottom: 0;
     left: 0;
     font-weight: 700;
-    font-size: .8rem;
-    padding: .5em;
-  }
+    font-size: 0.8rem;
+    padding: 0.5em;
+}
 
-  .title {
-      font-weight: 700;
-  }
+.title {
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    text-align: left;
+    -webkit-box-orient: vertical;
+}
 
-  .creator {
-      font-size: .7rem;
-  }
+.listTitle {
+    -webkit-box-orient: vertical;
+}
+
+.creator {
+    font-size: 0.7rem;
+}

@@ -1,95 +1,95 @@
 import { devices } from './devices.json';
 
 interface LightPayload {
-  light: string;
-  max_brightness: number;
-  state: string;
+    light: string;
+    max_brightness: number;
+    state: string;
 }
 
 interface DaysSelected {
-  mon: boolean;
-  tue: boolean;
-  wed: boolean;
-  thu: boolean;
-  fri: boolean;
-  sat: boolean;
-  sun: boolean;
+    mon: boolean;
+    tue: boolean;
+    wed: boolean;
+    thu: boolean;
+    fri: boolean;
+    sat: boolean;
+    sun: boolean;
 }
 
 interface Light {
-  onoffset: number;
-  offoffset: number;
-  onpayload: LightPayload;
-  offpayload: LightPayload;
-  days_selected: DaysSelected;
+    onoffset: number;
+    offoffset: number;
+    onpayload: LightPayload;
+    offpayload: LightPayload;
+    days_selected: DaysSelected;
 }
 
 interface SoundPayload {
-  audio_file?: any;
-  volume: number;
-  max_volume: number;
-  state: string;
-  sound: string;
+    audio_file?: any;
+    volume: number;
+    max_volume: number;
+    state: string;
+    sound: string;
 }
 
 interface Sound {
-  onoffset: number;
-  offoffset: number;
-  onpayload: SoundPayload;
-  offpayload: SoundPayload;
-  days_selected: DaysSelected;
+    onoffset: number;
+    offoffset: number;
+    onpayload: SoundPayload;
+    offpayload: SoundPayload;
+    days_selected: DaysSelected;
 }
 
 interface Time {
-  type: string;
-  time: string;
-  light: Light;
-  sound: Sound;
-  relax: Sound;
+    type: string;
+    time: string;
+    light: Light;
+    sound: Sound;
+    relax: Sound;
 }
 
 export interface RestNodeStateType {
-  bedtime: Time;
-  waketime: Time;
+    bedtime: Time;
+    waketime: Time;
 }
 
 export interface TimeArc {
-  percentage: number;
-  placement: number;
+    percentage: number;
+    placement: number;
 }
 
 export interface ClockArcs {
-  [key: string]: TimeArc[];
+    [key: string]: TimeArc[];
 }
 
 export interface StringKeyedObject {
-  [key: string]: any;
+    [key: string]: any;
 }
 
 export interface TimeBarType {
-  width: string;
-  position: string;
-  start: string;
-  end: string;
+    width: string;
+    position: string;
+    start: string;
+    end: string;
 }
 
 export interface songInterface {
-  title: string;
-  artist?: string;
-  id: string;
-  fullPath: string;
-  source: string;
+    title: string;
+    artist?: string;
+    id: string;
+    fullPath: string;
+    source: string;
 }
 
 export interface deviceInfo {
-  type: string;
-  new: boolean;
-  id?: number;
-  nickname?: string;
+    type: string;
+    new: boolean;
+    id?: number;
+    nickname?: string;
 }
 
 export interface newDeviceDetailsType {
-  type: string | null;
-  switchedOn: boolean;
-  hotspotConnected: boolean;
+    type: string | null;
+    switchedOn: boolean;
+    hotspotConnected: boolean;
 }

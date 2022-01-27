@@ -1,5 +1,3 @@
-const Help: React.FC = () => {
-  return <div>Help</div>;
-};
+const Help: React.FC = () => <div>Help</div>;
 
 export default Help;

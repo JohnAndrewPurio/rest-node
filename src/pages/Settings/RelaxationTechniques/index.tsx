@@ -5,19 +5,17 @@ import { RelaxationContextProvider } from '../../../contextStore/RelaxationConte
 import Content from './Content';
 
 interface Props {
-  router: HTMLIonRouterOutletElement | null;
+    router: HTMLIonRouterOutletElement | null;
 }
 
-const Relaxation: React.FC<Props> = ({ router }) => {
-  return (
+const Relaxation: React.FC<Props> = ({ router }) => (
     <RelaxationContextProvider>
-      <IonPage>
-        <SettingsHeader title="Relaxation Techniques" />
-        <Content router={router} />
-        <RelaxationFooter />
-      </IonPage>
+        <IonPage>
+            <SettingsHeader title="Relaxation Techniques" />
+            <Content router={router} />
+            <RelaxationFooter />
+        </IonPage>
     </RelaxationContextProvider>
-  );
-};
+);
 
 export default Relaxation;

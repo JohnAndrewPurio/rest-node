@@ -1,5 +1,5 @@
 .header {
-    margin: .5em 0em;
+    margin: 0.5em 0em;
     font-weight: 700;
     font-size: 1.1rem;
 }
@@ -9,6 +9,6 @@
     color: var(--ion-color-primary);
 }
 
-.bottomMargin { 
-    margin: 0em .5em 0em 0em;
+.bottomMargin {
+    margin: 0em 0.5em 0em 0em;
 }

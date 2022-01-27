@@ -15,109 +15,110 @@ import { storageGet } from '../../../../api/CapacitorStorage';
 import { REST_NODE_STATES_KEY } from '../../../../api/CapacitorStorage/keys';
 
 const Content: FC = () => {
-  const bedtimeState = useContext(BedTimeContext);
-  const lightsState = useContext(LightsContext);
-  const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
+    const bedtimeState = useContext(BedTimeContext);
+    const lightsState = useContext(LightsContext);
+    const { started, bedtimeStart, wakeUpTime } = bedtimeState.state;
 
-  const getState = async () => {
-    const defaultStates = await storageGet(REST_NODE_STATES_KEY);
+    const getState = async () => {
+        const defaultStates = await storageGet(REST_NODE_STATES_KEY);
 
-    if (!defaultStates) return;
+        if (!defaultStates) return;
 
-    const _moment = moment();
-    const { start, end } = getStartEnd(defaultStates);
-    const _start = start;
-    const _end = end;
+        const _moment = moment();
+        const { start, end } = getStartEnd(defaultStates);
+        const _start = start;
+        const _end = end;
 
-    const nightStart = _start
-      .clone()
-      .add(defaultStates.bedtime.light.onoffset, 'minutes');
+        const nightStart = _start
+            .clone()
+            .add(defaultStates.bedtime.light.onoffset, 'minutes');
 
-    const nightEnd = _start
-      .clone()
-      .add(defaultStates.bedtime.light.offoffset, 'minutes');
+        const nightEnd = _start
+            .clone()
+            .add(defaultStates.bedtime.light.offoffset, 'minutes');
 
-    const wakeStart = _end
-      .clone()
-      .add(defaultStates.waketime.light.onoffset, 'minutes');
+        const wakeStart = _end
+            .clone()
+            .add(defaultStates.waketime.light.onoffset, 'minutes');
 
-    const wakeEnd = _end
-      .clone()
-      .add(defaultStates.waketime.light.offoffset, 'minutes');
+        const wakeEnd = _end
+            .clone()
+            .add(defaultStates.waketime.light.offoffset, 'minutes');
 
-    const isNightLightOn =
-      _moment.isSameOrAfter(nightStart) && _moment.isBefore(nightEnd);
-    const isWakeLightOn =
-      _moment.isSameOrAfter(wakeStart) && _moment.isBefore(wakeEnd);
+        const isNightLightOn =
+            _moment.isSameOrAfter(nightStart) && _moment.isBefore(nightEnd);
+        const isWakeLightOn =
+            _moment.isSameOrAfter(wakeStart) && _moment.isBefore(wakeEnd);
 
-    const light = {
-      night: isNightLightOn,
-      wake: isWakeLightOn,
+        const light = {
+            night: isNightLightOn,
+            wake: isWakeLightOn,
+        };
+
+        const brightness = {
+            night: defaultStates.bedtime.light.onpayload.max_brightness,
+            wake: defaultStates.bedtime.light.onpayload.max_brightness,
+        };
+
+        const nightLightSchedule = {
+            start: nightStart,
+            end: nightEnd,
+        };
+
+        const wakeLightSchedule = {
+            start: wakeStart,
+            end: wakeEnd,
+        };
+
+        const newState = {
+            light,
+            brightness,
+            nightLightSchedule,
+            wakeLightSchedule,
+        };
+
+        lightsState.dispatch(setState(newState));
     };
 
-    const brightness = {
-      night: defaultStates.bedtime.light.onpayload.max_brightness,
-      wake: defaultStates.bedtime.light.onpayload.max_brightness,
-    };
+    const isBedtime = () =>
+        moment().isSameOrAfter(bedtimeStart) &&
+        moment().isSameOrBefore(wakeUpTime);
 
-    const nightLightSchedule = {
-      start: nightStart,
-      end: nightEnd,
-    };
+    useEffect(() => {
+        const bedtimeCheckHandler = () => {
+            const bedtime = isBedtime();
+            const bedtimeHasStarted = bedtimeStarted();
 
-    const wakeLightSchedule = {
-      start: wakeStart,
-      end: wakeEnd,
-    };
+            if (!started && bedtime) bedtimeState.dispatch(bedtimeHasStarted);
+        };
 
-    const newState = {
-      light,
-      brightness,
-      nightLightSchedule,
-      wakeLightSchedule,
-    };
+        const interval = setInterval(bedtimeCheckHandler, 1000);
 
-    lightsState.dispatch(setState(newState));
-  };
+        getState();
 
-  const isBedtime = () =>
-    moment().isSameOrAfter(bedtimeStart) && moment().isSameOrBefore(wakeUpTime);
+        return () => {
+            clearInterval(interval);
+        };
 
-  useEffect(() => {
-    const bedtimeCheckHandler = () => {
-      const bedtime = isBedtime();
-      const bedtimeHasStarted = bedtimeStarted();
+        // eslint-disable-next-line
+    }, [])
 
-      if (!started && bedtime) bedtimeState.dispatch(bedtimeHasStarted);
-    };
+    useEffect(() => {
+        if (started) getState();
 
-    const interval = setInterval(bedtimeCheckHandler, 1000);
+        // eslint-disable-next-line
+    }, [started])
 
-    getState();
-
-    return () => {
-      clearInterval(interval);
-    };
-
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    if (started) getState();
-
-    // eslint-disable-next-line
-  }, [started]);
-
-  return (
-    <IonContent>
-      <IonGrid>
-        <TimeBar />
-        <SunSyncToggle />
-      </IonGrid>
-      <LightControl component="night" index={0} />
-      <LightControl component="wake" index={1} />
-    </IonContent>
-  );
+    return (
+        <IonContent>
+            <IonGrid>
+                <TimeBar />
+                <SunSyncToggle />
+            </IonGrid>
+            <LightControl component="night" index={0} />
+            <LightControl component="wake" index={1} />
+        </IonContent>
+    );
 };
 
 export default Content;
